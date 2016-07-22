@@ -47,19 +47,20 @@
                     </a>
                 </li>
                 <li>
+                    <a href="<?php echo BASE_URL;?>Cronogramas">
+                        <i class="pe-7s-clock"></i>
+                        <p>Cronogramas</p>
+                    </a>
+                </li>
+                <li>
                     <a href="<?php echo BASE_URL;?>Ciudades">
                         <i class="pe-7s-id"></i>
                         <p>Tablas Auxiliares</p>
                     </a>
                 </li>
 
+                
                 <!--
-                <li>
-                    <a href="maps.html">
-                        <i class="pe-7s-map-marker"></i>
-                        <p>Maps</p>
-                    </a>
-                </li>
                 <li>
                     <a href="notifications.html">
                         <i class="pe-7s-bell"></i>
