@@ -49,6 +49,20 @@
 			}
 		}
 
+		public function getDetallesArrayByOperacionId($Id){
+			try
+			{
+				$stm = $this->pdo->prepare("SELECT de.Id, de.Descripcion, de.Monto FROM Detalle_Operacion do, Detalles de where do.Operacion_Id=? and do.Detalle_Id = de.Id");
+				$stm->execute(array($Id));
+
+				return $stm->fetchAll();
+			}
+			catch(Exception $e)
+			{
+				die($e->getMessage());
+			}
+		}
+
 		public function Obtener($Id)
 		{
 			try 
@@ -73,6 +87,20 @@
 				            ->prepare("DELETE FROM Detalle_Operacion WHERE Id = ?");			          
 
 				$stm->execute(array($Id));
+			} catch (Exception $e) 
+			{
+				die($e->getMessage());
+			}
+		}
+
+		public function EliminarByIds($Operacion_Id, $Detalle_Id)
+		{
+			try 
+			{
+				$stm = $this->pdo
+				            ->prepare("DELETE FROM Detalle_Operacion WHERE Operacion_Id = ? and Detalle_Id=?");			
+
+				$stm->execute(array($Operacion_Id, $Detalle_Id));
 			} catch (Exception $e) 
 			{
 				die($e->getMessage());

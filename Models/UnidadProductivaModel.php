@@ -14,6 +14,7 @@
 	    public $Celular;
 	    public $Ubicacion;
 	    public $Ciudad_Id;
+	    public $Organigrama;
 
 		public function __construct()
 		{
@@ -33,7 +34,7 @@
 			{
 				$limit = resultsPerPage;
 				$start = $startFrom;
-				$stmt = $this->pdo->prepare("SELECT * FROM UnidadesProductivas ORDER BY Id ASC LIMIT :startFrom,:resultsPerPage");
+				$stmt = $this->pdo->prepare("SELECT * FROM UnidadesProductivas ORDER BY Nombre ASC LIMIT :startFrom,:resultsPerPage");
 				$stmt->bindValue(":startFrom", (int)$start, PDO::PARAM_INT);
 				$stmt->bindValue(":resultsPerPage", (int)$limit, PDO::PARAM_INT);
 				$stmt->execute();
@@ -159,7 +160,8 @@
 							Fax 			= ?, 
 							Celular 		= ?, 
 							Ubicacion 		= ?, 
-							Ciudad_Id 		= ?
+							Ciudad_Id 		= ?,
+							Organigrama = ?
 					    WHERE Id = ?";
 
 				$this->pdo->prepare($sql)
@@ -174,6 +176,7 @@
 	                        $unidadProductiva->Celular,
 	                        $unidadProductiva->Ubicacion,
 	                        $unidadProductiva->Ciudad_Id,
+	                        $unidadProductiva->Organigrama,
 	                        $unidadProductiva->Id
 						)
 					);
@@ -187,8 +190,8 @@
 		{
 			try 
 			{
-			$sql = "INSERT INTO UnidadesProductivas (Nombre,Rubro_Id,Web,Telefono,Telefono_Anexo,Fax,Celular,Ubicacion, Ciudad_Id) 
-			        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			$sql = "INSERT INTO UnidadesProductivas (Nombre,Rubro_Id,Web,Telefono,Telefono_Anexo,Fax,Celular,Ubicacion, Ciudad_Id, Organigrama) 
+			        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			$this->pdo->prepare($sql)
 			     ->execute(
@@ -201,7 +204,8 @@
 	                    $unidadProductiva->Fax,
 	                    $unidadProductiva->Celular,
 	                    $unidadProductiva->Ubicacion,
-	                    $unidadProductiva->Ciudad_Id
+	                    $unidadProductiva->Ciudad_Id,
+	                    $unidadProductiva->Organigrama
 	                )
 				);
 			} catch (Exception $e) 

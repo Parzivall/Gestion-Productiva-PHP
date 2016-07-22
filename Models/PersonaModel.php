@@ -31,16 +31,17 @@ class Persona
 		}
 	}
 
-	public function Listar()
+	public function Listar($startFrom)
 	{
 		try
 		{
-			$result = array();
-
-			$stm = $this->pdo->prepare("SELECT * FROM Personas");
-			$stm->execute();
-
-			return $stm->fetchAll(PDO::FETCH_OBJ);
+			$limit = resultsPerPage;
+			$start = $startFrom;
+			$stmt = $this->pdo->prepare("SELECT * FROM Personas ORDER BY Apellidos ASC LIMIT :startFrom,:resultsPerPage");
+			$stmt->bindValue(":startFrom", (int)$start, PDO::PARAM_INT);
+			$stmt->bindValue(":resultsPerPage", (int)$limit, PDO::PARAM_INT);
+			$stmt->execute();
+			return $stmt->fetchAll(PDO::FETCH_OBJ);
 		}
 		catch(Exception $e)
 		{
@@ -64,13 +65,23 @@ class Persona
 		}
 	}
 
+	public function getTotalRecords(){
+		try {
+			$stm = $this->pdo->prepare("SELECT * FROM Personas");
+			$stm->execute();
+			return $stm->rowCount();
+			
+		} catch (Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
 	public function Eliminar($dni)
 	{
 		try 
 		{
 			$stm = $this->pdo
-			            ->prepare("DELETE FROM Personas WHERE dni = ?");			          
-
+			            ->prepare("DELETE FROM Personas WHERE dni = ?");
 			$stm->execute(array($dni));
 		} catch (Exception $e) 
 		{

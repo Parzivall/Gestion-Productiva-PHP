@@ -6,6 +6,7 @@ require_once 'Models/PersonaModel.php';
 class PersonasController{
     
     private $model;
+    private $persona;
     
     public function __construct(){
         $this->model = new Persona();
@@ -13,6 +14,11 @@ class PersonasController{
     }
     
     public function Index(){
+        $persona = new Persona();
+        $totalRecords = $this->model->getTotalRecords();
+        $totalPages = ceil($totalRecords/resultsPerPage);
+        if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };  
+        $startFrom = ($page-1) * resultsPerPage;
         require_once 'Views/header.php';
         require_once 'Views/sidebar.php';
         require_once 'Views/panel.php';
@@ -22,7 +28,11 @@ class PersonasController{
     
     public function Crud(){
         $persona = new Persona();
-        
+        $totalRecords = $this->model->getTotalRecords();
+        $totalPages = ceil($totalRecords/resultsPerPage);
+        if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };  
+        $startFrom = ($page-1) * resultsPerPage;
+
         if(isset($_REQUEST['Dni'])){
             $persona = $this->model->Obtener($_REQUEST['Dni']);
         }
@@ -31,6 +41,12 @@ class PersonasController{
         require_once 'Views/panel.php';
         require_once 'Views/Personas/update.php';
         require_once 'Views/footer.php';
+    }
+
+    public function Pagination(){
+        if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };  
+        $startFrom = ($page-1) * resultsPerPage;
+        require_once 'Views/Personas/pagination.php';
     }
     
     public function Guardar(){

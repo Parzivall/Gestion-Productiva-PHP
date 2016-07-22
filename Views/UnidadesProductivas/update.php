@@ -1,3 +1,22 @@
+<script type="text/javascript">
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#Organigrama')
+                    .attr('src', e.target.result);
+                    //.width(400)
+                    //.height(350);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }    
+    
+</script>
+
+
 <div class="content">
     <div class="container-fluid">
         <div class="row">
@@ -27,7 +46,7 @@
                                     <div class="form-group">
                                         <input type="hidden" name="Id" value="<?php echo $unidad->Id; ?>" />
                                         <label>Nombre</label>
-                                        <input type="text" class="form-control" placeholder="Nombre" name="Nombre" value="<?php echo $unidad->Nombre; ?>">
+                                        <input type="text" required maxlength="100" class="form-control" placeholder="Nombre" name="Nombre" value="<?php echo $unidad->Nombre; ?>">
                                     </div>
                                 </div>    
                                 <div class="col-md-6">
@@ -66,7 +85,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Fax:</label>
-                                        <input type="text" class="form-control" name="Fax" value="<?php echo $unidad->Fax;?>" placeholder="Fax">
+                                        <input type="text" maxlength="20" class="form-control" name="Fax" value="<?php echo $unidad->Fax;?>" placeholder="Fax">
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +99,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Ubicacion:</label>
-                                        <input type="text" class="form-control" name="Ubicacion" value="<?php echo $unidad->Ubicacion;?>" placeholder="Ubicacion">
+                                        <input type="text" maxlength="100" class="form-control" name="Ubicacion" value="<?php echo $unidad->Ubicacion;?>" placeholder="Ubicacion">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -94,7 +113,20 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-2">
+                                    <label>Organigrama</label>                                  
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="file" name="Organigrama" Id="fileImage" onchange="readURL(this);" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <img src="<?php echo $unidad->Id!=null ? 'data:image;base64,'.$unidad->Organigrama : ""?>" class="img-responsive" align="center" id="Organigrama">
+                                </div>
+                            </div>
                             <button type="submit" class="btn btn-info btn-fill pull-right">Guardar</button>
                             <div class="clearfix"></div>
                         </form>

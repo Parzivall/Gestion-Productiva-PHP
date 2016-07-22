@@ -26,7 +26,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Nombre</label>
-                                            <input type="text" class="form-control" name="Nombre" placeholder="Nombre" value="<?php echo $ciudad->Nombre;?>">
+                                            <input type="text" required maxlength="100" class="form-control" name="Nombre" placeholder="Nombre" value="<?php echo $ciudad->Nombre;?>">
                                         </div>
                                     </div>
                                     <input type="hidden" name="Id" value="<?php echo $ciudad->Id; ?>" />

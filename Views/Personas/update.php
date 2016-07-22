@@ -27,7 +27,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Dni</label>
-                                                <input required type="text" name="Dni" class="form-control" <?php echo $persona->Dni!=null ? "disabled": "" ?> placeholder="Dni" value="<?php echo $persona->Dni; ?>"/>
+                                                <input required maxlength="20" type="text" name="Dni" class="form-control" <?php echo $persona->Dni!=null ? "disabled": "" ?> placeholder="Dni" value="<?php echo $persona->Dni; ?>"/>
                                                 <input type="hidden" name="DniUpdate" value="<?php echo $persona->Dni ? $persona->Dni : -1; ?>"/>
                                             </div>
                                         </div>    
@@ -36,13 +36,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Usuario</label>
-                                                <input type="text" class="form-control" name="Username" placeholder="Nombre de Usuario" value="<?php echo $persona->Username;?>">
+                                                <input type="text" maxlength="20" class="form-control" name="Username" placeholder="Nombre de Usuario" value="<?php echo $persona->Username;?>">
                                             </div>    
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Contraseña</label>
-                                                <input type="password" name="Password" class="form-control" placeholder="Contraseña" value="<?php echo $persona->Password;?>">
+                                                <input type="password" maxlength="20" name="Password" class="form-control" placeholder="Contraseña" value="<?php echo $persona->Password;?>">
                                             </div>
                                         </div>
                                     </div>
@@ -50,13 +50,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Nombres</label>
-                                                <input type="text" name="Nombres" class="form-control" placeholder="Nombres" value="<?php echo $persona->Nombres?>">
+                                                <input type="text" required maxlength="50" name="Nombres" class="form-control" placeholder="Nombres" value="<?php echo $persona->Nombres?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Apellidos</label>
-                                                <input type="text" name="Apellidos" class="form-control" placeholder="Apellidos" value="<?php echo $persona->Apellidos;?>">
+                                                <input type="text" required maxlength="50" name="Apellidos" class="form-control" placeholder="Apellidos" value="<?php echo $persona->Apellidos;?>">
                                             </div>
                                         </div>
                                     </div>
@@ -73,7 +73,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Fecha de Nacimiento</label>
-                                                <input type="date" class="form-control" name="Nacimiento" value="<?php echo $persona->Nacimiento?>">    
+                                                <input type="date" required class="form-control" name="Nacimiento" value="<?php echo $persona->Nacimiento?>">    
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -105,19 +105,19 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Dirección</label>
-                                        <input type="text" class="form-control" name="Direccion" placeholder="Direccion" value="<?php echo $persona->Direccion;?>">
+                                        <input type="text" maxlength="100" class="form-control" name="Direccion" placeholder="Direccion" value="<?php echo $persona->Direccion;?>">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Email</label>
-                                        <input type="email" class="form-control" name="Email" placeholder="Email" value="<?php echo $persona->Email;?>">
+                                        <input type="email" maxlength="50" class="form-control" name="Email" placeholder="Email" value="<?php echo $persona->Email;?>">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Pagina web</label>
-                                        <input type="url" class="form-control" name="Web" value="<?php echo $persona->Web;?>" placeholder="Web">
+                                        <input type="url" maxlength="100" class="form-control" name="Web" value="<?php echo $persona->Web;?>" placeholder="Web">
                                     </div>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Acerca de:</label>
-                                        <textarea rows="5" name="Informacion" class="form-control" placeholder="Descripción de la persona, puesto, etc"><?php echo $persona->Informacion;?></textarea>
+                                        <textarea rows="5" maxlength="400" name="Informacion" class="form-control" placeholder="Descripción de la persona, puesto anterior, etc"><?php echo $persona->Informacion;?></textarea>
                                     </div>
                                 </div>
                             </div>

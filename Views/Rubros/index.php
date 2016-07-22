@@ -26,7 +26,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Descripcion</label>
-                                            <input type="text" class="form-control" name="Descripcion" placeholder="Descripcion" value="<?php echo $rubro->Descripcion;?>">
+                                            <input type="text" required maxlength="100" class="form-control" name="Descripcion" placeholder="Descripcion" value="<?php echo $rubro->Descripcion;?>">
                                         </div>
                                     </div>
                                     <input type="hidden" name="Id" value="<?php echo $rubro->Id; ?>" />

@@ -1,165 +1,4 @@
 <script type="text/javascript" src="<?php echo BASE_URL;?>Assets/js/jspdf.min.js"></script>
-
-<div class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    
-                    <ol class="breadcrumb">
-                        <li><a href="<?php echo BASE_URL;?>Operaciones/">Operaciones</a></li>
-                        <li class="active"><?php echo $operacion->Id != null ? $operacion->Tipo.'('.$operacion->Fecha.')' : 'Registro de Operación'; ?></li>
-                    </ol>
-                    <form method="post" action="<?php echo BASE_URL;?>Operaciones/Guardar/" enctype="multipart/form-data">
-                        <div class="content">
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h4 class="title" id="Titulo">
-                                        <?php echo $operacion->Id!=null ? ($operacion->Tipo==1 ? "Ingreso" : "Egreso").' ('. $this->model->getUnidadById($operacion->Unidad_Id).')' : 'Nuevo Registro: Operaciones';?>
-                                    </h4>    
-                                </div>
-                                <div class="col-md-4">
-                                    <button type="button" id="btnGenerarReporte" class="btn btn-primary btn-fill pull-right">Generar Reporte</button>        
-                                </div>
-                            </div>
-
-                            <div class="content crud">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="hidden" name="Id" value="<?php echo $operacion->Id; ?>" />
-                                            <label>Tipo</label>
-                                            <select name="Tipo" class="form-control">
-                                                <option <?php echo $operacion->Tipo==1 ? 'selected':''; ?> value="1">Ingreso</option>
-                                                <option <?php echo $operacion->Tipo==2 ? 'selected':''; ?> value="2">Egreso</option>
-                                            </select>
-                                        </div>
-                                    </div>    
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Monto</label>
-                                                <div class="input-group">
-                                                  <div class="input-group-addon">S/.</div>
-                                                    <input type="number" name="Monto" min="0" step="0.01" class="form-control" id="exampleInputAmount" placeholder="Amount" value="<?php echo $operacion->Id != null ? $operacion->Monto : "0"; ?>">
-                                                  <div class="input-group-addon">.00</div>
-                                                </div>
-                                        </div>
-                                    </div>    
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Unidad Productiva</label>
-                                            <select name="Unidad" class="form-control">
-                                                <?php foreach($this->model->getUnidades() as $r): ?>
-                                                    <option <?php echo ($operacion->Unidad_Id==$r->Id) ? 'selected' : '' ?> value="<?php echo $r->Id?>" ><?php echo $r->Nombre;?></option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Fecha</label>
-                                            <input type="date" name="Fecha" class="form-control" value="<?php echo $operacion->Id!=null ? $operacion->Fecha : date('Y-m-d')?>">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group">
-                                        <a class="btn btn-info btn-fill pull-right btnMargin" href="<?php echo BASE_URL;?>Operaciones">Cancelar</a>                                        
-                                        <button type="submit" class="btn btn-info btn-fill pull-right btnMargin" style="margin-right:1%">Guardar</button>
-                                        <!--<div class="clearfix"></div>-->
-                                        
-                                        <!--<div class="clearfix"></div>-->
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- This part will manage the Detalles From Operaciones -->
-                            <div class="card">
-                                <div class="content">
-                                    <!--<div class="typo-line">
-                                            <h4>Detalles:</h3>
-                                            </div>-->
-                                    <h4 style="text-align:center;">Detalles</h4>
-                                    
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="card" style="padding:30px;">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label>Descripcion</label>
-                                                            <input type="text" class="form-control" name="DescripcionDetalle" placeholder="Descripcion" id="DescripcionDetalle" value="<?php echo "";?>">
-                                                        </div>        
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label>Monto</label>
-                                                            <div class="input-group">
-                                                              <div class="input-group-addon">S/.</div>
-                                                                <input type="number" name="MontoDetalle" min="0" step="0.01" class="form-control" id="MontoDetalle" placeholder="Amount" value="0">
-                                                              <div class="input-group-addon">.00</div>
-                                                            </div>
-                                                        </div>       
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <button type="button" id="btnGuardarDetalle" class="btn btn-primary btn-fill pull-right">Guardar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div id="tableToGenerate">
-                                                <div class="content table-responsive table-full-width">
-                                                    <table class="table table-hover table-striped" id="tableDetalles">
-                                                        <thead>
-                                                            <th>Descripcion</th>
-                                                            <th>Monto</th>
-                                                            <th></th>
-                                                        </thead>
-                                                        <tbody id="target-content">
-                                                            <?php foreach($this->modelDetalleOperacion->getDetallesByOperacionId($operacion->Id) as $r): ?>
-                                                                <tr>
-                                                                    <td><?php echo $r->Descripcion ?></td>
-                                                                    <td><?php echo "S/.".$r->Monto; ?></td>
-                                                                    <td class="td-actions text-right">
-                                                                        <button type="button" rel="tooltip" title="Editar Detalle" class="btnEditDetalle btn btn-info btn-simple btn-xs">
-                                                                            <i class="fa fa-edit"></i>
-                                                                        </button>
-                                                                        <button type="button" rel="tooltip" title="Eliminar" class="btnDeleteDetalle btn btn-danger btn-simple btn-xs">
-                                                                            <i class="fa fa-times"></i>
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
-                                                            <?php endforeach; ?>
-                                                        </tbody>
-                                                    </table>
-                                                </div>        
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>  
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <script type="text/javascript">
     var montoAcumulado = 0;
     var editandoDetalle = false;
@@ -238,6 +77,8 @@
         var montoAnterior = parent.children("td:nth-child(2)").html();
         parent.children("td:nth-child(1)").html(descripcion);
         parent.children("td:nth-child(2)").html(monto);
+        parent.children("input:nth-child(5)").val(descripcion);
+        parent.children("input:nth-child(6)").val(monto);
         montoAcumulado -= parseInt(montoAnterior);
         montoAcumulado += parseInt(monto);
         cleanDetalle();
@@ -284,12 +125,26 @@
         return true;   
     }
 
-    $(document).ready(function(){
-        //Set initial variables
-        montoAcumulado = parseInt($('[name=Monto]').val());
+    var verificarRequeridos = function(){
+        if ($('#DescripcionDetalle').val()=='' || $('#MontoDetalle').val()==''){
+            return false;
+        }
+        return true;
+    }
 
+    var flag = true;
+
+    $(document).ready(function(){
+        $('.btnEditDetalle').bind("click", editDetalle);
+        $('.btnDeleteDetalle').bind("click", deleteDetalle);   
+        //Set initial variables
+        //montoAcumulado = parseInt($('[name=Monto]').val());        
         $('#btnGuardarDetalle').click(function(){
-                      
+            if(!verificarRequeridos()){
+                alert('Ingrese el detalle a guardar');
+                return;
+            }     
+
             if (editandoDetalle){
                 //Verificar que el monto a ingresar no sea mayor al total
                 if(!verificarMontoEdit()){
@@ -320,6 +175,9 @@
                                             <i class="fa fa-times"></i>
                                         </button>
                                     </td>`;
+                detalleToAppend += '<input type="hidden" name="IdDetalle[]" value="'
+                detalleToAppend += '-1';
+                detalleToAppend += '"/>';
                 detalleToAppend += '<input type="hidden" name="DescripcionDetalle[]" value="'
                 detalleToAppend += $('#DescripcionDetalle').val();
                 detalleToAppend += '"/>';
@@ -340,3 +198,168 @@
     })
 
 </script>
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    
+                    <ol class="breadcrumb">
+                        <li><a href="<?php echo BASE_URL;?>Operaciones/">Operaciones</a></li>
+                        <li class="active"><?php echo $operacion->Id != null ? $operacion->Tipo.'('.$operacion->Fecha.')' : 'Registro de Operación'; ?></li>
+                    </ol>
+                    <form method="post" action="<?php echo BASE_URL;?>Operaciones/Guardar/" enctype="multipart/form-data">
+                        <div class="content">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4 class="title" id="Titulo">
+                                        <?php echo $operacion->Id!=null ? ($operacion->Tipo==1 ? "Ingreso" : "Egreso").' ('. $this->model->getUnidadById($operacion->Unidad_Id).')' : 'Nuevo Registro: Operaciones';?>
+                                    </h4>    
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" id="btnGenerarReporte" class="btn btn-primary btn-fill pull-right">Generar Reporte</button>        
+                                </div>
+                            </div>
+
+                            <div class="content crud">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="hidden" name="Id" value="<?php echo $operacion->Id; ?>" />
+                                            <label>Tipo</label>
+                                            <select name="Tipo" class="form-control">
+                                                <option <?php echo $operacion->Tipo==1 ? 'selected':''; ?> value="1">Ingreso</option>
+                                                <option <?php echo $operacion->Tipo==2 ? 'selected':''; ?> value="2">Egreso</option>
+                                            </select>
+                                        </div>
+                                    </div>    
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Monto</label>
+                                                <div class="input-group">
+                                                  <div class="input-group-addon">S/.</div>
+                                                    <input type="number" required name="Monto" min="0" step="0.01" class="form-control" id="exampleInputAmount" placeholder="Amount" value="<?php echo $operacion->Id != null ? $operacion->Monto : "0"; ?>">
+                                                  <div class="input-group-addon">.00</div>
+                                                </div>
+                                        </div>
+                                    </div>    
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Unidad Productiva</label>
+                                            <select name="Unidad" class="form-control">
+                                                <?php foreach($this->model->getUnidades() as $r): ?>
+                                                    <option <?php echo ($operacion->Unidad_Id==$r->Id) ? 'selected' : '' ?> value="<?php echo $r->Id?>" ><?php echo $r->Nombre;?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Fecha</label>
+                                            <input type="date" name="Fecha" required class="form-control" value="<?php echo $operacion->Id!=null ? $operacion->Fecha : date('Y-m-d')?>">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <a class="btn btn-info btn-fill pull-right btnMargin" href="<?php echo BASE_URL;?>Operaciones">Cancelar</a>                                        
+                                        <button type="submit" class="btn btn-info btn-fill pull-right btnMargin" style="margin-right:1%">Guardar</button>
+                                        <!--<div class="clearfix"></div>-->
+                                        
+                                        <!--<div class="clearfix"></div>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- This part will manage the Detalles From Operaciones -->
+                            <div class="card">
+                                <div class="content">
+                                    <!--<div class="typo-line">
+                                            <h4>Detalles:</h3>
+                                            </div>-->
+                                    <h4 style="text-align:center;">Detalles</h4>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="card" style="padding:30px;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label>Descripcion</label>
+                                                            <input type="text" class="form-control" name="DescripcionDetalle" placeholder="Descripcion" id="DescripcionDetalle" value="<?php echo "";?>">
+                                                        </div>        
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label>Monto</label>
+                                                            <div class="input-group">
+                                                              <div class="input-group-addon">S/.</div>
+                                                                <input type="number" name="MontoDetalle" min="0" step="0.01" class="form-control" id="MontoDetalle" placeholder="Amount" value="0">
+                                                              <div class="input-group-addon">.00</div>
+                                                            </div>
+                                                        </div>       
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <button type="button" id="btnGuardarDetalle" class="btn btn-primary btn-fill pull-right">Guardar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div id="tableToGenerate">
+                                                <div class="content table-responsive table-full-width">
+                                                    <table class="table table-hover table-striped" id="tableDetalles">
+                                                        <thead>
+                                                            <th>Descripcion</th>
+                                                            <th>Monto</th>
+                                                            <th></th>
+                                                        </thead>
+                                                        <tbody id="target-content">
+                                                            <?php foreach($this->modelDetalleOperacion->getDetallesByOperacionId($operacion->Id) as $r): ?>
+                                                                <tr>
+                                                                    <td><?php echo $r->Descripcion ?></td>
+                                                                    <td><?php echo $r->Monto; ?></td>
+                                                                    <td class="td-actions text-right">
+                                                                        <button type="button" rel="tooltip" title="Editar Detalle" class="btnEditDetalle btn btn-info btn-simple btn-xs">
+                                                                            <i class="fa fa-edit"></i>
+                                                                        </button>
+                                                                        <button type="button" rel="tooltip" title="Eliminar" class="btnDeleteDetalle btn btn-danger btn-simple btn-xs">
+                                                                            <i class="fa fa-times"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                    <input type="hidden" name="IdDetalle[]" value="<?php echo $r->Id;?>"/>
+                                                                    <input type="hidden" name="DescripcionDetalle[]" value="<?php echo $r->Descripcion;?>"/>
+                                                                    <input type="hidden" name="MontoDetalle[]" value="<?php echo $r->Monto;?>"/>
+
+                                                                </tr>
+                                                            <?php endforeach; ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

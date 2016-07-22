@@ -73,7 +73,7 @@
 			{
 				$sql = "UPDATE Detalles SET 
 							Descripcion         = ?, 
-							Monto        		= ?,
+							Monto        		= ?
 					    WHERE Id = ?";
 
 				$this->pdo->prepare($sql)

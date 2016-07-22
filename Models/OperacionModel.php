@@ -101,6 +101,24 @@
 		{
 			try 
 			{
+				//Eliminar las relaciones
+				$stmForeign = $this->pdo
+				            ->prepare("DELETE FROM Detalle_Operacion WHERE Operacion_Id = ?");			          
+				$stmForeign->execute(array($Id));
+
+				//Eliminar los detalles
+
+				$stm = $this->pdo->prepare("SELECT De.Id FROM Detalle_Operacion do, Detalles de where do.Operacion_Id=? and do.Detalle_Id = de.Id");
+				$stm->execute(array($Id));
+
+				$detallesToDelete = $stm->fetchAll();
+				for ($i=0; $i < count($detallesToDelete); $i++) { 
+					//Eliminar cada detalle
+					$stmForeign = $this->pdo
+					            ->prepare("DELETE FROM Detalles WHERE Id = ?");			          
+					$stmForeign->execute(array($detallesToDelete[$i][0]));
+				}
+
 				$stm = $this->pdo
 				            ->prepare("DELETE FROM Operaciones WHERE Id = ?");			          
 				$stm->execute(array($Id));

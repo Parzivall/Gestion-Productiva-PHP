@@ -49,8 +49,16 @@
         }
         
         public function Guardar(){
+            //Manejar imagen organigrama
             $unidad = new UnidadProductiva();
-            
+
+            if (getimagesize($_FILES['Organigrama']['tmp_name'])!=FALSE){
+                $organigrama= addslashes($_FILES['Organigrama']['tmp_name']);
+                $name= addslashes($_FILES['Organigrama']['name']);
+                $organigrama= file_get_contents($organigrama);
+                $organigrama= base64_encode($organigrama);
+                $unidad->Organigrama = $organigrama;    
+            }
             $unidad->Id = $_REQUEST['Id'];
             $unidad->Nombre = $_REQUEST['Nombre'];
             $unidad->Rubro_Id = $_REQUEST['Rubro'];
