@@ -40,13 +40,14 @@
                     </ul>
                     -->
                     <ul class="nav navbar-nav navbar-right">
-                        <!--
+                        
                         <li>
-                           <a href="#">
-                               Cuenta
+                           <a href="<?php echo BASE_URL;?>Personas/Crud/<?php echo $_SESSION['UserDni']?>">
+                               Perfil
                             </a>
                         </li>
                         
+                        <!--
                         <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     Dropdown

@@ -50,7 +50,7 @@
 		{
 			try
 			{
-				$stmt = $this->pdo->prepare("SELECT Username, Password FROM Personas where Username=:username");
+				$stmt = $this->pdo->prepare("SELECT Dni, Username, Password FROM Personas where Username=:username");
 				$stmt->bindparam(":username", $usuario->Username);
 				$stmt->execute();
 				$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -64,6 +64,7 @@
 					//if ($usuario->Password == $userRow['Password']){
 						printf("login success");
 						$_SESSION['UserSession'] = $userRow['Username'];
+						$_SESSION['UserDni'] = $userRow['Dni'];
 						printf($_SESSION['UserSession']);
 						return true;
 					}
