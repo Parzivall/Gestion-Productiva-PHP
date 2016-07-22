@@ -3,8 +3,6 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-
-                                
                     <div class="content">
                         <div class="row">
                             <div class="col-md-4"></div>
@@ -121,6 +119,12 @@
         </div>
     </div>
 </div>
+<?php
+    $cronogramasFechaLimite = $this->model->getCronogramasFechaLimite();
+    for ($i=0; $i < count($cronogramasFechaLimite); $i++) { 
+        # code...
+    }
+?>
 <script type="text/javascript">
 $(document).ready(function(){
     $('.pagination').pagination({
@@ -136,3 +140,25 @@ $(document).ready(function(){
         });
     });
 </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            <?php
+                $cronogramasFechaLimite = $this->model->getCronogramasFechaLimite();
+                for ($i=0; $i < count($cronogramasFechaLimite); $i++) { ?>
+                    $.notify({
+                        icon: 'pe-7s-info',
+                        message: "Hoy es el ultimo dia para cumplir <b><?=$cronogramasFechaLimite[$i][0]?></b> de la Unidad <b><?=$cronogramasFechaLimite[$i][1]?></b>!!"
+
+                    },{
+                        type: 'danger',
+                        timer: 4000,
+                        placement :{
+                            from : 'top',
+                            align: 'center'
+                        } 
+                    });
+          <?php } ?>
+            
+
+        });
+    </script>

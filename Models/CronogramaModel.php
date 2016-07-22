@@ -147,6 +147,20 @@
 			}
 		}
 
+		public function getCronogramasFechaLimite(){
+			try
+			{
+				$stmt = $this->pdo->prepare("SELECT cro.Descripcion, upro.Nombre FROM Cronogramas cro, UnidadesProductivas upro WHERE cro.Unidad_Id = upro.Id and FechaFin=CURDATE() and Cumplido=false");
+				$stmt->execute();
+				return $stmt->fetchAll();
+			}
+			catch(Exception $e)
+			{
+				die($e->getMessage());
+			}
+		}
+
+
 		public function getUnidadById($Id){
 			try 
 			{
