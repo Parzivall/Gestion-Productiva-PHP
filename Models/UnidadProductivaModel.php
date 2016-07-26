@@ -63,6 +63,25 @@
 			}
 		}
 
+		public function nameExists($nombre){
+			try 
+				{
+					$stmt = $this->pdo->prepare("SELECT * FROM UnidadesProductivas where Nombre=:nombre");
+					$stmt->bindparam(":nombre", $nombre);
+					$stmt->execute();
+					if($stmt->rowCount() > 0){
+						return true;
+					}
+					else{
+						return false;
+					}
+				} 
+				catch (Exception $e) 
+				{
+					die($e->getMessage());
+				}
+		}
+
 		public function getRubros(){
 			try
 			{
@@ -152,7 +171,8 @@
 		{
 			try 
 			{
-				$sql = "UPDATE UnidadesProductivas SET 
+				if ($unidadProductiva->Organigrama!=null){
+					$sql = "UPDATE UnidadesProductivas SET 
 							Nombre          = ?, 
 							Rubro_Id        = ?,
 	                        Web        		= ?,
@@ -165,7 +185,7 @@
 							Organigrama = ?
 					    WHERE Id = ?";
 
-				$this->pdo->prepare($sql)
+					$this->pdo->prepare($sql)
 				     ->execute(
 					    array(
 	                        $unidadProductiva->Nombre, 
@@ -181,6 +201,39 @@
 	                        $unidadProductiva->Id
 						)
 					);
+							
+				} else {
+					$sql = "UPDATE UnidadesProductivas SET 
+							Nombre          = ?, 
+							Rubro_Id        = ?,
+	                        Web        		= ?,
+							Telefono        = ?, 
+							Telefono_Anexo  = ?,
+							Fax 			= ?, 
+							Celular 		= ?, 
+							Ubicacion 		= ?, 
+							Ciudad_Id 		= ?
+					    WHERE Id = ?";
+
+					$this->pdo->prepare($sql)
+				     ->execute(
+					    array(
+	                        $unidadProductiva->Nombre, 
+	                        $unidadProductiva->Rubro_Id,
+	                        $unidadProductiva->Web,
+	                        $unidadProductiva->Telefono,
+	                        $unidadProductiva->Telefono_Anexo,
+	                        $unidadProductiva->Fax,
+	                        $unidadProductiva->Celular,
+	                        $unidadProductiva->Ubicacion,
+	                        $unidadProductiva->Ciudad_Id,
+	                        $unidadProductiva->Id
+						)
+					);	
+				}
+				
+
+				
 			} catch (Exception $e) 
 			{
 				die($e->getMessage());

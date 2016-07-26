@@ -2,6 +2,11 @@
     require_once("Core/Session.php");
     require_once 'Models/UnidadProductivaModel.php';
 
+    if ($_SESSION['TipoUsuario']==0){
+        header('Location:'.BASE_URL.'Home');       
+    }
+
+
     class UnidadesProductivasController{
         
         private $model;
@@ -48,17 +53,27 @@
             require_once 'Views/UnidadesProductivas/pagination.php';
         }
         
+        public function Verificar(){
+            require_once 'Views/UnidadesProductivas/check_availability.php';
+        }
+
         public function Guardar(){
             //Manejar imagen organigrama
             $unidad = new UnidadProductiva();
 
-            if (getimagesize($_FILES['Organigrama']['tmp_name'])!=FALSE){
-                $organigrama= addslashes($_FILES['Organigrama']['tmp_name']);
-                $name= addslashes($_FILES['Organigrama']['name']);
-                $organigrama= file_get_contents($organigrama);
-                $organigrama= base64_encode($organigrama);
-                $unidad->Organigrama = $organigrama;    
+            if($_FILES["Organigrama"]["error"] == 4) {
+                //means there is no file uploaded
             }
+            else{
+                if (getimagesize($_FILES['Organigrama']['tmp_name'])!=FALSE){
+                    $organigrama= addslashes($_FILES['Organigrama']['tmp_name']);
+                    $name= addslashes($_FILES['Organigrama']['name']);
+                    $organigrama= file_get_contents($organigrama);
+                    $organigrama= base64_encode($organigrama);
+                    $unidad->Organigrama = $organigrama;    
+                }    
+            }
+            
             $unidad->Id = $_REQUEST['Id'];
             $unidad->Nombre = $_REQUEST['Nombre'];
             $unidad->Rubro_Id = $_REQUEST['Rubro'];

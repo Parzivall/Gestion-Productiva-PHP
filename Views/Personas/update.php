@@ -1,4 +1,12 @@
-
+<?php
+    //Almacenar el Usuario temporal para saltar la verificación en caso el usuario sea el mismo
+    if ($persona->Dni!=null){
+        $tmpUser = $persona->Username;    
+    }
+    else{
+        $tmpUser = "";
+    }
+?>
 <div class="content">
     <div class="container-fluid">
         <div class="row">
@@ -170,20 +178,25 @@ function checkDniAvailability() {
 
 function checkUserAvailability() {
     var base = "<?php echo BASE_URL;?>";
+    var tmpUser = "<?php echo $tmpUser;?>";
     $("#loaderIcon").show();
     jQuery.ajax({
     url: base+"Personas/Verificar/",
     data:'Username='+$("#Username").val(),
     type: "POST",
     success:function(data){
-        $("#user-availability-status").html(data);
+        
         $("#loaderIcon").hide();
-        if($('#user-availability-status span').hasClass('text-danger')){
-            $('#btnSubmit').prop('disabled', true);
+        if (tmpUser != $('#Username').val()){
+            $("#user-availability-status").html(data);
+            if($('#user-availability-status span').hasClass('text-danger')){
+                $('#btnSubmit').prop('disabled', true);
+            }
+            else{
+                $('#btnSubmit').prop('disabled', false);   
+            }
         }
-        else{
-            $('#btnSubmit').prop('disabled', false);   
-        }
+        
     },
     error:function (){}
     });

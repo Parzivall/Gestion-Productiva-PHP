@@ -16,6 +16,16 @@
     
 </script>
 
+<?php
+    //Almacenar el Nombre temporal para saltar la verificación en caso el usuario sea el mismo
+    if ($unidad->Id!=null){
+        $tmpName = $unidad->Nombre;    
+    }
+    else{
+        $tmpName = "";
+    }
+?>
+
 
 <div class="content">
     <div class="container-fluid">
@@ -46,7 +56,9 @@
                                     <div class="form-group">
                                         <input type="hidden" name="Id" value="<?php echo $unidad->Id; ?>" />
                                         <label class="text-danger">Nombre (*)</label>
-                                        <input type="text" required maxlength="100" class="form-control" placeholder="Nombre" name="Nombre" value="<?php echo $unidad->Nombre; ?>">
+                                        <input type="text" required maxlength="100" class="form-control" placeholder="Nombre" name="Nombre" id="Nombre" onBlur="checkNameAvailability()" value="<?php echo $unidad->Nombre; ?>">
+                                        <span id="name-availability-status"></span>
+                                        <p><img src="<?php echo BASE_URL;?>Assets/img/LoaderIcon.gif" id="loaderIcon" style="display:none" /></p>
                                     </div>
                                 </div>    
                                 <div class="col-md-6">
@@ -119,7 +131,7 @@
                                     <label class="text-danger">Organigrama (*)</label>                                  
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="file" required accept="image/*" name="Organigrama" Id="fileImage" onchange="readURL(this);" />
+                                    <input type="file" <?php echo ($unidad->Id==null) ? 'required' : '' ?> accept="image/*" name="Organigrama" Id="fileImage" onchange="readURL(this);" />
                                 </div>
                             </div>
                             <div class="row">
@@ -127,7 +139,7 @@
                                     <img src="<?php echo $unidad->Id!=null ? 'data:image;base64,'.$unidad->Organigrama : ""?>" class="img-responsive" align="center" id="Organigrama">
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-info btn-fill pull-right">Guardar</button>
+                            <button type="submit" id="btnSubmit" class="btn btn-info btn-fill pull-right">Guardar</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>
@@ -138,5 +150,29 @@
 </div>
 
 <script type="text/javascript">
-    
+    function checkNameAvailability() {
+        var base = "<?php echo BASE_URL;?>";
+        var tmpName = "<?php echo $tmpName;?>";
+        $("#loaderIcon").show();
+        jQuery.ajax({
+        url: base+"UnidadesProductivas/Verificar/",
+        data:'Nombre='+$("#Nombre").val(),
+        type: "POST",
+        success:function(data){
+            
+            $("#loaderIcon").hide();
+            if (tmpName != $('#Nombre').val()){
+                $("#name-availability-status").html(data);
+                if($('#name-availability-status span').hasClass('text-danger')){
+                    $('#btnSubmit').prop('disabled', true);
+                }
+                else{
+                    $('#btnSubmit').prop('disabled', false);   
+                }
+            }
+
+        },
+        error:function (){}
+        });
+    }
 </script>
