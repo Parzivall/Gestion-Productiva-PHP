@@ -1,4 +1,4 @@
-<?php foreach($this->model->Listar($startFrom) as $r): ?>
+<?php foreach((isset($_SESSION['Unidad_Id']) ? $this->model->getCronogramasByUnidadId($_SESSION['Unidad_Id'], $startFrom) : $this->model->Listar($startFrom)) as $r): ?>
     <tr>
         <td><?php echo $this->model->getUnidadById($r->Unidad_Id); ?></td>
         <td><?php echo $r->Descripcion ?></td>

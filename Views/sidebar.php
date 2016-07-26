@@ -16,7 +16,7 @@
             </div>
 
             <ul class="nav">
-                <li class="<?php echo isset($unidad) ? 'active' : ''?>">
+                <li class="<?php echo $_SESSION['TipoUsuario']==0 ? 'hide' : ''; ?> <?php echo isset($unidad) ? 'active' : ''?>" >
                     <a href="<?php echo BASE_URL;?>UnidadesProductivas">
                         <i class="pe-7s-graph"></i>
                         <p>Unidades Productivas</p>
@@ -28,8 +28,8 @@
                         <p>Personal</p>
                     </a>
                 </li>
-                <li class="<?php echo isset($responsable) ? 'active' : ''?>">
-                    <a href="<?php echo BASE_URL;?>Responsables">
+                <li class="<?php echo (isset($responsable) || isset($unidadPersona)) ? 'active' : ''?>">
+                    <a href="<?php echo BASE_URL;?>UnidadesPersonas">
                         <i class="pe-7s-add-user"></i>
                         <p>Asignaciones</p>
                     </a>
@@ -52,7 +52,7 @@
                         <p>Cronogramas</p>
                     </a>
                 </li>
-                <li class="<?php echo (isset($ciudad) || isset($rubro) || isset($cargo)) ? 'active' : ''?>">
+                <li class="<?php echo $_SESSION['TipoUsuario']==0 ? 'hide' : ''; ?>  <?php echo (isset($ciudad) || isset($rubro) || isset($cargo)) ? 'active' : ''?>">
                     <a href="<?php echo BASE_URL;?>Ciudades">
                         <i class="pe-7s-id"></i>
                         <p>Tablas Auxiliares</p>

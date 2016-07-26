@@ -2,6 +2,10 @@
     require_once("Core/Session.php");
     require_once 'Models/CargoModel.php';
     
+    if ($_SESSION['TipoUsuario']==0){
+        header('Location:'.BASE_URL.'Home');       
+    }
+    
     class CargosController{
         
         private $model;

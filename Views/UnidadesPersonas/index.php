@@ -13,7 +13,7 @@
                             </div>
                             <div class="col-md-4">
                                 <select class="form-control" name="Tablas" id="Tablas" onchange="location=this.value;">
-                                    <option value="<?php echo BASE_URL;?>Responsables" <?php if (isset($this->auxTable) && $this->auxTable=="Responsables") echo 'selected'; ?>>Asignar Responsables</option>
+                                    <option class="<?php echo isset($_SESSION['Unidad_Id']) ? 'hide' : '' ?>" value="<?php echo BASE_URL;?>Responsables" <?php if (isset($this->auxTable) && $this->auxTable=="Responsables") echo 'selected'; ?>>Asignar Responsables</option>
                                     <option value="<?php echo BASE_URL;?>UnidadesPersonas" <?php if (isset($this->auxTable) && $this->auxTable=="UnidadesPersonas") echo 'selected'; ?>>Asignar Personal a Unidades</option>
                                 </select>         
                             </div>
@@ -27,9 +27,21 @@
                                             <div class="form-group">
                                                 <label>Unidad Productiva</label>
                                                 <select name="Unidad" class="form-control">
+                                                    <!--
                                                     <?php foreach($this->model->getUnidadesProductivas() as $r): ?>
                                                         <option <?php echo ($unidadPersona->Unidad_Id==$r->Id) ? 'selected' : '' ?> value="<?php echo $r->Id?>" ><?php echo $r->Nombre;?></option>
                                                     <?php endforeach; ?>
+                                                    -->
+                                                    <?php
+                                                        if (isset($_SESSION['Unidad_Id'])) {
+                                                            echo "<option selected value='".$_SESSION['Unidad_Id']."'>".$_SESSION['UnidadNombre']."</option>";
+                                                        } else { ?>
+                                                            <?php foreach($this->model->getUnidadesProductivas() as $r): ?>
+                                                                <option <?php echo ($unidadPersona->Unidad_Id==$r->Id) ? 'selected' : '' ?> value="<?php echo $r->Id?>" ><?php echo $r->Nombre;?></option>
+                                                            <?php endforeach; ?>
+                                                    <?php
+                                                        }
+                                                    ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -81,7 +93,7 @@
                                     <th>Cargo</th>
                                 </thead>
                                 <tbody id="target-content">
-                                    <?php foreach($this->model->Listar($startFrom) as $r): ?>
+                                    <?php foreach((isset($_SESSION['Unidad_Id']) ? $this->model->getUnidadesPersonasByUnidadId($_SESSION['Unidad_Id'], $startFrom) : $this->model->Listar($startFrom)) as $r): ?>                                    
                                         <tr>
                                             <td><?php echo $r->Id; ?></td>
                                             <td><?php echo $this->model->getUnidadById($r->Unidad_Id); ?></td>

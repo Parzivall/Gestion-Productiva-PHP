@@ -42,7 +42,13 @@
 
 		public function getTotalRecords(){
 			try {
-				$stm = $this->pdo->prepare("SELECT * FROM Unidades_Personas");
+				if (isset($_SESSION['Unidad_Id'])){
+					$stm = $this->pdo->prepare("SELECT * FROM Unidades_Personas WHERE Unidad_Id=:unidad_id");
+					$stm->bindparam(":unidad_id", ($_SESSION['Unidad_Id']));	
+				}
+				else{
+					$stm = $this->pdo->prepare("SELECT * FROM Unidades_Personas");	
+				}
 				$stm->execute();
 				return $stm->rowCount();
 				
@@ -50,6 +56,26 @@
 				die($e->getMessage());
 			}
 		}
+
+		public function getUnidadesPersonasByUnidadId($unidad_Id, $startFrom){
+			try
+			{
+				$limit = resultsPerPage;
+				$start = $startFrom;
+				$stmt = $this->pdo->prepare("SELECT * FROM Unidades_Personas WHERE Unidad_Id=:unidad_id LIMIT :startFrom,:resultsPerPage");
+				$stmt->bindparam(":unidad_id", $unidad_Id);
+				$stmt->bindValue(":startFrom", (int)$start, PDO::PARAM_INT);
+				$stmt->bindValue(":resultsPerPage", (int)$limit, PDO::PARAM_INT);
+				$stmt->execute();
+				return $stmt->fetchAll(PDO::FETCH_OBJ);
+
+			}
+			catch(Exception $e)
+			{
+				die($e->getMessage());
+			}
+		}
+
 
 		public function Obtener($Id)
 		{

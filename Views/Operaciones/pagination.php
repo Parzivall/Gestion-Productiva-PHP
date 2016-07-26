@@ -1,4 +1,4 @@
-<?php foreach($this->model->Listar($startFrom) as $r): ?>
+<?php foreach((isset($_SESSION['Unidad_Id']) ? $this->model->getOperacionesByUnidadId($_SESSION['Unidad_Id'], $startFrom) : $this->model->Listar($startFrom)) as $r): ?>
     <tr>
         <td><?php echo $r->Tipo==1 ? "Ingreso" : "Egreso" ; ?></td>
         <td><?php echo "S/.".$r->Monto; ?></td>

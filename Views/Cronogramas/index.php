@@ -19,9 +19,21 @@
                                             <div class="form-group">
                                                 <label>Unidad Productiva</label>
                                                 <select name="Unidad" class="form-control">
+                                                    <!--
                                                     <?php foreach($this->model->getUnidadesProductivas() as $r): ?>
                                                         <option <?php echo ($cronograma->Unidad_Id==$r->Id) ? 'selected' : '' ?> value="<?php echo $r->Id?>" ><?php echo $r->Nombre;?></option>
                                                     <?php endforeach; ?>
+                                                    -->
+                                                    <?php
+                                                        if (isset($_SESSION['Unidad_Id'])) {
+                                                            echo "<option selected value='".$_SESSION['Unidad_Id']."'>".$_SESSION['UnidadNombre']."</option>";
+                                                        } else { ?>
+                                                            <?php foreach($this->model->getUnidadesProductivas() as $r): ?>
+                                                                <option <?php echo ($cronograma->Unidad_Id==$r->Id) ? 'selected' : '' ?> value="<?php echo $r->Id?>" ><?php echo $r->Nombre;?></option>
+                                                            <?php endforeach; ?>
+                                                    <?php
+                                                        }
+                                                    ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -80,7 +92,7 @@
                                     <th>FechaFin</th>
                                 </thead>
                                 <tbody id="target-content">
-                                    <?php foreach($this->model->Listar($startFrom) as $r): ?>
+                                    <?php foreach((isset($_SESSION['Unidad_Id']) ? $this->model->getCronogramasByUnidadId($_SESSION['Unidad_Id'], $startFrom) : $this->model->Listar($startFrom)) as $r): ?>
                                         <tr>
                                             <td><?php echo $this->model->getUnidadById($r->Unidad_Id); ?></td>
                                             <td><?php echo $r->Descripcion ?></td>

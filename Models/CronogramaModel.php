@@ -44,11 +44,36 @@
 
 		public function getTotalRecords(){
 			try {
-				$stm = $this->pdo->prepare("SELECT * FROM Cronogramas");
+				if (isset($_SESSION['Unidad_Id'])){
+					$stm = $this->pdo->prepare("SELECT * FROM Cronogramas WHERE Unidad_Id=:unidad_id");
+					$stm->bindparam(":unidad_id", ($_SESSION['Unidad_Id']));	
+				}
+				else{
+					$stm = $this->pdo->prepare("SELECT * FROM Cronogramas");	
+				}
 				$stm->execute();
 				return $stm->rowCount();
 				
 			} catch (Exception $e) {
+				die($e->getMessage());
+			}
+		}
+
+		public function getCronogramasByUnidadId($unidad_Id, $startFrom){
+			try
+			{
+				$limit = resultsPerPage;
+				$start = $startFrom;
+				$stmt = $this->pdo->prepare("SELECT * FROM Cronogramas WHERE Unidad_Id=:unidad_id ORDER BY FechaFin DESC LIMIT :startFrom,:resultsPerPage");
+				$stmt->bindparam(":unidad_id", $unidad_Id);
+				$stmt->bindValue(":startFrom", (int)$start, PDO::PARAM_INT);
+				$stmt->bindValue(":resultsPerPage", (int)$limit, PDO::PARAM_INT);
+				$stmt->execute();
+				return $stmt->fetchAll(PDO::FETCH_OBJ);
+
+			}
+			catch(Exception $e)
+			{
 				die($e->getMessage());
 			}
 		}
@@ -150,7 +175,15 @@
 		public function getCronogramasFechaLimite(){
 			try
 			{
-				$stmt = $this->pdo->prepare("SELECT cro.Descripcion, upro.Nombre FROM Cronogramas cro, UnidadesProductivas upro WHERE cro.Unidad_Id = upro.Id and FechaFin=CURDATE() and Cumplido=false");
+				if (isset($_SESSION['Unidad_Id'])){
+					$stmt = $this->pdo->prepare("SELECT cro.Descripcion, upro.Nombre FROM Cronogramas cro, UnidadesProductivas upro WHERE cro.Unidad_Id = upro.Id and FechaFin=CURDATE() and Cumplido=false and cro.Unidad_Id=:unidad_id");
+
+					$stmt->bindparam(":unidad_id", ($_SESSION['Unidad_Id']));	
+				}
+				else{
+					$stmt = $this->pdo->prepare("SELECT cro.Descripcion, upro.Nombre FROM Cronogramas cro, UnidadesProductivas upro WHERE cro.Unidad_Id = upro.Id and FechaFin=CURDATE() and Cumplido=false");
+
+				}
 				$stmt->execute();
 				return $stmt->fetchAll();
 			}
