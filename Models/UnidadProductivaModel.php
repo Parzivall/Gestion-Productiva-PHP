@@ -135,6 +135,7 @@
 
 		public function Eliminar($Id)
 		{
+			//Faltar eliminar recursivamente las fks
 			try 
 			{
 				$stm = $this->pdo

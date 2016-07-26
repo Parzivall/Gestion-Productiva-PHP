@@ -65,6 +65,52 @@ class Persona
 		}
 	}
 
+	public function dniExists($dni){
+		try 
+			{
+				$stmt = $this->pdo->prepare("SELECT * FROM Personas where Dni=:dni");
+				$stmt->bindparam(":dni", $dni);
+				$stmt->execute();
+				//$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+				//printf($userRow['Username']);
+				//printf($usuario->Password);
+				//printf($userRow['Password']);
+				if($stmt->rowCount() > 0){
+					return true;
+				}
+				else{
+					return false;
+				}
+			} 
+			catch (Exception $e) 
+			{
+				die($e->getMessage());
+			}
+	}
+
+	public function userExists($username){
+		try 
+			{
+				$stmt = $this->pdo->prepare("SELECT * FROM Personas where Username=:username");
+				$stmt->bindparam(":username", $username);
+				$stmt->execute();
+				//$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+				//printf($userRow['Username']);
+				//printf($usuario->Password);
+				//printf($userRow['Password']);
+				if($stmt->rowCount() > 0){
+					return true;
+				}
+				else{
+					return false;
+				}
+			} 
+			catch (Exception $e) 
+			{
+				die($e->getMessage());
+			}
+	}
+
 	public function getTotalRecords(){
 		try {
 			$stm = $this->pdo->prepare("SELECT * FROM Personas");

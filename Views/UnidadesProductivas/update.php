@@ -45,13 +45,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <input type="hidden" name="Id" value="<?php echo $unidad->Id; ?>" />
-                                        <label>Nombre</label>
+                                        <label class="text-danger">Nombre (*)</label>
                                         <input type="text" required maxlength="100" class="form-control" placeholder="Nombre" name="Nombre" value="<?php echo $unidad->Nombre; ?>">
                                     </div>
                                 </div>    
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Rubro</label>
+                                        <label class="text-danger">Rubro (*)</label>
                                         <select name="Rubro" class="form-control">
                                             <?php foreach($this->model->getRubros() as $r): ?>
                                                 <option <?php echo ($unidad->Rubro_Id==$r->Id) ? 'selected' : '' ?> value="<?php echo $r->Id?>" ><?php echo $r->Descripcion;?></option>
@@ -104,7 +104,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Ciudad</label>
+                                        <label class="text-danger">Ciudad (*)</label>
                                         <select name="Ciudad" class="form-control">
                                             <?php foreach($this->model->getCiudades() as $r): ?>
                                                 <option <?php echo ($unidad->Ciudad_Id==$r->Id) ? 'selected' : '' ?> value="<?php echo $r->Id?>" ><?php echo $r->Nombre;?></option>
@@ -116,10 +116,10 @@
                             <div class="row">
                                 <div class="col-md-2"></div>
                                 <div class="col-md-2">
-                                    <label>Organigrama</label>                                  
+                                    <label class="text-danger">Organigrama (*)</label>                                  
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="file" name="Organigrama" Id="fileImage" onchange="readURL(this);" />
+                                    <input type="file" required accept="image/*" name="Organigrama" Id="fileImage" onchange="readURL(this);" />
                                 </div>
                             </div>
                             <div class="row">
@@ -136,3 +136,7 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    
+</script>

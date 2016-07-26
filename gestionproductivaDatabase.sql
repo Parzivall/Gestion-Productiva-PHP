@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-07-2016 a las 09:37:45
+-- Tiempo de generación: 22-07-2016 a las 11:11:07
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.21
 
@@ -281,7 +281,8 @@ CREATE TABLE `cronogramas` (
 --
 
 INSERT INTO `cronogramas` (`Id`, `Cumplido`, `Descripcion`, `FechaInicio`, `FechaFin`, `Unidad_Id`) VALUES
-(2, 1, 'Venta de Gaseosas por Vencer', '2016-07-22', '2016-08-05', 16);
+(2, 1, 'Venta de Gaseosas por Vencer', '2016-07-22', '2016-08-05', 16),
+(4, 0, 'Venta de Pan', '2016-07-20', '2016-07-22', 1);
 
 -- --------------------------------------------------------
 
@@ -346,7 +347,8 @@ INSERT INTO `detalles` (`Id`, `Descripcion`, `Monto`) VALUES
 (69, 'kjlksadj', 1000),
 (70, 'Melgar vs Cristal', 200000),
 (71, 'Olimpiadas', 10000),
-(72, 'OTROS', 46793);
+(72, 'OTROS', 46793),
+(73, 'Melgar vs Garcilaso', 100001);
 
 -- --------------------------------------------------------
 
@@ -359,6 +361,13 @@ CREATE TABLE `detalle_operacion` (
   `Operacion_Id` int(11) NOT NULL,
   `Detalle_Id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `detalle_operacion`
+--
+
+INSERT INTO `detalle_operacion` (`Id`, `Operacion_Id`, `Detalle_Id`) VALUES
+(1, 44, 73);
 
 -- --------------------------------------------------------
 
@@ -388,7 +397,7 @@ INSERT INTO `operaciones` (`Id`, `Tipo`, `Monto`, `Unidad_Id`, `Fecha`) VALUES
 (38, 1, 8009, 1, '2016-07-21'),
 (39, 1, 8000, 11, '2016-07-21'),
 (41, 1, 17888, 11, '2016-07-29'),
-(44, 1, 6000000, 14, '2016-10-08');
+(44, 1, 500000, 14, '2016-10-08');
 
 -- --------------------------------------------------------
 
@@ -419,10 +428,10 @@ CREATE TABLE `personas` (
 
 INSERT INTO `personas` (`Dni`, `Username`, `Password`, `Nombres`, `Apellidos`, `Direccion`, `Telefono`, `Email`, `Web`, `Nacimiento`, `Genero`, `UltimaConexion`, `Foto`, `Informacion`) VALUES
 ('1', 'admin', '$2y$10$5Hh9VUKl5hrdRT1/oNwix.XJ8pAzoW8f0HGu3dcnh4FOLt1oDxFfy', 'Administrador', 'UNSA', 'UNSA', 0, '', '', '1995-07-11', 1, '2016-07-12', NULL, ''),
-('400488647', 'Vestibulum', '$2y$10$5Hh9VUKl5hrdRT1/oNwix.XJ8pAzoW8f0HGu3dcnh4FOLt1oDxFfy', 'Caldwell', 'Christian', 'P.O. Box 611, 8156 Non Ave', 287395, 'Integer@dapibusligulaAliquam.co.uk', 'augue.id.ante@ametnullaDonec.org', '0000-00-00', 1, NULL, NULL, NULL),
+('400488647', 'jairfhc', '$2y$10$5Hh9VUKl5hrdRT1/oNwix.XJ8pAzoW8f0HGu3dcnh4FOLt1oDxFfy', 'Caldwell', 'Christian', 'P.O. Box 611, 8156 Non Ave', 287395, 'Integer@dapibusligulaAliquam.co.uk', '', '1995-07-22', 1, NULL, NULL, ''),
 ('400516056', 'hendrerit', '$2y$10$5Hh9VUKl5hrdRT1/oNwix.XJ8pAzoW8f0HGu3dcnh4FOLt1oDxFfy', 'Shafira', 'Daniel', '2448 Consequat, Street', 291952, 'sit.amet@nequeMorbiquis.edu', 'Etiam.bibendum@ut.co.uk', '0000-00-00', 1, NULL, NULL, NULL),
 ('400717673', 'dolor', '$2y$10$5Hh9VUKl5hrdRT1/oNwix.XJ8pAzoW8f0HGu3dcnh4FOLt1oDxFfy', 'Tatum', 'Ross', 'Ap #199-7266 Vulputate Ave', 261826, 'tincidunt.pede.ac@elitelitfermentum.ca', 'non.justo.Proin@tinciduntaliquam.ca', '0000-00-00', 2, NULL, NULL, NULL),
-('71498374', 'administrador', '$2y$10$wU0y/O3wFCh5wnN42.Kp2.Y4XR2JqkFfFHA/bF/ddrMCOJLhGLJFK', 'Jair Francesco', 'Huaman Canqui', 'Alto Selva Alegre', 959003224, 'jairfrancesco@gmail.com', '', '1995-07-11', 1, '2016-07-07', NULL, 'Ciencia de la Computación\r\nUniversidad Nacional de San Agustin'),
+('71498374', 'administrador', '$2y$10$wU0y/O3wFCh5wnN42.Kp2.Y4XR2JqkFfFHA/bF/ddrMCOJLhGLJFK', 'Jair Francesco', 'Huaman Canqui', 'Alto Selva Alegre', 959003224, 'jairfrancesco@gmail.com', '', '1995-07-11', 1, '2016-07-07', NULL, 'Ciencia de la Computación\r\nUniversidad Nacional de San Agustin\r\nIntroducción al Internet - Semestre III'),
 ('716987104', 'inceptos', '$2y$10$5Hh9VUKl5hrdRT1/oNwix.XJ8pAzoW8f0HGu3dcnh4FOLt1oDxFfy', 'Cathleen', 'Sosa', '2071 Nulla. Road', 267314, 'mauris.rhoncus.id@magnaNamligula.ca', 'diam.Sed.diam@velsapienimperdiet.ca', '0000-00-00', 1, NULL, NULL, NULL),
 ('7891826', 'Administradora', '$2y$10$t3er9kitV2STlKMz3NIIuOigUyNGfJqP4O5fuJllMgPAcKaG7H.EK', 'Administradora', 'de Marketing', 'Cerro Colorado', 0, 'adminMarketing@gmail.com', '', '1990-08-12', 2, '2016-07-21', NULL, 'Jefa de MarketingS'),
 ('791066925', 'Duis', '$2y$10$5Hh9VUKl5hrdRT1/oNwix.XJ8pAzoW8f0HGu3dcnh4FOLt1oDxFfy', 'Derek', 'Fischer', 'Ap #355-768 Augue Street', 230209, 'ultrices.a@Sedauctorodio.ca', 'dui.semper@dolornonummyac.net', '0000-00-00', 1, NULL, NULL, NULL),
@@ -446,7 +455,8 @@ CREATE TABLE `responsables` (
 
 INSERT INTO `responsables` (`Id`, `Unidad_Id`, `Persona_Dni`) VALUES
 (2, 3, '7891826'),
-(3, 12, '71498374');
+(3, 12, '71498374'),
+(4, 14, '400516056');
 
 -- --------------------------------------------------------
 
@@ -640,7 +650,8 @@ CREATE TABLE `unidades_personas` (
 INSERT INTO `unidades_personas` (`Id`, `Persona_Dni`, `Unidad_Id`, `Cargo_Id`) VALUES
 (1, '1', 9, 2),
 (2, '71498374', 12, 3),
-(3, '7891826', 1, 8);
+(3, '7891826', 1, 8),
+(4, '400717673', 5, 11);
 
 --
 -- Índices para tablas volcadas
@@ -691,7 +702,8 @@ ALTER TABLE `operaciones`
 -- Indices de la tabla `personas`
 --
 ALTER TABLE `personas`
-  ADD PRIMARY KEY (`Dni`);
+  ADD PRIMARY KEY (`Dni`),
+  ADD UNIQUE KEY `Username` (`Username`);
 
 --
 -- Indices de la tabla `responsables`
@@ -742,17 +754,17 @@ ALTER TABLE `ciudades`
 -- AUTO_INCREMENT de la tabla `cronogramas`
 --
 ALTER TABLE `cronogramas`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `detalles`
 --
 ALTER TABLE `detalles`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 --
 -- AUTO_INCREMENT de la tabla `detalle_operacion`
 --
 ALTER TABLE `detalle_operacion`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `operaciones`
 --
@@ -762,7 +774,7 @@ ALTER TABLE `operaciones`
 -- AUTO_INCREMENT de la tabla `responsables`
 --
 ALTER TABLE `responsables`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `rubros`
 --
@@ -772,7 +784,7 @@ ALTER TABLE `rubros`
 -- AUTO_INCREMENT de la tabla `unidades_personas`
 --
 ALTER TABLE `unidades_personas`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- Restricciones para tablas volcadas
 --

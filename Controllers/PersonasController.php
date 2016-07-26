@@ -48,6 +48,10 @@ class PersonasController{
         $startFrom = ($page-1) * resultsPerPage;
         require_once 'Views/Personas/pagination.php';
     }
+
+    public function Verificar(){
+        require_once 'Views/Personas/check_availability.php';
+    }
     
     public function Guardar(){
         $persona = new Persona();

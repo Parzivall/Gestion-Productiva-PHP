@@ -50,7 +50,7 @@
 		{
 			try
 			{
-				$stmt = $this->pdo->prepare("SELECT Dni, Username, Password FROM Personas where Username=:username");
+				$stmt = $this->pdo->prepare("SELECT Dni, Username, Password, TipoUsuario FROM Personas where Username=:username");
 				$stmt->bindparam(":username", $usuario->Username);
 				$stmt->execute();
 				$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -62,11 +62,27 @@
 					if(password_verify($usuario->Password, $userRow['Password']))
 					{
 					//if ($usuario->Password == $userRow['Password']){
-						printf("login success");
+						if ($userRow['TipoUsuario'] == 0){
+							$stmtUnidad = $this->pdo->prepare("SELECT re.Unidad_Id, upro.Nombre FROM Responsables re, UnidadesProductivas upro where re.Persona_Dni=:personaDni and re.Unidad_Id = upro.Id");
+							$stmtUnidad->bindparam(":personaDni", $userRow['Dni']);
+							$stmtUnidad->execute();
+							$unidadRow=$stmtUnidad->fetch(PDO::FETCH_ASSOC);	
+							if  ($stmtUnidad->rowCount() > 0){
+								$_SESSION['Unidad_Id'] = $unidadRow['Unidad_Id'];
+								$_SESSION['UnidadNombre'] = $unidadRow['Nombre'];
+								$_SESSION['NoUnidad'] = "0";
+							}
+							else{
+								$_SESSION['NoUnidad'] = "1";
+								return false;
+							}
+						
+						}
 						$_SESSION['UserSession'] = $userRow['Username'];
 						$_SESSION['UserDni'] = $userRow['Dni'];
-						printf($_SESSION['UserSession']);
+						$_SESSION['TipoUsuario'] = $userRow['TipoUsuario'];
 						return true;
+	
 					}
 					else
 					{
@@ -102,6 +118,11 @@
 		{
 			session_destroy();
 			unset($_SESSION['UserSession']);
+			unset($_SESSION['UserDni']);
+			unset($_SESSION['TipoUsuario']);
+			unset($_SESSION['Unidad_Id']);
+			unset($_SESSION['UnidadNombre']);
+			unset($_SESSION['NoUnidad']);
 			return true;
 		}
 }

@@ -1,3 +1,4 @@
+
 <div class="content">
     <div class="container-fluid">
         <div class="row">
@@ -26,9 +27,11 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Dni</label>
-                                                <input required maxlength="20" type="text" name="Dni" class="form-control" <?php echo $persona->Dni!=null ? "disabled": "" ?> placeholder="Dni" value="<?php echo $persona->Dni; ?>"/>
+                                                <label class="text-danger">Dni (*)</label>
+                                                <input required maxlength="20" type="text" name="Dni" id="Dni" class="form-control" <?php echo $persona->Dni!=null ? "disabled": "" ?> placeholder="Dni" onBlur="checkDniAvailability()" value="<?php echo $persona->Dni; ?>"/>
                                                 <input type="hidden" name="DniUpdate" value="<?php echo $persona->Dni ? $persona->Dni : -1; ?>"/>
+                                                <span id="dni-availability-status"></span>
+                                                <p><img src="<?php echo BASE_URL;?>Assets/img/LoaderIcon.gif" id="loaderIcon" style="display:none" /></p>
                                             </div>
                                         </div>    
                                     </div>
@@ -36,7 +39,9 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Usuario</label>
-                                                <input type="text" maxlength="20" class="form-control" name="Username" placeholder="Nombre de Usuario" value="<?php echo $persona->Username;?>">
+                                                <input type="text" maxlength="20" class="form-control" name="Username" id="Username" onBlur="checkUserAvailability()" placeholder="Nombre de Usuario" value="<?php echo $persona->Username;?>">
+                                                <span id="user-availability-status"></span>
+                                                <p><img src="<?php echo BASE_URL;?>Assets/img/LoaderIcon.gif" id="loaderIcon" style="display:none" /></p>
                                             </div>    
                                         </div>
                                         <div class="col-md-6">
@@ -49,13 +54,13 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Nombres</label>
+                                                <label class="text-danger">Nombres (*)</label>
                                                 <input type="text" required maxlength="50" name="Nombres" class="form-control" placeholder="Nombres" value="<?php echo $persona->Nombres?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Apellidos</label>
+                                                <label class="text-danger">Apellidos (*)</label>
                                                 <input type="text" required maxlength="50" name="Apellidos" class="form-control" placeholder="Apellidos" value="<?php echo $persona->Apellidos;?>">
                                             </div>
                                         </div>
@@ -72,7 +77,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Fecha de Nacimiento</label>
+                                                <label class="text-danger">Fecha de Nacimiento (*)</label>
                                                 <input type="date" required class="form-control" name="Nacimiento" value="<?php echo $persona->Nacimiento?>">    
                                             </div>
                                         </div>
@@ -130,7 +135,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-info btn-fill pull-right">Guardar</button>
+                            <button type="submit" id="btnSubmit" class="btn btn-info btn-fill pull-right">Guardar</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>
@@ -139,3 +144,48 @@
         </div>
     </div>
 </div>
+
+
+<script>
+function checkDniAvailability() {
+    var base = "<?php echo BASE_URL;?>";
+    $("#loaderIcon").show();
+    jQuery.ajax({
+    url: base+"Personas/Verificar/",
+    data:'Dni='+$("#Dni").val(),
+    type: "POST",
+    success:function(data){
+        $("#dni-availability-status").html(data);
+        $("#loaderIcon").hide();
+        if($('#dni-availability-status span').hasClass('text-danger')){
+            $('#btnSubmit').prop('disabled', true);
+        }
+        else{
+            $('#btnSubmit').prop('disabled', false);   
+        }
+    },
+    error:function (){}
+    });
+}
+
+function checkUserAvailability() {
+    var base = "<?php echo BASE_URL;?>";
+    $("#loaderIcon").show();
+    jQuery.ajax({
+    url: base+"Personas/Verificar/",
+    data:'Username='+$("#Username").val(),
+    type: "POST",
+    success:function(data){
+        $("#user-availability-status").html(data);
+        $("#loaderIcon").hide();
+        if($('#user-availability-status span').hasClass('text-danger')){
+            $('#btnSubmit').prop('disabled', true);
+        }
+        else{
+            $('#btnSubmit').prop('disabled', false);   
+        }
+    },
+    error:function (){}
+    });
+}
+</script>

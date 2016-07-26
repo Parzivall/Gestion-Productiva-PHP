@@ -100,3 +100,9 @@
 /* add padding  */
 .left-addon input  { padding-left:  30px; }
 .right-addon input { padding-right: 30px; }
+
+
+#frmCheckUsername {border-top:#F0F0F0 2px solid;background:#FAF8F8;padding:10px;}
+.demoInputBox{padding:7px; border:#F0F0F0 1px solid; border-radius:4px;}
+.status-available{color:#2FC332;}
+.status-not-available{color:#D60202;}

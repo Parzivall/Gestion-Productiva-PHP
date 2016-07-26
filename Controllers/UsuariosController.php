@@ -31,8 +31,13 @@
         }
 
         public function Error(){
-            $error= "Usuario o Contraseña incorrectos";
-            require_once 'views/Usuarios/login.php';
+            if (isset($_SESSION['NoUnidad']) && $_SESSION['NoUnidad']=="1"){
+                $error ="El Usuario no tiene asignada una Unidad Productiva para Administrar";
+            }
+            else{
+                $error= "Usuario o Contraseña incorrectos";
+            }          
+            require_once 'views/Usuarios/login.php';    
         }
 
         public function Index(){
