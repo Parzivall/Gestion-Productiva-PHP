@@ -1,3 +1,21 @@
+<script type="text/javascript">
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#Foto')
+                    .attr('src', e.target.result);
+                    //.width(400)
+                    //.height(350);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }    
+    
+</script>
+
 <?php
     //Almacenar el Usuario temporal para saltar la verificación en caso el usuario sea el mismo
     if ($persona->Dni!=null){
@@ -98,27 +116,25 @@
                                     </div>
                                 </div>
                                 <br>
-                                <div class="col-md-4">
-                                    <div class="card card-user">
-                                        <div class="text-center">
+                                <div class="col-md-4" style="padding-left: 0px;  padding-right: 0px; padding-bottom: 0px; padding-top:0px;">
+                                    <div class="card card-user text-center">
                                             <label>Foto</label>    
                                             <br>
-                                            <img class="img-rounded" alt="..." src="<?php echo BASE_URL;?>Assets/img/default-avatar.png">
+                                            <img  class="img-responsive center-block" src="<?php echo $persona->Dni!=null ? 'data:image;base64,'.$persona->Foto : BASE_URL.'Assets/img/default-avatar.png'?>" id="Foto">
+
+                                            <!--<img class="img-rounded" alt="..." src="<?php echo BASE_URL;?>Assets/img/default-avatar.png">-->
                                             <br>
                                             <div class="fileUpload btn btn-info">
                                                 <span>Subir Foto</span>
                                                 <input type="file" class="upload" name="Foto">
+                                                <input type="file" class="upload" accept="image/*" name="Foto" Id="fileImage" onchange="readURL(this);" />
                                             </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-
-
                             <!--
                             added fields according to documents received
                             -->
-
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -153,6 +169,39 @@
                                     </div>                                            
                                 </div>    
                             </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Fecha de Ingreso</label>
+                                        <input type="date" class="form-control" name="FechaIngreso" placeholder="Fecha de Ingreso" value="<?php echo $persona->Fecha_Ingreso;?>">
+                                    </div>
+                                </div>
+                                <!--
+                                ACTIVO O SUBSIDIADO
+                                BAJA
+                                SUSPENSIÓN PERFECTA
+                                SIN VÍNCULO LABORAL CON CONCEPTOS PENDIENTE DE LIQUIDAR                                
+                                -->
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Condición Laboral</label>
+                                        <select class="form-control" name="CondicionLaboral">
+                                            <option value="1" <?php if ($persona->Condicion_Laboral==1) echo 'selected'; ?>>ACTIVO O SUBSIDIADO</option>
+                                            <option value="2" <?php if ($persona->Condicion_Laboral==2) echo 'selected'; ?>>BAJA</option>
+                                            <option value="3" <?php if ($persona->Condicion_Laboral==3) echo 'selected'; ?>>SUSPENSIÓN PERFECTA</option>
+                                            <option value="4" <?php if ($persona->Condicion_Laboral==4) echo 'selected'; ?>>SIN VÍNCULO LABORAL CON CONCEPTOS PENDIENTE DE LIQUIDAR</option>
+                                        </select>    
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Especialidad</label>
+                                        <input type="text" maxlength="100" class="form-control" name="Especialidad" value="<?php echo $persona->Especialidad;?>" placeholder="Especialidad">
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">

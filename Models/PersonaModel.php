@@ -171,11 +171,11 @@ class Persona
                         $persona->Genero,
                         $persona->Foto,
                         $persona->Informacion,
-                        $Persona->Fecha_Ingreso,
-                        $Persona->Condicion_Laboral,
-                        $Persona->Especialidad,
-                        $Persona->Cargo_Id,
-                        $Persona->Unidad_Id,
+                        $persona->Fecha_Ingreso,
+                        $persona->Condicion_Laboral,
+                        $persona->Especialidad,
+                        $persona->Cargo_Id,
+                        $persona->Unidad_Id,
                         $persona->Dni
 
 					)
@@ -212,11 +212,11 @@ class Persona
 	                    date('Y-m-d'),
 	                    $persona->Foto,
 	                    $persona->Informacion,
-	                    $Persona->Fecha_Ingreso,
-	                    $Persona->Condicion_Laboral,
-	                    $Persona->Especialidad,
-	                    $Persona->Cargo_Id,
-	                    $Persona->Unidad_Id
+	                    $persona->Fecha_Ingreso,
+	                    $persona->Condicion_Laboral,
+	                    $persona->Especialidad,
+	                    $persona->Cargo_Id,
+	                    $persona->Unidad_Id
 	                )
 				);
 		} catch (Exception $e) 

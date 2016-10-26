@@ -17,7 +17,7 @@
 </script>
 
 <?php
-    //Almacenar el Nombre temporal para saltar la verificación en caso el usuario sea el mismo
+    //Almacenar el Nombre temporal para saltar la verificación en caso el nombre de unidad sea el mismo
     if ($unidad->Id!=null){
         $tmpName = $unidad->Nombre;    
     }

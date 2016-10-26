@@ -55,6 +55,19 @@ class PersonasController{
     
     public function Guardar(){
         $persona = new Persona();
+
+        if($_FILES["Foto"]["error"] == 4) {
+            //means there is no file uploaded
+        }
+        else{
+            if (getimagesize($_FILES['Foto']['tmp_name'])!=FALSE){
+                $foto= addslashes($_FILES['Foto']['tmp_name']);
+                $name= addslashes($_FILES['Foto']['name']);
+                $foto= file_get_contents($foto);
+                $foto= base64_encode($foto);
+                $persona->Foto = $foto;    
+            }    
+        }
         
         $DniUpdate = $_REQUEST['DniUpdate'];
         $persona->Dni = $_REQUEST['Dni'];
@@ -67,9 +80,13 @@ class PersonasController{
         $persona->Email = $_REQUEST['Email'];
         $persona->Web = $_REQUEST['Web'];
         $persona->Nacimiento = $_REQUEST['Nacimiento'];
-        $persona->Genero = $_REQUEST['Genero'];
-        //$persona->Foto = $_REQUEST['Foto'];
+        $persona->Genero = $_REQUEST['Genero'];        
         $persona->Informacion = $_REQUEST['Informacion'];
+        $persona->Fecha_Ingreso = $_REQUEST['FechaIngreso'];
+        $persona->Condicion_Laboral = $_REQUEST['CondicionLaboral'];
+        $persona->Especialidad = $_REQUEST['Especialidad'];
+        $persona->Cargo_Id = $_REQUEST['Cargo'];
+        $persona->Unidad_Id = $_REQUEST['Unidad'];
 
         if ($DniUpdate!="-1"){
             $persona->Dni = $_REQUEST['DniUpdate'];
