@@ -85,6 +85,16 @@
             $unidad->Ubicacion = $_REQUEST['Ubicacion'];
             $unidad->Ciudad_Id = $_REQUEST['Ciudad'];
 
+            if ($_REQUEST['Responsable'] === '') {
+                $unidad->Persona_Dni = null; // or 'NULL' for SQL
+            }
+            else
+            {
+                $unidad->Persona_Dni = $_REQUEST['Responsable'];    
+            }
+
+            
+
             $unidad->Id > 0 
                 ? $this->model->Actualizar($unidad)
                 : $this->model->Registrar($unidad);

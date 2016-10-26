@@ -15,6 +15,7 @@
 	    public $Ubicacion;
 	    public $Ciudad_Id;
 	    public $Organigrama;
+	    public $Persona_Dni;
 
 		public function __construct()
 		{
@@ -141,6 +142,21 @@
 				die($e->getMessage());
 			}
 		}
+
+		public function getPersonas(){
+			try
+			{
+				$stmt = $this->pdo->prepare("SELECT * FROM Personas ORDER BY Nombres ASC");
+				$stmt->execute();
+				return $stmt->fetchAll(PDO::FETCH_OBJ);
+
+			}
+			catch(Exception $e)
+			{
+				die($e->getMessage());
+			}
+		}
+
 		public function getTotalRecords(){
 			try {
 				$stm = $this->pdo->prepare("SELECT * FROM UnidadesProductivas");
@@ -182,7 +198,8 @@
 							Celular 		= ?, 
 							Ubicacion 		= ?, 
 							Ciudad_Id 		= ?,
-							Organigrama = ?
+							Organigrama		= ?,
+							Persona_Dni		= ?
 					    WHERE Id = ?";
 
 					$this->pdo->prepare($sql)
@@ -198,6 +215,7 @@
 	                        $unidadProductiva->Ubicacion,
 	                        $unidadProductiva->Ciudad_Id,
 	                        $unidadProductiva->Organigrama,
+	                        $unidadProductiva->Persona_Dni,
 	                        $unidadProductiva->Id
 						)
 					);
@@ -212,7 +230,8 @@
 							Fax 			= ?, 
 							Celular 		= ?, 
 							Ubicacion 		= ?, 
-							Ciudad_Id 		= ?
+							Ciudad_Id 		= ?,
+							Persona_Dni = ?
 					    WHERE Id = ?";
 
 					$this->pdo->prepare($sql)
@@ -227,6 +246,7 @@
 	                        $unidadProductiva->Celular,
 	                        $unidadProductiva->Ubicacion,
 	                        $unidadProductiva->Ciudad_Id,
+	                        $unidadProductiva->Persona_Dni,
 	                        $unidadProductiva->Id
 						)
 					);	
@@ -244,8 +264,8 @@
 		{
 			try 
 			{
-			$sql = "INSERT INTO UnidadesProductivas (Nombre,Rubro_Id,Web,Telefono,Telefono_Anexo,Fax,Celular,Ubicacion, Ciudad_Id, Organigrama) 
-			        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			$sql = "INSERT INTO UnidadesProductivas (Nombre,Rubro_Id,Web,Telefono,Telefono_Anexo,Fax,Celular,Ubicacion, Ciudad_Id, Organigrama, Persona_Dni) 
+			        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			$this->pdo->prepare($sql)
 			     ->execute(
@@ -259,7 +279,8 @@
 	                    $unidadProductiva->Celular,
 	                    $unidadProductiva->Ubicacion,
 	                    $unidadProductiva->Ciudad_Id,
-	                    $unidadProductiva->Organigrama
+	                    $unidadProductiva->Organigrama,
+	                    $unidadProductiva->Persona_Dni
 	                )
 				);
 			} catch (Exception $e) 

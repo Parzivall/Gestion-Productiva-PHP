@@ -74,47 +74,33 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Telefono</label>
                                         <input type="number" class="form-control" name="Telefono" placeholder="Telefono" value="<?php echo $unidad->Telefono;?>">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Telefono:Anexo</label>
                                         <input type="number" class="form-control" name="Telefono_Anexo" value="<?php echo $unidad->Telefono_Anexo;?>" placeholder="Anexo del Telefono">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Web</label>
-                                        <input type="text" class="form-control" name="Web" placeholder="Web" value="<?php echo $unidad->Web;?>">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Fax:</label>
-                                        <input type="text" maxlength="20" class="form-control" name="Fax" value="<?php echo $unidad->Fax;?>" placeholder="Fax">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Celular:</label>
                                         <input type="number" class="form-control" name="Celular" value="<?php echo $unidad->Celular;?>" placeholder="Celular">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Ubicacion:</label>
                                         <input type="text" maxlength="100" class="form-control" name="Ubicacion" value="<?php echo $unidad->Ubicacion;?>" placeholder="Ubicacion">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="text-danger">Ciudad (*)</label>
                                         <select name="Ciudad" class="form-control">
@@ -125,6 +111,32 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Responsable de la Unidad</label>
+                                        <select name="Responsable" class="form-control">
+                                            <option selected value> -- Seleccione un Responsable -- </option>
+                                            <?php foreach($this->model->getPersonas() as $r): ?>
+                                                <option <?php echo ($unidad->Persona_Dni==$r->Dni) ? 'selected' : '' ?> value="<?php echo $r->Dni;?>"><?php echo $r->Nombres.' '.$r->Apellidos;?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>                                            
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Web</label>
+                                        <input type="text" class="form-control" name="Web" placeholder="Web" value="<?php echo $unidad->Web;?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Fax:</label>
+                                        <input type="text" maxlength="20" class="form-control" name="Fax" value="<?php echo $unidad->Fax;?>" placeholder="Fax">
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <div class="row">
                                 <div class="col-md-2"></div>
                                 <div class="col-md-2">

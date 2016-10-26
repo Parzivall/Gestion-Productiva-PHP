@@ -120,7 +120,7 @@
                                     <div class="card card-user text-center">
                                             <label>Foto</label>    
                                             <br>
-                                            <img  class="img-responsive center-block" src="<?php echo $persona->Dni!=null ? 'data:image;base64,'.$persona->Foto : BASE_URL.'Assets/img/default-avatar.png'?>" id="Foto">
+                                            <img  class="img-responsive center-block" src="<?php echo $persona->Foto!=null ? 'data:image;base64,'.$persona->Foto : BASE_URL.'Assets/img/default-avatar.png'?>" id="Foto">
 
                                             <!--<img class="img-rounded" alt="..." src="<?php echo BASE_URL;?>Assets/img/default-avatar.png">-->
                                             <br>

@@ -136,7 +136,8 @@ class Persona
 	{
 		try 
 		{
-			$sql = "UPDATE Personas SET 
+			if ($persona->Foto!=null){
+				$sql = "UPDATE Personas SET 
 						Username          = ?, 
 						Password = ?,
 						Nombres        = ?,
@@ -156,30 +157,75 @@ class Persona
 						Unidad_Id = ?
 				    WHERE Dni = ?";
 
-			$this->pdo->prepare($sql)
-			     ->execute(
-				    array(
-                        $persona->Username, 
-                        $persona->Password,
-                        $persona->Nombres,
-                        $persona->Apellidos,
-                        $persona->Direccion,
-                        $persona->Telefono,
-                        $persona->Email,
-                        $persona->Web,
-                        $persona->Nacimiento,
-                        $persona->Genero,
-                        $persona->Foto,
-                        $persona->Informacion,
-                        $persona->Fecha_Ingreso,
-                        $persona->Condicion_Laboral,
-                        $persona->Especialidad,
-                        $persona->Cargo_Id,
-                        $persona->Unidad_Id,
-                        $persona->Dni
+				$this->pdo->prepare($sql)
+				     ->execute(
+					    array(
+	                        $persona->Username, 
+	                        $persona->Password,
+	                        $persona->Nombres,
+	                        $persona->Apellidos,
+	                        $persona->Direccion,
+	                        $persona->Telefono,
+	                        $persona->Email,
+	                        $persona->Web,
+	                        $persona->Nacimiento,
+	                        $persona->Genero,
+	                        $persona->Foto,
+	                        $persona->Informacion,
+	                        $persona->Fecha_Ingreso,
+	                        $persona->Condicion_Laboral,
+	                        $persona->Especialidad,
+	                        $persona->Cargo_Id,
+	                        $persona->Unidad_Id,
+	                        $persona->Dni
+						)
+					);
+			} else {
+				$sql = "UPDATE Personas SET 
+						Username          = ?, 
+						Password = ?,
+						Nombres        = ?,
+                        Apellidos       = ?,
+						Direccion            = ?, 
+						Telefono = ?,
+						Email = ?,
+						Web = ?,
+						Nacimiento = ?,
+						Genero=?,
+						Informacion=?,
+						Fecha_Ingreso = ?,
+						Condicion_Laboral = ?,
+						Especialidad = ?,
+						Cargo_Id = ?,
+						Unidad_Id = ?
+				    WHERE Dni = ?";
 
-					)
-				);
+				$this->pdo->prepare($sql)
+				     ->execute(
+					    array(
+	                        $persona->Username, 
+	                        $persona->Password,
+	                        $persona->Nombres,
+	                        $persona->Apellidos,
+	                        $persona->Direccion,
+	                        $persona->Telefono,
+	                        $persona->Email,
+	                        $persona->Web,
+	                        $persona->Nacimiento,
+	                        $persona->Genero,
+	                        $persona->Informacion,
+	                        $persona->Fecha_Ingreso,
+	                        $persona->Condicion_Laboral,
+	                        $persona->Especialidad,
+	                        $persona->Cargo_Id,
+	                        $persona->Unidad_Id,
+	                        $persona->Dni
+						)
+					);
+
+			}
+
+			
 		} catch (Exception $e) 
 		{
 			die($e->getMessage());
