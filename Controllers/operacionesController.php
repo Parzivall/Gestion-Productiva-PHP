@@ -1,20 +1,17 @@
 <?php
     require_once("Core/Session.php");
     require_once 'Models/OperacionModel.php';
-    require_once 'Models/DetalleModel.php';
     require_once 'Models/DetalleOperacionModel.php';
     
     class OperacionesController{
         
         private $model;
         private $operacion;
-        private $modelDetalle;
         private $modelDetalleOperacion;
         private $detallesTemporales;
 
         public function __construct(){
             $this->model = new Operacion();
-            $this->modelDetalle = new Detalle();
             $this->modelDetalleOperacion = new DetalleOperacion();
         }
         

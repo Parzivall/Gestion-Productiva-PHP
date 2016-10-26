@@ -28,12 +28,14 @@
                         <p>Personal</p>
                     </a>
                 </li>
+                <!--
                 <li class="<?php echo (isset($responsable) || isset($unidadPersona)) ? 'active' : ''?>">
                     <a href="<?php echo BASE_URL;?>UnidadesPersonas">
                         <i class="pe-7s-add-user"></i>
                         <p>Asignaciones</p>
                     </a>
                 </li>
+                -->
                 <li class="<?php echo isset($directorio) ? 'active' : ''?>">
                     <a href="<?php echo BASE_URL;?>Directorio">
                         <i class="pe-7s-note2"></i>

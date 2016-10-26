@@ -8,7 +8,7 @@
                     <div class="content">
                         <div class="row">
                             <div class="col-md-4"></div>
-                            <div class="col-md-1"><img class="img-responsive" src="<?php echo BASE_URL;?>Assets/Img/Directorio.png"></div>
+                            <div class="col-md-1"><img class="img-responsive" src="<?php echo BASE_URL;?>Assets/img/directorio.png"></div>
                             <div class="col-md-2">
                                 <h2 class="title" style="text-align:center;">Directorio</h2>    
                             </div>

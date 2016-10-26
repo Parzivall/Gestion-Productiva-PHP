@@ -134,6 +134,10 @@ class Persona
 
 	public function Actualizar(Persona $persona)
 	{
+		if (strlen($persona->Password)<22)
+		{
+			$persona->Password = password_hash($persona->Password, PASSWORD_DEFAULT);
+		}		
 		try 
 		{
 			if ($persona->Foto!=null){
@@ -236,7 +240,6 @@ class Persona
 	{
 		try 
 		{
-
 			$newPassword = password_hash($persona->Password, PASSWORD_DEFAULT);
 			$sql = "INSERT INTO Personas (Dni,Username,Password,Nombres,Apellidos,Direccion,Telefono, Email, Web, Nacimiento, Genero, UltimaConexion, Foto, Informacion, Fecha_Ingreso, Condicion_Laboral, Especialidad, Cargo_Id, Unidad_Id) 
 			        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?)";

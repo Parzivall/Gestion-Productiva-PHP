@@ -5,8 +5,10 @@
 		private $pdo;
 	    
 	    public $Id;
+	    public $Descripcion;
+	    public $Monto;
 	    public $Operacion_Id;
-	    public $Detalle_Id;
+
 
 		public function __construct()
 		{
@@ -24,7 +26,7 @@
 		{
 			try
 			{
-				$stm = $this->pdo->prepare("SELECT * FROM Detalle_Operacion");
+				$stm = $this->pdo->prepare("SELECT * FROM DetallesOperacion");
 				$stm->execute();
 
 				return $stm->fetchAll(PDO::FETCH_OBJ);
@@ -35,10 +37,31 @@
 			}
 		}
 
+		public function getMontoTotal()
+		{
+			
+		}
+
+		public function Obtener($id)
+		{
+			try 
+			{
+				$stm = $this->pdo
+				          ->prepare("SELECT * FROM DetallesOperacion WHERE Id = ?");
+				          
+
+				$stm->execute(array($id));
+				return $stm->fetch(PDO::FETCH_OBJ);
+			} catch (Exception $e) 
+			{
+				die($e->getMessage());
+			}
+		}
+
 		public function getDetallesByOperacionId($Id){
 			try
 			{
-				$stm = $this->pdo->prepare("SELECT de.Id, de.Descripcion, de.Monto FROM Detalle_Operacion do, Detalles de where do.Operacion_Id=? and do.Detalle_Id = de.Id");
+				$stm = $this->pdo->prepare("SELECT de.Id, de.Descripcion, de.Monto FROM DetallesOperacion do where do.Operacion_Id=?");
 				$stm->execute(array($Id));
 
 				return $stm->fetchAll(PDO::FETCH_OBJ);
@@ -52,7 +75,7 @@
 		public function getDetallesArrayByOperacionId($Id){
 			try
 			{
-				$stm = $this->pdo->prepare("SELECT de.Id, de.Descripcion, de.Monto FROM Detalle_Operacion do, Detalles de where do.Operacion_Id=? and do.Detalle_Id = de.Id");
+				$stm = $this->pdo->prepare("SELECT de.Id, de.Descripcion, de.Monto FROM DetallesOperacion do, where do.Operacion_Id=?");
 				$stm->execute(array($Id));
 
 				return $stm->fetchAll();
@@ -63,44 +86,15 @@
 			}
 		}
 
-		public function Obtener($Id)
-		{
-			try 
-			{
-				$stm = $this->pdo
-				          ->prepare("SELECT * FROM Detalle_Operacion WHERE Id = ?");
-				          
-
-				$stm->execute(array($Id));
-				return $stm->fetch(PDO::FETCH_OBJ);
-			} catch (Exception $e) 
-			{
-				die($e->getMessage());
-			}
-		}
 
 		public function Eliminar($Id)
 		{
 			try 
 			{
 				$stm = $this->pdo
-				            ->prepare("DELETE FROM Detalle_Operacion WHERE Id = ?");			          
+				            ->prepare("DELETE FROM DetallesOperacion WHERE Id = ?");			          
 
 				$stm->execute(array($Id));
-			} catch (Exception $e) 
-			{
-				die($e->getMessage());
-			}
-		}
-
-		public function EliminarByIds($Operacion_Id, $Detalle_Id)
-		{
-			try 
-			{
-				$stm = $this->pdo
-				            ->prepare("DELETE FROM Detalle_Operacion WHERE Operacion_Id = ? and Detalle_Id=?");			
-
-				$stm->execute(array($Operacion_Id, $Detalle_Id));
 			} catch (Exception $e) 
 			{
 				die($e->getMessage());
@@ -111,16 +105,18 @@
 		{
 			try 
 			{
-				$sql = "UPDATE Detalle_Operacion SET 
-							Operacion_Id      = ?, 
-							Detalle_Id        = ?,
+				$sql = "UPDATE DetallesOperacion SET 
+							Descripcion       = ?, 
+							Monto        	  = ?,
+							Operacion_Id      = ?
 					    WHERE Id = ?";
 
 				$this->pdo->prepare($sql)
 				     ->execute(
 					    array(
-	                        $Detalle_Operacion->Operacion_Id, 
-	                        $Detalle_Operacion->Detalle_Id,
+	                        $Detalle_Operacion->Descripcion, 
+	                        $Detalle_Operacion->Monto,
+	                        $Detalle_Operacion->Operacion_Id,
 	                        $Detalle_Operacion->Id
 						)
 					);
@@ -134,14 +130,15 @@
 		{
 			try 
 			{
-			$sql = "INSERT INTO Detalle_Operacion (Operacion_Id,Detalle_Id) 
-			        VALUES (?, ?)";
+			$sql = "INSERT INTO DetallesOperacion (Descripcion,Monto,Operacion_Id) 
+			        VALUES (?, ?, ?)";
 
 			$this->pdo->prepare($sql)
 			     ->execute(
 					array(
-						$Detalle_Operacion->Operacion_Id, 
-						$Detalle_Operacion->Detalle_Id
+						$Detalle_Operacion->Descripcion, 
+						$Detalle_Operacion->Monto,
+						$Detalle_Operacion->Operacion_Id
 	                )
 				);
 			} catch (Exception $e) 

@@ -54,21 +54,18 @@
 				$stmt->bindparam(":username", $usuario->Username);
 				$stmt->execute();
 				$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-				//printf($userRow['Username']);
-				//printf($usuario->Password);
-				//printf($userRow['Password']);
 				if($stmt->rowCount() == 1)
 				{
 					if(password_verify($usuario->Password, $userRow['Password']))
 					{
 					//if ($usuario->Password == $userRow['Password']){
 						if ($userRow['TipoUsuario'] == 0){
-							$stmtUnidad = $this->pdo->prepare("SELECT re.Unidad_Id, upro.Nombre FROM Responsables re, UnidadesProductivas upro where re.Persona_Dni=:personaDni and re.Unidad_Id = upro.Id");
+							$stmtUnidad = $this->pdo->prepare("SELECT Id, Nombre FROM UnidadesProductivas where Persona_Dni=:personaDni");
 							$stmtUnidad->bindparam(":personaDni", $userRow['Dni']);
 							$stmtUnidad->execute();
 							$unidadRow=$stmtUnidad->fetch(PDO::FETCH_ASSOC);	
 							if  ($stmtUnidad->rowCount() > 0){
-								$_SESSION['Unidad_Id'] = $unidadRow['Unidad_Id'];
+								$_SESSION['Unidad_Id'] = $unidadRow['Id'];
 								$_SESSION['UnidadNombre'] = $unidadRow['Nombre'];
 								$_SESSION['NoUnidad'] = "0";
 							}
@@ -93,7 +90,7 @@
 			}
 			catch(PDOException $e)
 			{
-				echo $e->getMessage();
+				die($e->getMessage());
 			}
 		}
 

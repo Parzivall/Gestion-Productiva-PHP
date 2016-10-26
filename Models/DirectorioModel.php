@@ -33,7 +33,7 @@
 			{
 				$limit = resultsPerPage;
 				$start = $startFrom;
-				$stmt = $this->pdo->prepare("SELECT up.Id, up.Nombre, up.Rubro_Id, up.Web, up.Telefono, up.Telefono_Anexo, up.Celular, up.Ubicacion, up.Ciudad_Id, re.Persona_Dni FROM UnidadesProductivas up, Responsables re where up.Id = re.Unidad_Id LIMIT :startFrom,:resultsPerPage");
+				$stmt = $this->pdo->prepare("SELECT up.Id, up.Nombre, up.Rubro_Id, up.Web, up.Telefono, up.Telefono_Anexo, up.Celular, up.Ubicacion, up.Ciudad_Id, up.Persona_Dni FROM UnidadesProductivas up LIMIT :startFrom,:resultsPerPage");
 				$stmt->bindValue(":startFrom", (int)$start, PDO::PARAM_INT);
 				$stmt->bindValue(":resultsPerPage", (int)$limit, PDO::PARAM_INT);
 				$stmt->execute();
@@ -48,7 +48,7 @@
 
 		public function getTotalRecords(){
 			try {
-				$stm = $this->pdo->prepare("SELECT up.Id, up.Nombre, up.Rubro_Id, up.Web, up.Telefono, up.Telefono_Anexo, up.Celular, up.Ubicacion, up.Ciudad_Id, re.Persona_Dni FROM UnidadesProductivas up, Responsables re where up.Id = re.Unidad_Id");
+				$stm = $this->pdo->prepare("SELECT up.Id, up.Nombre, up.Rubro_Id, up.Web, up.Telefono, up.Telefono_Anexo, up.Celular, up.Ubicacion, up.Ciudad_Id, up.Persona_Dni FROM UnidadesProductivas up");
 				$stm->execute();
 				return $stm->rowCount();
 				
