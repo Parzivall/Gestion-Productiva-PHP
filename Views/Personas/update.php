@@ -114,6 +114,45 @@
                                 </div>
                             </div>
 
+
+                            <!--
+                            added fields according to documents received
+                            -->
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Unidad Productiva</label>
+                                        <select name="Unidad" class="form-control">
+                                            <!--
+                                            <?php foreach($this->model->getUnidadesProductivas() as $r): ?>
+                                                <option <?php echo ($unidadPersona->Unidad_Id==$r->Id) ? 'selected' : '' ?> value="<?php echo $r->Id?>" ><?php echo $r->Nombre;?></option>
+                                            <?php endforeach; ?>
+                                            -->
+                                            <?php
+                                                if (isset($_SESSION['Unidad_Id'])) {
+                                                    echo "<option selected value='".$_SESSION['Unidad_Id']."'>".$_SESSION['UnidadNombre']."</option>";
+                                                } else { ?>
+                                                    <?php foreach($this->model->getUnidadesProductivas() as $r): ?>
+                                                        <option <?php echo ($persona->Unidad_Id==$r->Id) ? 'selected' : '' ?> value="<?php echo $r->Id?>" ><?php echo $r->Nombre;?></option>
+                                                    <?php endforeach; ?>
+                                            <?php
+                                                }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Cargo</label>
+                                        <select name="Cargo" class="form-control">
+                                            <?php foreach($this->model->getCargos() as $r): ?>
+                                                <option <?php echo ($persona->Cargo_Id==$r->Id) ? 'selected' : '' ?> value="<?php echo $r->Id;?>"><?php echo $r->Descripcion;?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>                                            
+                                </div>    
+                            </div>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">

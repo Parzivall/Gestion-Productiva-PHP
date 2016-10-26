@@ -17,6 +17,13 @@ class Persona
     public $Foto;
     public $Informacion;
     public $UltimaConexion;
+    public $TipoUsuario;
+    public $Fecha_Ingreso;
+    public $Condicion_Laboral;
+    public $Especialidad;
+    public $Cargo_Id;
+    public $Unidad_Id;
+
 
 
 	public function __construct()
@@ -55,8 +62,6 @@ class Persona
 		{
 			$stm = $this->pdo
 			          ->prepare("SELECT * FROM Personas WHERE Dni = ?");
-			          
-
 			$stm->execute(array($dni));
 			return $stm->fetch(PDO::FETCH_OBJ);
 		} catch (Exception $e) 
@@ -71,10 +76,6 @@ class Persona
 				$stmt = $this->pdo->prepare("SELECT * FROM Personas where Dni=:dni");
 				$stmt->bindparam(":dni", $dni);
 				$stmt->execute();
-				//$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-				//printf($userRow['Username']);
-				//printf($usuario->Password);
-				//printf($userRow['Password']);
 				if($stmt->rowCount() > 0){
 					return true;
 				}
@@ -94,10 +95,6 @@ class Persona
 				$stmt = $this->pdo->prepare("SELECT * FROM Personas where Username=:username");
 				$stmt->bindparam(":username", $username);
 				$stmt->execute();
-				//$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-				//printf($userRow['Username']);
-				//printf($usuario->Password);
-				//printf($userRow['Password']);
 				if($stmt->rowCount() > 0){
 					return true;
 				}
@@ -151,7 +148,12 @@ class Persona
 						Nacimiento = ?,
 						Genero=?,
 						Foto=?,
-						Informacion=?
+						Informacion=?,
+						Fecha_Ingreso = ?,
+						Condicion_Laboral = ?,
+						Especialidad = ?,
+						Cargo_Id = ?,
+						Unidad_Id = ?
 				    WHERE Dni = ?";
 
 			$this->pdo->prepare($sql)
@@ -169,7 +171,13 @@ class Persona
                         $persona->Genero,
                         $persona->Foto,
                         $persona->Informacion,
+                        $Persona->Fecha_Ingreso,
+                        $Persona->Condicion_Laboral,
+                        $Persona->Especialidad,
+                        $Persona->Cargo_Id,
+                        $Persona->Unidad_Id,
                         $persona->Dni
+
 					)
 				);
 		} catch (Exception $e) 
@@ -184,8 +192,8 @@ class Persona
 		{
 
 			$newPassword = password_hash($persona->Password, PASSWORD_DEFAULT);
-			$sql = "INSERT INTO Personas (Dni,Username,Password,Nombres,Apellidos,Direccion,Telefono, Email, Web, Nacimiento, Genero, UltimaConexion, Foto, Informacion) 
-			        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)";
+			$sql = "INSERT INTO Personas (Dni,Username,Password,Nombres,Apellidos,Direccion,Telefono, Email, Web, Nacimiento, Genero, UltimaConexion, Foto, Informacion, Fecha_Ingreso, Condicion_Laboral, Especialidad, Cargo_Id, Unidad_Id) 
+			        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?)";
 
 			$this->pdo->prepare($sql)
 			     ->execute(
@@ -203,7 +211,12 @@ class Persona
 	                    $persona->Genero,
 	                    date('Y-m-d'),
 	                    $persona->Foto,
-	                    $persona->Informacion
+	                    $persona->Informacion,
+	                    $Persona->Fecha_Ingreso,
+	                    $Persona->Condicion_Laboral,
+	                    $Persona->Especialidad,
+	                    $Persona->Cargo_Id,
+	                    $Persona->Unidad_Id
 	                )
 				);
 		} catch (Exception $e) 
@@ -212,4 +225,76 @@ class Persona
 			die($e->getMessage());
 		}
 	}
+
+
+	public function getUnidadesProductivas(){
+			try
+			{
+				$stmt = $this->pdo->prepare("SELECT * FROM UnidadesProductivas ORDER BY Nombre ASC");
+				$stmt->execute();
+				return $stmt->fetchAll(PDO::FETCH_OBJ);
+			}
+			catch(Exception $e)
+			{
+				die($e->getMessage());
+			}
+		}
+
+		public function getPersonas(){
+			try
+			{
+				$stmt = $this->pdo->prepare("SELECT * FROM Personas ORDER BY Nombres ASC");
+				$stmt->execute();
+				return $stmt->fetchAll(PDO::FETCH_OBJ);
+			}
+			catch(Exception $e)
+			{
+				die($e->getMessage());
+			}
+		}
+
+		public function getCargos(){
+			try
+			{
+				$stmt = $this->pdo->prepare("SELECT * FROM Cargos ORDER BY Descripcion ASC");
+				$stmt->execute();
+				return $stmt->fetchAll(PDO::FETCH_OBJ);
+			}
+			catch(Exception $e)
+			{
+				die($e->getMessage());
+			}
+		}
+
+		public function getUnidadById($Id){
+			try 
+			{
+				$stm = $this->pdo
+				            ->prepare("SELECT * FROM UnidadesProductivas WHERE Id = ?");			          
+
+				$stm->execute(array($Id));
+				$row = $stm->fetch(PDO::FETCH_ASSOC);
+				return $row['Nombre'];
+			}
+			catch (Exception $e) 
+			{
+				die($e->getMessage());
+			}
+		}
+
+		public function getCargoById($Id){
+			try 
+			{
+				$stm = $this->pdo
+				            ->prepare("SELECT * FROM Cargos WHERE Id = ?");			          
+
+				$stm->execute(array($Id));
+				$row = $stm->fetch(PDO::FETCH_ASSOC);
+				return $row['Descripcion'];
+			}
+			catch (Exception $e) 
+			{
+				die($e->getMessage());
+			}
+		}
 }

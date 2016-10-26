@@ -5,7 +5,7 @@ if(!isset($_SESSION)) {
 }
  
 require_once 'Core/database.php';
-$controller = 'Home';
+$controller = 'home';
 
 
 require_once("Core/base_url.php");
