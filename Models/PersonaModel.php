@@ -38,13 +38,14 @@ class Persona
 		}
 	}
 
-	public function Listar($startFrom)
+	public function ListarByUnidad($startFrom,$Id)
 	{
 		try
 		{
 			$limit = resultsPerPage;
 			$start = $startFrom;
-			$stmt = $this->pdo->prepare("SELECT * FROM Personas ORDER BY Apellidos ASC LIMIT :startFrom,:resultsPerPage");
+			$stmt = $this->pdo->prepare("SELECT * FROM Personas where Unidad_Id=:unidad_Id ORDER BY Apellidos ASC LIMIT :startFrom,:resultsPerPage");
+			$stmt->bindValue(":unidad_Id", $Id, PDO::PARAM_INT);
 			$stmt->bindValue(":startFrom", (int)$start, PDO::PARAM_INT);
 			$stmt->bindValue(":resultsPerPage", (int)$limit, PDO::PARAM_INT);
 			$stmt->execute();
@@ -53,6 +54,32 @@ class Persona
 		catch(Exception $e)
 		{
 			die($e->getMessage());
+		}
+	}	
+
+	public function Listar($startFrom)
+	{
+		if (isset($_SESSION['Unidad_Id']))
+		{
+			$unidadID = intval($_SESSION['Unidad_Id']);
+			return $this->ListarByUnidad($startFrom,$unidadID);
+		}
+		else
+		{
+			try
+			{
+				$limit = resultsPerPage;
+				$start = $startFrom;
+				$stmt = $this->pdo->prepare("SELECT * FROM Personas ORDER BY Apellidos ASC LIMIT :startFrom,:resultsPerPage");
+				$stmt->bindValue(":startFrom", (int)$start, PDO::PARAM_INT);
+				$stmt->bindValue(":resultsPerPage", (int)$limit, PDO::PARAM_INT);
+				$stmt->execute();
+				return $stmt->fetchAll(PDO::FETCH_OBJ);
+			}
+			catch(Exception $e)
+			{
+				die($e->getMessage());
+			}
 		}
 	}
 
