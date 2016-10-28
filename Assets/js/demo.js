@@ -145,7 +145,23 @@ demo = {
                 align: align
             }
         });
-	}
+	},
+
+  showDangerNotification: function(from, align, msg){
+     
+      $.notify({
+          icon: "pe-7s-gift",
+          message: msg
+          
+        },{
+            type: 'danger',
+            timer: 4000,
+            placement: {
+                from: from,
+                align: align
+            }
+        });
+  }
 
     
 }

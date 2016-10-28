@@ -104,7 +104,39 @@ class PersonasController{
     }
     
     public function Eliminar(){
-        $this->model->Eliminar($_REQUEST['Dni']);
-        header('Location:'.BASE_URL.'Personas');
+        if (!$this->model->Eliminar($_REQUEST['Dni']))
+        {
+            $persona = new Persona();
+            $totalRecords = $this->model->getTotalRecords();
+            $totalPages = ceil($totalRecords/resultsPerPage);
+            if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };  
+            $startFrom = ($page-1) * resultsPerPage;
+            require_once 'Views/header.php';
+            require_once 'Views/sidebar.php';
+            require_once 'Views/panel.php';
+            require_once 'Views/Personas/index.php';
+            require_once 'Views/footer.php';
+            $unidadResponsable = $this->model->getUnidadById($this->model->Obtener($_REQUEST['Dni'])->Unidad_Id);
+            echo '<script type="text/javascript">'.'demo.showDangerNotification("top","center",'.'"La persona que intenta eliminar es actualmente responsable de la unidad '.$unidadResponsable.', asigne otro responsable a dicha unidad para poder eliminar esta persona."); </script>';
+            /*echo '<script type="text/javascript">',
+                 "$.notify({",
+                    "icon: 'pe-7s-info',",
+                    "message: 'Hoy es el ultimo dia para cumplir'",
+                 "},{",
+                    "type: 'danger',",
+                    "timer: 4000,",
+                    " placement :{",
+                        "from : 'top'",
+                        "align: 'center'",
+                    "}",
+                  "});",
+                 '</script>';
+                 */
+            //header('Location:'.BASE_URL.'Personas');       
+        }
+        else
+        {
+            header('Location:'.BASE_URL.'Personas');    
+        }
     }
 }

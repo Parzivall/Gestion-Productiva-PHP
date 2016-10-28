@@ -150,12 +150,19 @@ class Persona
 	{
 		try 
 		{
-			$fotoPath = $this->Obtener($Id)->Foto;
+			$fotoPath = $this->Obtener($dni)->Foto;
 			$stm = $this->pdo
 			            ->prepare("DELETE FROM Personas WHERE dni = ?");
 			$stm->execute(array($dni));
 			unlink($fotoPath); //Eliminar la foto de perfil
-		} catch (Exception $e) 
+			return true;
+		} 
+		catch(PDOException $e)
+		{
+			return false;
+			//die("La persona que deseas eliminar es responsable de una unidad, asigne otro responsable");
+		}
+		catch (Exception $e) 
 		{
 			die($e->getMessage());
 		}
