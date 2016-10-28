@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 28-10-2016 a las 13:32:49
+-- Tiempo de generación: 28-10-2016 a las 15:20:07
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.21
 
@@ -434,7 +434,6 @@ CREATE TABLE `Material_Insumo` (
 CREATE TABLE `Operaciones` (
   `Id` int(11) NOT NULL,
   `Tipo` tinyint(4) NOT NULL,
-  `Monto` double NOT NULL,
   `Unidad_Id` int(11) NOT NULL,
   `Fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -473,8 +472,7 @@ CREATE TABLE `Personas` (
 --
 
 INSERT INTO `Personas` (`Dni`, `Username`, `Password`, `Nombres`, `Apellidos`, `Direccion`, `Telefono`, `Email`, `Web`, `Nacimiento`, `Genero`, `UltimaConexion`, `Foto`, `Informacion`, `TipoUsuario`, `Fecha_Ingreso`, `Condicion_Laboral`, `Especialidad`, `Cargo_Id`, `Unidad_Id`) VALUES
-('1', 'admin', '$2y$10$5Hh9VUKl5hrdRT1/oNwix.XJ8pAzoW8f0HGu3dcnh4FOLt1oDxFfy', 'Administrador', 'General', '', 959003224, '', '', '1995-07-11', 1, NULL, NULL, '', 1, '0000-00-00', 1, '', 15, NULL),
-('71498374', 'test', '$2y$10$elzdDHRudsvI/2C2oYsx0e9T59LKE.mYDCeTHc2J/YWMi9ic3/S92', 'test', 'test', '', 0, '', '', '2016-10-19', 1, '2016-10-28', 'imagenes/personas/71498374.jpg', '', 0, '2016-09-30', 1, '', 2, 1);
+('1', 'admin', '$2y$10$5Hh9VUKl5hrdRT1/oNwix.XJ8pAzoW8f0HGu3dcnh4FOLt1oDxFfy', 'Administrador', 'General', '', 959003224, '', '', '1995-07-11', 1, NULL, 'imagenes/personas/1.jpg', '', 1, '0000-00-00', 1, '', 15, 65);
 
 -- --------------------------------------------------------
 
@@ -713,7 +711,6 @@ CREATE TABLE `UnidadesProductivas` (
 --
 
 INSERT INTO `UnidadesProductivas` (`Id`, `Nombre`, `Rubro_Id`, `Web`, `Telefono`, `Telefono_Anexo`, `Fax`, `Celular`, `Ubicacion`, `Ciudad_Id`, `Organigrama`, `Facultad_Id`, `Persona_Dni`) VALUES
-(1, 'CPS', 97, '', 0, 0, '', 0, '', 35, 'imagenes/unidadesproductivas/1.jpg', NULL, '71498374'),
 (26, 'LABORATORIO DE ANALISIS FISICO - SERVILAB ', 44, '', 220360, 0, '', 987882315, 'Av. Independencia s/n - Ciudad Universitaria - Laboratorio 108 (1ª piso)', 35, 'imagenes/unidadesproductivas/organigrama.jpg', NULL, NULL),
 (27, 'PLANTA DE SEGREGACION DE RIO SECO ', 113, '', 0, 0, '', 988444719, 'Parque Industrial Rio Seco - Cono Norte', 35, 'imagenes/unidadesproductivas/organigrama.jpg', NULL, NULL),
 (28, 'PROYECTO DE FUNDICION Y MOLDEO ', 113, 'aicafae@hotmail.com', 225602, 0, '', 0, 'Av. Independencia s/n - Area Ingenierias ', 35, 'imagenes/unidadesproductivas/organigrama.jpg', NULL, NULL),
@@ -1036,7 +1033,7 @@ ALTER TABLE `Titulos`
 -- AUTO_INCREMENT de la tabla `UnidadesProductivas`
 --
 ALTER TABLE `UnidadesProductivas`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 --
 -- Restricciones para tablas volcadas
 --
