@@ -148,7 +148,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
+                                    <!--
                                     <img src="<?php echo $unidad->Id!=null ? 'data:image;base64,'.$unidad->Organigrama : ""?>" class="img-responsive" align="center" id="Organigrama">
+                                    -->
+                                    <img src="<?php echo $unidad->Id!=null ? BASE_URL.$unidad->Organigrama : ''?>" class="img-responsive" align="center" id="Organigrama">
                                 </div>
                             </div>
                             <button type="submit" id="btnSubmit" class="btn btn-info btn-fill pull-right">Guardar</button>

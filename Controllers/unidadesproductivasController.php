@@ -65,13 +65,19 @@
                 //means there is no file uploaded
             }
             else{
+                $path = $_FILES['Organigrama']['name'];
+                $ext = pathinfo($path, PATHINFO_EXTENSION);
+                $imagePath = 'imagenes/unidadesproductivas/'.$_REQUEST['Id'].'.'.$ext;
+                $unidad->Organigrama = $imagePath;
+                /*
                 if (getimagesize($_FILES['Organigrama']['tmp_name'])!=FALSE){
                     $organigrama= addslashes($_FILES['Organigrama']['tmp_name']);
                     $name= addslashes($_FILES['Organigrama']['name']);
                     $organigrama= file_get_contents($organigrama);
                     $organigrama= base64_encode($organigrama);
                     $unidad->Organigrama = $organigrama;    
-                }    
+                } 
+                */   
             }
             
             $unidad->Id = $_REQUEST['Id'];

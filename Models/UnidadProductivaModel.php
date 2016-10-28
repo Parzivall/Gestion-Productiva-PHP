@@ -219,6 +219,10 @@
 	                        $unidadProductiva->Id
 						)
 					);
+				    if (!move_uploaded_file($_FILES['Organigrama']['tmp_name'], $unidadProductiva->Organigrama))
+					{
+						die("Error al subir la imagen al servidor");
+					}
 							
 				} else {
 					$sql = "UPDATE UnidadesProductivas SET 
@@ -264,27 +268,45 @@
 		{
 			try 
 			{
-			$sql = "INSERT INTO UnidadesProductivas (Nombre,Rubro_Id,Web,Telefono,Telefono_Anexo,Fax,Celular,Ubicacion, Ciudad_Id, Organigrama, Persona_Dni) 
-			        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				$this->pdo->beginTransaction();	
+				$sql = "INSERT INTO UnidadesProductivas (Nombre,Rubro_Id,Web,Telefono,Telefono_Anexo,Fax,Celular,Ubicacion, Ciudad_Id, Persona_Dni) 
+				        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-			$this->pdo->prepare($sql)
-			     ->execute(
-					array(
-						$unidadProductiva->Nombre, 
-						$unidadProductiva->Rubro_Id,
-	                    $unidadProductiva->Web,
-	                    $unidadProductiva->Telefono,
-	                    $unidadProductiva->Telefono_Anexo,
-	                    $unidadProductiva->Fax,
-	                    $unidadProductiva->Celular,
-	                    $unidadProductiva->Ubicacion,
-	                    $unidadProductiva->Ciudad_Id,
-	                    $unidadProductiva->Organigrama,
-	                    $unidadProductiva->Persona_Dni
-	                )
-				);
+				$this->pdo->prepare($sql)
+				     ->execute(
+						array(
+							$unidadProductiva->Nombre, 
+							$unidadProductiva->Rubro_Id,
+		                    $unidadProductiva->Web,
+		                    $unidadProductiva->Telefono,
+		                    $unidadProductiva->Telefono_Anexo,
+		                    $unidadProductiva->Fax,
+		                    $unidadProductiva->Celular,
+		                    $unidadProductiva->Ubicacion,
+		                    $unidadProductiva->Ciudad_Id,
+		                    $unidadProductiva->Persona_Dni
+		                )
+					);
+				$lastId = $this->pdo->lastInsertId();
+				$path = $_FILES['Organigrama']['name'];
+				$ext = pathinfo($path, PATHINFO_EXTENSION);
+				$imagePath = 'imagenes/unidadesproductivas/'.$lastId.'.'.$ext;
+				$sql = "UPDATE UnidadesProductivas SET Organigrama=? WHERE Id=?";
+				$this->pdo->prepare($sql)
+				     ->execute(
+						array(
+							$imagePath,
+							$lastId
+		                )
+					);
+				$this->pdo->commit();
+				if (!move_uploaded_file($_FILES['Organigrama']['tmp_name'], $imagePath))
+				{
+					die("Error al subir la imagen al servidor");
+				}
 			} catch (Exception $e) 
 			{
+				$this->pdo->rollback();
 				die($e->getMessage());
 			}
 		}
