@@ -60,15 +60,20 @@ class PersonasController{
             //means there is no file uploaded
         }
         else{
+            $path = $_FILES['Foto']['name'];
+            $ext = pathinfo($path, PATHINFO_EXTENSION);
+            $imagePath = 'imagenes/personas/'.$_REQUEST['DniUpdate'].'.'.$ext;
+            $persona->Foto = $imagePath;
+            /*
             if (getimagesize($_FILES['Foto']['tmp_name'])!=FALSE){
                 $foto= addslashes($_FILES['Foto']['tmp_name']);
                 $name= addslashes($_FILES['Foto']['name']);
                 $foto= file_get_contents($foto);
                 $foto= base64_encode($foto);
                 $persona->Foto = $foto;    
-            }    
+            } 
+            */   
         }
-        
         $DniUpdate = $_REQUEST['DniUpdate'];
         $persona->Dni = $_REQUEST['Dni'];
         $persona->Username = $_REQUEST['Username'];

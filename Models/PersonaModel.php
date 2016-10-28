@@ -150,9 +150,11 @@ class Persona
 	{
 		try 
 		{
+			$fotoPath = $this->Obtener($Id)->Foto;
 			$stm = $this->pdo
 			            ->prepare("DELETE FROM Personas WHERE dni = ?");
 			$stm->execute(array($dni));
+			unlink($fotoPath); //Eliminar la foto de perfil
 		} catch (Exception $e) 
 		{
 			die($e->getMessage());
@@ -211,6 +213,11 @@ class Persona
 	                        $persona->Dni
 						)
 					);
+				    if (!move_uploaded_file($_FILES['Foto']['tmp_name'], $persona->Foto))
+					{
+						die("Error al subir la imagen al servidor, puede que no tenga permisos para escribir en el directorio.");
+					}
+
 			} else {
 				$sql = "UPDATE Personas SET 
 						Username          = ?, 
@@ -267,6 +274,7 @@ class Persona
 	{
 		try 
 		{
+			$this->pdo->beginTransaction();
 			$newPassword = password_hash($persona->Password, PASSWORD_DEFAULT);
 			$sql = "INSERT INTO Personas (Dni,Username,Password,Nombres,Apellidos,Direccion,Telefono, Email, Web, Nacimiento, Genero, UltimaConexion, Foto, Informacion, Fecha_Ingreso, Condicion_Laboral, Especialidad, Cargo_Id, Unidad_Id) 
 			        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?)";
@@ -295,8 +303,17 @@ class Persona
 	                    $persona->Unidad_Id
 	                )
 				);
+			$this->pdo->commit();
+			if ($persona->Foto!=null)
+			{
+				if (!move_uploaded_file($_FILES['Foto']['tmp_name'], $imagePath))
+				{
+					die("Error al subir la imagen al servidor, puede que no tenga permisos para escribir en el directorio.");
+				}	
+			}
 		} catch (Exception $e) 
 		{
+			$this->pdo->rollback();
 			//echo $e->getMessage();
 			die($e->getMessage());
 		}

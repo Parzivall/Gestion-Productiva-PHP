@@ -41,7 +41,7 @@
                                     <th>Rubro</th>
                                     <!--<th>Web</th>-->
                                     <th>Telefono</th>
-                                    <th>Anexo</th>
+                                    <!--<th>Anexo</th>-->
                                     <!--<th>Fax</th>-->
                                     <th>Celular</th>
                                     <th>Ubicacion</th>
@@ -55,7 +55,7 @@
                                             <td><?php echo $this->model->getRubroById($r->Rubro_Id); ?></td>
                                             <!--<td><?php echo $r->Web; ?></td>-->
                                             <td><?php echo $r->Telefono; ?></td>
-                                            <td><?php echo $r->Telefono_Anexo; ?></td>
+                                            <!--<td><?php echo $r->Telefono_Anexo; ?></td>-->
                                             <!--<td><?php echo $r->Fax; ?></td>-->
                                             <td><?php echo $r->Celular; ?></td>
                                             <td><?php echo $r->Ubicacion;?></td>

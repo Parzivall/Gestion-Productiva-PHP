@@ -173,11 +173,12 @@
 			//Faltar eliminar recursivamente las fks
 			try 
 			{
+				$organigramaPath = $this->Obtener($Id)->Organigrama;
 				$stm = $this->pdo
 				            ->prepare("DELETE FROM UnidadesProductivas WHERE Id = ?");			          
-
 				$stm->execute(array($Id));
-			} catch (Exception $e) 
+				unlink($organigramaPath); //Eliminar la imagen del organigrama
+			} catch (Exception $e)
 			{
 				die($e->getMessage());
 			}
@@ -221,7 +222,7 @@
 					);
 				    if (!move_uploaded_file($_FILES['Organigrama']['tmp_name'], $unidadProductiva->Organigrama))
 					{
-						die("Error al subir la imagen al servidor");
+						die("Error al subir la imagen al servidor, puede que no tenga permisos para escribir en el directorio.");
 					}
 							
 				} else {
@@ -302,7 +303,7 @@
 				$this->pdo->commit();
 				if (!move_uploaded_file($_FILES['Organigrama']['tmp_name'], $imagePath))
 				{
-					die("Error al subir la imagen al servidor");
+					die("Error al subir la imagen al servidor, puede que no tenga permisos para escribir en el directorio.");
 				}
 			} catch (Exception $e) 
 			{

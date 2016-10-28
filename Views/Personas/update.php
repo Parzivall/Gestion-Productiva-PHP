@@ -120,13 +120,14 @@
                                     <div class="card card-user text-center">
                                             <label>Foto</label>    
                                             <br>
-                                            <img  class="img-responsive center-block" src="<?php echo $persona->Foto!=null ? 'data:image;base64,'.$persona->Foto : BASE_URL.'Assets/img/default-avatar.png'?>" id="Foto">
+                                            <!--
+                                            <img  class="img-responsive center-block" src="<?php echo $persona->Foto!=null ? 'data:image;base64,'.$persona->Foto : BASE_URL.'Assets/img/default-avatar.png'?>" id="Foto">-->
 
-                                            <!--<img class="img-rounded" alt="..." src="<?php echo BASE_URL;?>Assets/img/default-avatar.png">-->
+                                            <img  class="img-responsive center-block" src="<?php echo $persona->Foto!=null ? BASE_URL.$persona->Foto : BASE_URL.'Assets/img/default-avatar.png'?>" id="Foto">
+
                                             <br>
                                             <div class="fileUpload btn btn-info">
                                                 <span>Subir Foto</span>
-                                                <input type="file" class="upload" name="Foto">
                                                 <input type="file" class="upload" accept="image/*" name="Foto" Id="fileImage" onchange="readURL(this);" />
                                             </div>
                                     </div>
