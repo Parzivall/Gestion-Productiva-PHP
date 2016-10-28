@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 28-10-2016 a las 12:46:49
+-- Tiempo de generación: 28-10-2016 a las 13:32:49
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.21
 
@@ -458,7 +458,7 @@ CREATE TABLE `Personas` (
   `Nacimiento` date NOT NULL,
   `Genero` tinyint(4) NOT NULL,
   `UltimaConexion` date DEFAULT NULL,
-  `Foto` longblob,
+  `Foto` varchar(200) DEFAULT NULL,
   `Informacion` varchar(400) DEFAULT NULL,
   `TipoUsuario` tinyint(4) NOT NULL DEFAULT '0',
   `Fecha_Ingreso` date DEFAULT NULL,
@@ -473,7 +473,8 @@ CREATE TABLE `Personas` (
 --
 
 INSERT INTO `Personas` (`Dni`, `Username`, `Password`, `Nombres`, `Apellidos`, `Direccion`, `Telefono`, `Email`, `Web`, `Nacimiento`, `Genero`, `UltimaConexion`, `Foto`, `Informacion`, `TipoUsuario`, `Fecha_Ingreso`, `Condicion_Laboral`, `Especialidad`, `Cargo_Id`, `Unidad_Id`) VALUES
-('1', 'admin', '$2y$10$5Hh9VUKl5hrdRT1/oNwix.XJ8pAzoW8f0HGu3dcnh4FOLt1oDxFfy', 'Administrador', 'General', '', 959003224, '', '', '1995-07-11', 1, NULL, NULL, '', 1, '0000-00-00', 1, '', 15, NULL);
+('1', 'admin', '$2y$10$5Hh9VUKl5hrdRT1/oNwix.XJ8pAzoW8f0HGu3dcnh4FOLt1oDxFfy', 'Administrador', 'General', '', 959003224, '', '', '1995-07-11', 1, NULL, NULL, '', 1, '0000-00-00', 1, '', 15, NULL),
+('71498374', 'test', '$2y$10$elzdDHRudsvI/2C2oYsx0e9T59LKE.mYDCeTHc2J/YWMi9ic3/S92', 'test', 'test', '', 0, '', '', '2016-10-19', 1, '2016-10-28', 'imagenes/personas/71498374.jpg', '', 0, '2016-09-30', 1, '', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -712,7 +713,7 @@ CREATE TABLE `UnidadesProductivas` (
 --
 
 INSERT INTO `UnidadesProductivas` (`Id`, `Nombre`, `Rubro_Id`, `Web`, `Telefono`, `Telefono_Anexo`, `Fax`, `Celular`, `Ubicacion`, `Ciudad_Id`, `Organigrama`, `Facultad_Id`, `Persona_Dni`) VALUES
-(1, 'CPS', 97, '', 0, 0, '', 0, '', 35, NULL, NULL, '1'),
+(1, 'CPS', 97, '', 0, 0, '', 0, '', 35, 'imagenes/unidadesproductivas/1.jpg', NULL, '71498374'),
 (26, 'LABORATORIO DE ANALISIS FISICO - SERVILAB ', 44, '', 220360, 0, '', 987882315, 'Av. Independencia s/n - Ciudad Universitaria - Laboratorio 108 (1ª piso)', 35, 'imagenes/unidadesproductivas/organigrama.jpg', NULL, NULL),
 (27, 'PLANTA DE SEGREGACION DE RIO SECO ', 113, '', 0, 0, '', 988444719, 'Parque Industrial Rio Seco - Cono Norte', 35, 'imagenes/unidadesproductivas/organigrama.jpg', NULL, NULL),
 (28, 'PROYECTO DE FUNDICION Y MOLDEO ', 113, 'aicafae@hotmail.com', 225602, 0, '', 0, 'Av. Independencia s/n - Area Ingenierias ', 35, 'imagenes/unidadesproductivas/organigrama.jpg', NULL, NULL),
@@ -754,8 +755,7 @@ INSERT INTO `UnidadesProductivas` (`Id`, `Nombre`, `Rubro_Id`, `Web`, `Telefono`
 (64, 'LABORATORIO BROMATOLOGICO Y CONTROL DE CALIDAD DE LOS ALIMENTOS ', 113, 'daccsnut@unsa.edu.pe', 417098, 0, '', 0, 'Av. Alcides Carrion Nº 101', 35, 'imagenes/unidadesproductivas/organigrama.jpg', NULL, NULL),
 (65, 'AULA MAGNA ', 21, '', 0, 0, '', 968012305, 'Av. Alcides Carrion Nº 101', 35, 'imagenes/unidadesproductivas/organigrama.jpg', NULL, NULL),
 (66, 'LABORATORIO DE FISIOLOGIA Y BIOTECNOLOGIA VEGETAL ', 113, 'hlazon@hotmail.com', 0, 0, '', 942723607, 'Av. Alcides Carrion Nº 101', 35, 'imagenes/unidadesproductivas/organigrama.jpg', NULL, NULL),
-(67, 'INPEGAS UNSA ', 24, '', 0, 0, '', 0, 'Av. Independencia s/n - Area Ingenierias', 35, 'imagenes/unidadesproductivas/organigrama.jpg', NULL, NULL),
-(72, 'aaaaa', 8, '', 0, 0, '', 0, '', 35, 'imagenes/unidadesproductivas/72.png', NULL, NULL);
+(67, 'INPEGAS UNSA ', 24, '', 0, 0, '', 0, 'Av. Independencia s/n - Area Ingenierias', 35, 'imagenes/unidadesproductivas/organigrama.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1036,7 +1036,7 @@ ALTER TABLE `Titulos`
 -- AUTO_INCREMENT de la tabla `UnidadesProductivas`
 --
 ALTER TABLE `UnidadesProductivas`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 --
 -- Restricciones para tablas volcadas
 --
