@@ -1,10 +1,9 @@
 <script type="text/javascript" src="<?php echo BASE_URL;?>Assets/js/jspdf.min.js"></script>
 <script type="text/javascript">
-    var montoAcumulado = 0;
+    //var montoAcumulado = 0;
+    var montoAcumulado = parseFloat("<?php echo $operacion->Id != null ? ($this->model->getMontoTotal($operacion->Id) =='' ? "0" : $this->model->getMontoTotal($operacion->Id)) : "0"; ?>");
     var editandoDetalle = false;
     var rowEdit = null;
-    var detallesArray = [];
-
 
     var genPDF = function(){
         /*
@@ -52,25 +51,6 @@
 
     }
 
-    var readRowsFromTable = function(){
-        var table = document.getElementById('tableDetalles');
-        var rowLength = table.rows.length;
-
-        for(var i=1; i<rowLength; i+=1){
-          var row = table.rows[i];
-          //your code goes here, looping over every row.
-          //cells are accessed as easy
-          alert(row.cells[0].innerHTML);
-          var cellLength = row.cells.length;
-          /*
-          for(var y=0; y<cellLength; y+=1){
-            var cell = row.cells[y];
-
-            //do something with every cell here
-          }*/
-        }
-    }
-
     var saveEditDetalle = function(parent){
         var descripcion = $('#DescripcionDetalle').val();
         var monto = $('#MontoDetalle').val();
@@ -79,8 +59,9 @@
         parent.children("td:nth-child(2)").html(monto);
         parent.children("input:nth-child(5)").val(descripcion);
         parent.children("input:nth-child(6)").val(monto);
-        montoAcumulado -= parseInt(montoAnterior);
-        montoAcumulado += parseInt(monto);
+        montoAcumulado -= parseFloat(montoAnterior);
+        montoAcumulado += parseFloat(monto);
+        actualizarMontoTotal();
         cleanDetalle();
         editandoDetalle = false;
     }
@@ -98,7 +79,9 @@
     var deleteDetalle = function(){
         var parent = $(this).closest("tr");
         var tdMonto = parent.children("td:nth-child(2)").html();
-        montoAcumulado -= parseInt(tdMonto);
+        alert("Quitando:" + tdMonto);
+        montoAcumulado -= parseFloat(tdMonto);
+        actualizarMontoTotal();
         $(this).closest("tr").remove();
     }
     var cleanDetalle = function(){
@@ -106,6 +89,13 @@
         $('#MontoDetalle').val('');
     }
 
+    var actualizarMontoTotal = function()
+    {
+        //Actualizar el monto total
+        $('[name=Monto]').val(montoAcumulado);
+    }
+
+    /*
     var verificarMonto = function(){
         var montoGeneral = parseInt($('[name=Monto]').val());
         var montoToAdd = parseInt($('#MontoDetalle').val());
@@ -114,7 +104,9 @@
         }
         return true;
     }
+    */
 
+    /*
     var verificarMontoEdit = function(){
         var montoGeneral = parseInt($('[name=Monto]').val());
         var montoAnterior = rowEdit.children("td:nth-child(2)").html();
@@ -124,6 +116,8 @@
         }
         return true;   
     }
+    */
+
 
     var verificarRequeridos = function(){
         if ($('#DescripcionDetalle').val()=='' || $('#MontoDetalle').val()==''){
@@ -147,18 +141,22 @@
 
             if (editandoDetalle){
                 //Verificar que el monto a ingresar no sea mayor al total
+                /*
                 if(!verificarMontoEdit()){
                     alert("No puede ingresar un monto mayor al total");
                     return;
                 }
+                */
                 saveEditDetalle(rowEdit);
             }
             else{
                 //Verificar que el monto a ingresar no sea mayor al total
+                /*
                 if (verificarMonto()==false){
                     alert("No puede ingresar un monto mayor al total");
                     return;
                 }
+                */
 
                 var detalleToAppend = "<tr>";
                 detalleToAppend += "<td>";
@@ -185,11 +183,12 @@
                 detalleToAppend += $('#MontoDetalle').val();
                 detalleToAppend += '"/>';
 
-                montoAcumulado += parseInt($('#MontoDetalle').val());
+                montoAcumulado += parseFloat($('#MontoDetalle').val());
+                actualizarMontoTotal();
                 cleanDetalle();                                
                 $('#tableDetalles').append(detalleToAppend);
                 $('.btnEditDetalle').bind("click", editDetalle);
-                $('.btnDeleteDetalle').bind("click", deleteDetalle);    
+                $('.btnDeleteDetalle').off().on("click", deleteDetalle);    
             }
         });
 
@@ -242,7 +241,7 @@
                                             <label>Monto</label>
                                                 <div class="input-group">
                                                   <div class="input-group-addon">S/.</div>
-                                                    <input type="number" required name="Monto" min="0" step="0.01" class="form-control" id="exampleInputAmount" placeholder="Amount" value="<?php echo $operacion->Id != null ? $operacion->Monto : "0"; ?>">
+                                                    <input type="number" disabled required name="Monto" min="0" step="0.01" class="form-control" id="exampleInputAmount" placeholder="Amount" value="<?php echo $operacion->Id != null ? ($this->model->getMontoTotal($operacion->Id) =='' ? "0" : $this->model->getMontoTotal($operacion->Id)) : "0"; ?>">
                                                   <div class="input-group-addon">.00</div>
                                                 </div>
                                         </div>

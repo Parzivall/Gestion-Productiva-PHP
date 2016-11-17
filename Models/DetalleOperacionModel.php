@@ -61,7 +61,7 @@
 		public function getDetallesByOperacionId($Id){
 			try
 			{
-				$stm = $this->pdo->prepare("SELECT de.Id, de.Descripcion, de.Monto FROM DetallesOperacion do where do.Operacion_Id=?");
+				$stm = $this->pdo->prepare("SELECT do.Id, do.Descripcion, do.Monto FROM DetallesOperacion do where do.Operacion_Id=?");
 				$stm->execute(array($Id));
 
 				return $stm->fetchAll(PDO::FETCH_OBJ);
@@ -75,7 +75,7 @@
 		public function getDetallesArrayByOperacionId($Id){
 			try
 			{
-				$stm = $this->pdo->prepare("SELECT de.Id, de.Descripcion, de.Monto FROM DetallesOperacion do, where do.Operacion_Id=?");
+				$stm = $this->pdo->prepare("SELECT Id, Descripcion, Monto FROM DetallesOperacion where Operacion_Id=?");
 				$stm->execute(array($Id));
 
 				return $stm->fetchAll();

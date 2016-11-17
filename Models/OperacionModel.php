@@ -6,7 +6,6 @@
 	    
 	    public $Id;
 	    public $Tipo;
-	    public $Monto;
 	    public $Unidad_Id;
 	    public $Fecha;
 
@@ -106,6 +105,23 @@
 				die($e->getMessage());
 			}
 		}
+
+		public function getMontoTotal($Id){
+			try 
+			{
+				$stm = $this->pdo
+				            ->prepare("SELECT sum(Monto) FROM Operaciones op, DetallesOperacion do where op.Id = do.Operacion_Id and op.Id = ?");			          
+
+				$stm->execute(array($Id));
+				$row = $stm->fetch(PDO::FETCH_NUM);
+				return $row[0];
+			}
+			catch (Exception $e) 
+			{
+				die($e->getMessage());
+			}
+		}
+
 		public function Obtener($Id)
 		{
 			try 
@@ -126,13 +142,14 @@
 		{
 			try 
 			{
+				$this->pdo->beginTransaction();	
 				//Eliminar las relaciones
 				$stmForeign = $this->pdo
-				            ->prepare("DELETE FROM Detalle_Operacion WHERE Operacion_Id = ?");			          
+				            ->prepare("DELETE FROM DetallesOperacion WHERE Operacion_Id = ?");			          
 				$stmForeign->execute(array($Id));
 
+				/*
 				//Eliminar los detalles
-
 				$stm = $this->pdo->prepare("SELECT De.Id FROM Detalle_Operacion do, Detalles de where do.Operacion_Id=? and do.Detalle_Id = de.Id");
 				$stm->execute(array($Id));
 
@@ -144,11 +161,15 @@
 					$stmForeign->execute(array($detallesToDelete[$i][0]));
 				}
 
+				*/
 				$stm = $this->pdo
 				            ->prepare("DELETE FROM Operaciones WHERE Id = ?");			          
 				$stm->execute(array($Id));
+
+				$this->pdo->commit();
 			} catch (Exception $e) 
 			{
+				$this->pdo->rollback();
 				die($e->getMessage());
 			}
 		}
@@ -156,10 +177,9 @@
 		public function Actualizar(Operacion $operacion)
 		{
 			try 
-			{
+ 			{
 				$sql = "UPDATE Operaciones SET 
 							Tipo          = ?,
-							Monto=?,
 							Unidad_Id=?,
 							Fecha=?
 					    WHERE Id = ?";
@@ -168,7 +188,6 @@
 				     ->execute(
 					    array(
 	                        $operacion->Tipo, 
-	                        $operacion->Monto,
 	                        $operacion->Unidad_Id,
 	                        $operacion->Fecha,
 	                        $operacion->Id
@@ -184,14 +203,13 @@
 		{
 			try 
 			{
-			$sql = "INSERT INTO Operaciones (Tipo, Monto, Unidad_Id, Fecha) 
-			        VALUES (?,?,?,?)";
+			$sql = "INSERT INTO Operaciones (Tipo, Unidad_Id, Fecha) 
+			        VALUES (?,?,?)";
 
 			$this->pdo->prepare($sql)
 			     ->execute(
 					array(
 						$operacion->Tipo,
-						$operacion->Monto,
 						$operacion->Unidad_Id,
 						$operacion->Fecha
 	                )

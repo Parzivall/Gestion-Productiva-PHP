@@ -77,13 +77,14 @@
             $operacion = new Operacion();
             $operacion->Id = $_REQUEST['Id'];
             $operacion->Tipo = $_REQUEST['Tipo'];
-            $operacion->Monto = $_REQUEST['Monto'];
             $operacion->Unidad_Id = $_REQUEST['Unidad'];
             $operacion->Fecha = $_REQUEST['Fecha'];
-            $detallesTemporales = $this->modelDetalleOperacion->getDetallesArrayByOperacionId($operacion->Id);
 
             if ($operacion->Id > 0){
+                file_put_contents('php://stderr', print_r("ENTRO A ACTUALIZAR", TRUE));
+                $detallesTemporales = $this->modelDetalleOperacion->getDetallesArrayByOperacionId($operacion->Id);
                 $this->model->Actualizar($operacion);
+                file_put_contents('php://stderr', print_r("EMPEZO A Comparar", TRUE));
                 //Comparar los detalles nuevos con los anteriores
                 $contador2=0;
                 $tamDT = count($detallesTemporales);
@@ -91,11 +92,12 @@
                     //actualizar los detalles que ya estan en la base de datos
                     for ($j=0; $j < $tamDT; $j++) { 
                         if ($detalles[$i][2] == $detallesTemporales[$j][0]){
-                            $detalle = new Detalle();
+                            $detalle = new DetalleOperacion();
                             $detalle->Id = $detalles[$i][2];
                             $detalle->Descripcion = $detalles[$i][0];
                             $detalle->Monto = $detalles[$i][1];
-                            $this->modelDetalle->Actualizar($detalle);
+                            $detalle->Operacion_Id = $operacion->Id;
+                            $this->modelDetalleOperacion->Actualizar($detalle);
                             unset($detalles[$i]); //Eliminar de los nuevos detalles
                             unset($detallesTemporales[$j]);
                             $detallesTemporales = array_values($detallesTemporales);
@@ -111,36 +113,41 @@
                 //Eliminamos los detalles que ya no esten en la base de datos
                 for ($i=0; $i < count($detallesTemporales); $i++) { 
                     file_put_contents('php://stderr', print_r("Eliminando Detalle", TRUE));
-                    $this->modelDetalleOperacion->EliminarByIds($operacion->Id,$detallesTemporales[$i][0]);
-                    $this->modelDetalle->Eliminar($detallesTemporales[$i][0]);    
+                    //$this->modelDetalleOperacion->EliminarByIds($operacion->Id,$detallesTemporales[$i][0]);
+                    $this->modelDetalleOperacion->Eliminar($detallesTemporales[$i][0]);    
                 }
 
 
                 //Para insertar los detalles
                 for ($i=0; $i < count($detalles); $i++) { 
-                    $detalle = new Detalle();
+                    $detalle = new DetalleOperacion();
                     $detalle->Descripcion = $detalles[$i][0];
                     $detalle->Monto = $detalles[$i][1];
-                    $lastIdDetalle = $this->modelDetalle->Registrar($detalle);
+                    $detalle->Operacion_Id = $operacion->Id;
+                    $this->modelDetalleOperacion->Registrar($detalle);
+                    /*
+                    $lastIdDetalle = $this->modelDetalleOperacion->Registrar($detalle);
                     $detalleOperacion = new DetalleOperacion();
                     $detalleOperacion->Operacion_Id = $operacion->Id;
                     $detalleOperacion->Detalle_Id = $lastIdDetalle;
-                    $this->modelDetalleOperacion->Registrar($detalleOperacion);
+                    $this->modelDetalleOperacion->Registrar($detalleOperacion);*/
                 }
             }else {
                 $lastIdOperacion = $this->model->Registrar($operacion); //Registrar cabecera y obtener id generado
-                $detalle = new Detalle();
+                $detalle = new DetalleOperacion();
 
                 //Para insertar los detalles
                 for ($i=0; $i < $contador; $i++) { 
-                    $detalle = new Detalle();
+                    $detalle = new DetalleOperacion();
                     $detalle->Descripcion = $detalles[$i][0];
                     $detalle->Monto = $detalles[$i][1];
-                    $lastIdDetalle = $this->modelDetalle->Registrar($detalle);
+                    $detalle->Operacion_Id = $lastIdOperacion;
+                    /*$lastIdDetalle = $this->modelDetalleOperacion->Registrar($detalle);
                     $detalleOperacion = new DetalleOperacion();
                     $detalleOperacion->Operacion_Id = $lastIdOperacion;
                     $detalleOperacion->Detalle_Id = $lastIdDetalle;
-                    $this->modelDetalleOperacion->Registrar($detalleOperacion);
+                    $this->modelDetalleOperacion->Registrar($detalleOperacion);*/
+                    $this->modelDetalleOperacion->Registrar($detalle);
                 }
 
                 //Para enlazar los detalles insertados con La operacion Insertada

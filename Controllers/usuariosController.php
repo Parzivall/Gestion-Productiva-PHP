@@ -62,6 +62,11 @@
             require_once 'Views/Usuarios/registro.php';
         }
         
+        public function Recuperar(){
+            $usuario = new Usuario();
+            require_once 'Views/Usuarios/recuperar.php';
+        }
+
         public function Guardar(){
             $usuario = new Usuario();
             

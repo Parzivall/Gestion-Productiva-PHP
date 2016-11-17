@@ -16,39 +16,21 @@
         
        <form class="form-signin" action="<?php echo BASE_URL;?>Usuarios/Login/" method="post" id="login-form">
       
-        <h2 class="form-signin-heading">Bienvenido, por favor identifiquese.</h2><hr />
-        
-        <div id="error">
-        <?php
-			if(isset($error))
-			{
-				?>
-                <div class="alert alert-danger">
-                   <i class="glyphicon glyphicon-warning-sign"></i> &nbsp; <?php echo $error; ?> !
-                </div>
-                <?php
-			}
-		?>
-        </div>
+        <h2 class="form-signin-heading">Recuperar Contraseña.</h2><hr />
         
         <div class="form-group">
         <input type="text" class="form-control" name="Username" placeholder="Nombre de Usuario" required maxlength="20" />
-        <span id="check-e"></span>
         </div>
         
         <div class="form-group">
-        <input type="password" class="form-control" name="Password" placeholder="Contraseña" required maxlength="20" />
-        </div>
-       
-        <div class="form-group"> 
-            <a href="<?php echo BASE_URL;?>Usuarios/Recuperar/">¿Olvido su contraseña?</a>
+        <input type="mail" class="form-control" name="Correo" placeholder="Correo" required />
         </div>
        
      	<hr />
         
         <div class="form-group">
             <button type="submit" name="btn-login" class="btn btn-default">
-                	<i class="glyphicon glyphicon-log-in"></i> &nbsp; Entrar
+                	<i class="glyphicon glyphicon-log-in"></i> &nbsp; Recuperar Contraseña
             </button>
         </div>  
       	<!--<br />

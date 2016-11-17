@@ -31,7 +31,7 @@
                                     <?php foreach((isset($_SESSION['Unidad_Id']) ? $this->model->getOperacionesByUnidadId($_SESSION['Unidad_Id'], $startFrom) : $this->model->Listar($startFrom)) as $r): ?>
                                         <tr>
                                             <td><?php echo $r->Tipo==1 ? "Ingreso" : "Egreso" ; ?></td>
-                                            <td><?php echo "S/.".$r->Monto; ?></td>
+                                            <td><?php echo "S/.".($this->model->getMontoTotal($r->Id)=='' ? "0" : $this->model->getMontoTotal($r->Id)); ?></td>
                                             <td><?php echo $this->model->getUnidadById($r->Unidad_Id); ?></td>
                                             <td><?php echo $r->Fecha; ?></td>
                                             <td class="cell-actions">
