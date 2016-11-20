@@ -22,6 +22,27 @@
 			}
 		}
 
+		//userEmailExists
+		public function userEmailExists($username, $email){
+			try 
+			{
+				$stmt = $this->pdo->prepare("SELECT * FROM Personas where Username=:username and Email=:email");
+				$stmt->bindparam(":username", $username);
+				$stmt->bindparam(":email", $email);
+				$stmt->execute();
+				if($stmt->rowCount() > 0){
+					return true;
+				}
+				else{
+					return false;
+				}
+			} 
+			catch (Exception $e) 
+			{
+				die($e->getMessage());
+			}
+		}
+
 		public function Registrar(Usuario $user)
 		{
 			try 
@@ -43,6 +64,104 @@
 			catch (Exception $e) 
 			{
 				die($e->getMessage());
+			}
+		}
+
+		public function getToken($token)
+		{
+			try 
+			{
+				$stmt = $this->pdo->prepare("SELECT Username, TokenTimestamp FROM Personas WHERE Token=:token");
+				$stmt->bindparam(":token", $token);
+				$stmt->execute();
+				$row = $stmt->fetch(PDO::FETCH_ASSOC);
+				return $row;
+			} 
+			catch (Exception $e) 
+			{
+				die($e->getMessage());
+			}
+		}
+
+		public function eliminarToken($token)
+		{
+			try 
+			{
+				$sql = "UPDATE Personas SET Token = null, TokenTimestamp = 0 WHERE Token = ?";
+				$this->pdo->prepare($sql)
+				     ->execute(
+						array(
+		                    $token
+		                )
+					);
+			} 
+			catch (Exception $e) 
+			{
+				die($e->getMessage());
+			}
+		}
+
+		public function changePassword($username, $newPassword){
+						try 
+			{
+				$new_password = password_hash($newPassword, PASSWORD_DEFAULT);
+
+				$sql = "UPDATE Personas SET Password=? WHERE Username=?";
+
+				$this->pdo->prepare($sql)
+				     ->execute(
+						array(
+		                    $new_password,
+		                    $username
+		                )
+					);
+				return true;
+			} 
+			catch (Exception $e) 
+			{
+				die($e->getMessage());
+				return false;
+			}
+		}
+
+
+
+		public function addToken($username, $token)
+		{
+			try 
+			{
+				//Primero verificar si ya tiene un token, si lo tiene, entonces actualizarlo.
+				/*
+				$exitsToken = true;
+				$stmt = $this->pdo->prepare("SELECT Token FROM Personas where Username=:username");
+				$stmt->bindparam(":username", $username);
+				$stmt->execute();
+				$row = $stmt->fetch(PDO::FETCH_ASSOC);
+				if (is_null($row['Token']))
+				{
+					$exitsToken = false;
+				}
+
+				if ($exitsToken)
+				{*/
+					$sql = "UPDATE Personas SET Token = ?, TokenTimestamp = ? WHERE Username = ?";
+
+					$this->pdo->prepare($sql)
+					     ->execute(
+						    array(
+		                        $token,
+		                        $_SERVER["REQUEST_TIME"],
+		                        $username
+							)
+						);
+					return true;
+				//}
+				
+			} 
+			catch (Exception $e) 
+			{
+				die($e->getMessage());
+				return false;
 			}
 		}
 
