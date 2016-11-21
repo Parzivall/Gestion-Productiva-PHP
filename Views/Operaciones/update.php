@@ -92,7 +92,7 @@
     var actualizarMontoTotal = function()
     {
         //Actualizar el monto total
-        $('[name=Monto]').val(montoAcumulado);
+        $('[name=Monto]').val(montoAcumulado.toFixed(2));
     }
 
     /*
@@ -263,6 +263,19 @@
                                                 <?php
                                                     }
                                                 ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Tipo de Comprobante/Documento</label>
+                                            <select name="TipoComprobateDocumento" class="form-control">
+                                                <?php foreach($this->modelTipoComprobante->getAll() as $r): ?>
+                                                    <option <?php echo ($operacion->Tipo_Comprobante_Documento_Id==$r->Id) ? 'selected' : '' ?> value="<?php echo $r->Id?>" ><?php echo $r->Descripcion;?></option>
+                                                <?php endforeach; ?>
                                             </select>
                                         </div>
                                     </div>

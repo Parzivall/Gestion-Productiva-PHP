@@ -2,17 +2,20 @@
     require_once("Core/Session.php");
     require_once 'Models/OperacionModel.php';
     require_once 'Models/DetalleOperacionModel.php';
+    require_once 'Models/TipoComprobantePagoModel.php';
     
     class OperacionesController{
         
         private $model;
         private $operacion;
         private $modelDetalleOperacion;
+        private $modelTipoComprobante;
         private $detallesTemporales;
 
         public function __construct(){
             $this->model = new Operacion();
             $this->modelDetalleOperacion = new DetalleOperacion();
+            $this->modelTipoComprobante = new TipoComprobantePago();
         }
         
         public function Index(){
@@ -79,6 +82,7 @@
             $operacion->Tipo = $_REQUEST['Tipo'];
             $operacion->Unidad_Id = $_REQUEST['Unidad'];
             $operacion->Fecha = $_REQUEST['Fecha'];
+            $operacion->Tipo_Comprobante_Documento_Id = $_REQUEST['TipoComprobateDocumento'];
 
             if ($operacion->Id > 0){
                 file_put_contents('php://stderr', print_r("ENTRO A ACTUALIZAR", TRUE));

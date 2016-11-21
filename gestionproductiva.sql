@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 21-11-2016 a las 09:49:47
+-- Tiempo de generación: 21-11-2016 a las 10:44:38
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.21
 
@@ -301,7 +301,7 @@ CREATE TABLE `Cronogramas` (
 CREATE TABLE `DetallesOperacion` (
   `Id` int(11) NOT NULL,
   `Descripcion` varchar(100) NOT NULL,
-  `Monto` double NOT NULL,
+  `Monto` decimal(10,2) NOT NULL,
   `Operacion_Id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -310,8 +310,18 @@ CREATE TABLE `DetallesOperacion` (
 --
 
 INSERT INTO `DetallesOperacion` (`Id`, `Descripcion`, `Monto`, `Operacion_Id`) VALUES
-(1, '1 kg', 100, 1),
-(2, 'arroz', 4500, 1);
+(1, '1 kg', '100.00', 1),
+(2, 'arroz', '4500.00', 1),
+(3, 'Cuadernos', '9000.00', 2),
+(5, 'Puerta', '191.00', 2),
+(6, 'Otros', '80.00', 2),
+(7, 'Nuevo', '11.00', 2),
+(8, 'nuevo2', '11.00', 2),
+(9, 'nuevo3', '100.00', 2),
+(10, 'nuevonuevo', '0.00', 2),
+(11, 'nuevootros', '90.50', 2),
+(12, 'nuevo1', '1.00', 2),
+(13, 'nuevo', '190.00', 2);
 
 -- --------------------------------------------------------
 
@@ -443,15 +453,17 @@ CREATE TABLE `Operaciones` (
   `Id` int(11) NOT NULL,
   `Tipo` tinyint(4) NOT NULL,
   `Unidad_Id` int(11) NOT NULL,
-  `Fecha` date NOT NULL
+  `Fecha` date NOT NULL,
+  `Tipo_Comprobante_Documento_Id` int(11) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `Operaciones`
 --
 
-INSERT INTO `Operaciones` (`Id`, `Tipo`, `Unidad_Id`, `Fecha`) VALUES
-(1, 1, 52, '2016-11-17');
+INSERT INTO `Operaciones` (`Id`, `Tipo`, `Unidad_Id`, `Fecha`, `Tipo_Comprobante_Documento_Id`) VALUES
+(1, 1, 52, '2016-11-17', 1),
+(2, 2, 65, '2016-11-21', 3);
 
 -- --------------------------------------------------------
 
@@ -764,9 +776,7 @@ INSERT INTO `Tipo_Comprobante_Documento` (`Id`, `Descripcion`) VALUES
 (97, 'Nota de Crédito - No Domiciliado'),
 (98, 'Nota de Débito - No Domiciliado'),
 (99, 'Otros -Consolidado de Boletas de Venta'),
-(102, 'Otros (especificar)'),
-(153, 'pRYEVA'),
-(154, 'Prueba 2');
+(102, 'Otros (especificar)');
 
 -- --------------------------------------------------------
 
@@ -962,7 +972,8 @@ ALTER TABLE `Material_Insumo`
 --
 ALTER TABLE `Operaciones`
   ADD PRIMARY KEY (`Id`),
-  ADD KEY `unidadesproductivas_operaciones_fk` (`Unidad_Id`);
+  ADD KEY `unidadesproductivas_operaciones_fk` (`Unidad_Id`),
+  ADD KEY `fk_tipo_comprobante_documento` (`Tipo_Comprobante_Documento_Id`);
 
 --
 -- Indices de la tabla `Personas`
@@ -1068,7 +1079,7 @@ ALTER TABLE `Cronogramas`
 -- AUTO_INCREMENT de la tabla `DetallesOperacion`
 --
 ALTER TABLE `DetallesOperacion`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `DocumentoExistente`
 --
@@ -1098,7 +1109,7 @@ ALTER TABLE `InventarioFisico_Detalle`
 -- AUTO_INCREMENT de la tabla `Operaciones`
 --
 ALTER TABLE `Operaciones`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `Personas_Roles`
 --
@@ -1123,7 +1134,7 @@ ALTER TABLE `Rubros`
 -- AUTO_INCREMENT de la tabla `Tipo_Comprobante_Documento`
 --
 ALTER TABLE `Tipo_Comprobante_Documento`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 --
 -- AUTO_INCREMENT de la tabla `Titulos`
 --
@@ -1202,6 +1213,7 @@ ALTER TABLE `InventarioFisico_Detalle`
 -- Filtros para la tabla `Operaciones`
 --
 ALTER TABLE `Operaciones`
+  ADD CONSTRAINT `fk_tipo_comprobante_documento` FOREIGN KEY (`Tipo_Comprobante_Documento_Id`) REFERENCES `Tipo_Comprobante_Documento` (`Id`),
   ADD CONSTRAINT `unidadesproductivas_operaciones_fk` FOREIGN KEY (`Unidad_Id`) REFERENCES `UnidadesProductivas` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --

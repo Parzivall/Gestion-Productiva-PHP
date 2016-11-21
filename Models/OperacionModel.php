@@ -8,6 +8,7 @@
 	    public $Tipo;
 	    public $Unidad_Id;
 	    public $Fecha;
+	    public $Tipo_Comprobante_Documento_Id;
 
 		public function __construct()
 		{
@@ -181,7 +182,8 @@
 				$sql = "UPDATE Operaciones SET 
 							Tipo          = ?,
 							Unidad_Id=?,
-							Fecha=?
+							Fecha=?,
+							Tipo_Comprobante_Documento_Id = ?
 					    WHERE Id = ?";
 
 				$this->pdo->prepare($sql)
@@ -190,6 +192,7 @@
 	                        $operacion->Tipo, 
 	                        $operacion->Unidad_Id,
 	                        $operacion->Fecha,
+	                        $operacion->Tipo_Comprobante_Documento_Id,
 	                        $operacion->Id
 						)
 					);
@@ -203,15 +206,16 @@
 		{
 			try 
 			{
-			$sql = "INSERT INTO Operaciones (Tipo, Unidad_Id, Fecha) 
-			        VALUES (?,?,?)";
+			$sql = "INSERT INTO Operaciones (Tipo, Unidad_Id, Fecha, Tipo_Comprobante_Documento_Id) 
+			        VALUES (?,?,?,?)";
 
 			$this->pdo->prepare($sql)
 			     ->execute(
 					array(
 						$operacion->Tipo,
 						$operacion->Unidad_Id,
-						$operacion->Fecha
+						$operacion->Fecha,
+						$operacion->Tipo_Comprobante_Documento_Id
 	                )
 				);
 			return $this->pdo->lastInsertId();
