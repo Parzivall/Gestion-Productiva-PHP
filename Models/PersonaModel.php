@@ -57,6 +57,26 @@ class Persona
 		}
 	}	
 
+	public function Buscar($startFrom, $busqueda)
+	{
+		try
+		{
+			$limit = resultsPerPage;
+			$start = $startFrom;
+			$busqueda = '%'.$busqueda.'%';
+			$stmt = $this->pdo->prepare("SELECT * FROM Personas where Nombres LIKE :busqueda or Apellidos LIKE :busqueda ORDER BY Apellidos ASC LIMIT :startFrom,:resultsPerPage");
+			$stmt->bindparam(":busqueda", $busqueda);
+			$stmt->bindValue(":startFrom", (int)$start, PDO::PARAM_INT);
+			$stmt->bindValue(":resultsPerPage", (int)$limit, PDO::PARAM_INT);
+			$stmt->execute();
+			return $stmt->fetchAll(PDO::FETCH_OBJ);
+		}
+		catch(Exception $e)
+		{
+			die($e->getMessage());
+		}
+	}
+
 	public function Listar($startFrom)
 	{
 		if (isset($_SESSION['Unidad_Id']))
@@ -140,6 +160,27 @@ class Persona
 			$stm = $this->pdo->prepare("SELECT * FROM Personas");
 			$stm->execute();
 			return $stm->rowCount();
+			
+		} catch (Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getTotalRecordsBusqueda($busqueda){
+		try {
+			if ($busqueda!='')
+			{
+				$busqueda = '%'.$busqueda.'%';
+				$stmt = $this->pdo->prepare("SELECT * FROM Personas where Nombres LIKE :busqueda or Apellidos LIKE :busqueda");
+				$stmt->bindparam(":busqueda", $busqueda);
+				$stmt->execute();
+				return $stmt->rowCount();
+			} else {
+				$stmt = $this->pdo->prepare("SELECT * FROM Personas");
+				$stmt->execute();
+				return $stmt->rowCount();
+			}
+			
 			
 		} catch (Exception $e) {
 			die($e->getMessage());

@@ -49,8 +49,26 @@ class PersonasController{
         require_once 'Views/Personas/pagination.php';
     }
 
+    public function Paginacion(){
+        if (isset($_GET["search"])) { $search  = $_GET["search"]; } else { $search=''; };  
+        if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };  
+        $startFrom = ($page-1) * resultsPerPage;
+        require_once 'Views/Personas/paginationsearch.php';
+    }
+
     public function Verificar(){
         require_once 'Views/Personas/check_availability.php';
+    }
+
+    public function Buscar(){
+        $search = '';
+        $persona = new Persona();
+        if (isset($_POST["search"])) { $search  = $_POST["search"]; } else { $search=''; };  
+        $totalRecords = $this->model->getTotalRecordsBusqueda($search);
+        $totalPages = ceil($totalRecords/resultsPerPage);
+        if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };  
+        $startFrom = ($page-1) * resultsPerPage;
+        require_once 'Views/Personas/fetch.php';
     }
     
     public function Guardar(){

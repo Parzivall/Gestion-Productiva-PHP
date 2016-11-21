@@ -211,9 +211,12 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-group">
+                                    <div class="form-group has-warning has-feedback">
                                         <label>Email</label>
                                         <input type="email" maxlength="50" class="form-control" name="Email" placeholder="Email" value="<?php echo $persona->Email;?>">
+                                        <p class="text-warning" style="font-size: 90%;">
+                                            Se recomienda ingresar para recuperar el acceso en caso olvide su contraseña.
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -244,6 +247,16 @@
 
 
 <script>
+$(function(){
+    $("form").submit(function() {
+        $(this).submit(function() {
+            return false;
+        });
+        return true;
+    });
+});
+
+
 function checkDniAvailability() {
     var base = "<?php echo BASE_URL;?>";
     $("#loaderIcon").show();
@@ -254,7 +267,7 @@ function checkDniAvailability() {
     success:function(data){
         $("#dni-availability-status").html(data);
         $("#loaderIcon").hide();
-        if($('#dni-availability-status span').hasClass('text-danger')){
+        if($('#dni-availability-status span').hasClass('text-danger') || $('#user-availability-status span').hasClass('text-danger')){
             $('#btnSubmit').prop('disabled', true);
         }
         else{
@@ -278,7 +291,7 @@ function checkUserAvailability() {
         $("#loaderIcon").hide();
         if (tmpUser != $('#Username').val()){
             $("#user-availability-status").html(data);
-            if($('#user-availability-status span').hasClass('text-danger')){
+            if($('#user-availability-status span').hasClass('text-danger') || $('#dni-availability-status span').hasClass('text-danger')){
                 $('#btnSubmit').prop('disabled', true);
             }
             else{

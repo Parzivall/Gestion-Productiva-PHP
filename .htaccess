@@ -11,6 +11,8 @@ RewriteEngine on
 #	New Salida : ?c=Alumno&a=Crud&id=
 RewriteRule ^Personas/(\w+)/(\w+)/?$ ?c=Personas&a=$1&Dni=$2
 RewriteRule ^Usuarios/ResetPassword/(\w+)/?$ ?c=Usuarios&a=ResetPassword&Token=$1
+RewriteRule ^(\w+)/(\w+)/Pagina/(\w+)/Busqueda/(\w+)?$ ?c=$1&a=$2&page=$3&search=$4
+RewriteRule ^(\w+)/(\w+)/Pagina/(\w+)/?$ ?c=$1&a=$2&page=$3
 RewriteRule ^(\w+)/(\w+)/Page/(\w+)/?$ ?c=$1&a=$2&page=$3
 RewriteRule ^(\w+)/(\w+)/(\w+)/?$ ?c=$1&a=$2&Id=$3
 RewriteRule ^(\w+)/(\w+)/?$ ?c=$1&a=$2

@@ -15,6 +15,18 @@ if(!empty($_POST["Dni"])) {
   else{
   	echo "<span class='text-success'> Disponible.</span>";
   }
+} else if (isset($_POST["Dni"]))
+{
+  $dniPost = (string)$_POST["Dni"];
+  if ($dniPost=="0")
+  {
+    if ($this->model->dniExists($dniPost)){
+      echo "<span class='text-danger'> Ya existe una persona con este DNI.</span>";
+    }
+    else {
+      echo "<span class='text-success'> Disponible.</span>";
+    }  
+  }
 }
 
 ?>
