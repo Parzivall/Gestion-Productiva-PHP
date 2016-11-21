@@ -47,12 +47,33 @@
             require_once 'Views/footer.php';
         }
 
+        /*
         public function Pagination(){
             if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };  
             $startFrom = ($page-1) * resultsPerPage;
             require_once 'Views/UnidadesProductivas/pagination.php';
         }
+        */
+
+        public function Paginacion(){
+            if (isset($_GET["search"])) { $search  = $_GET["search"]; } else { $search=''; };  
+            if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };  
+            $startFrom = ($page-1) * resultsPerPage;
+            require_once 'Views/UnidadesProductivas/paginationsearch.php';
+        }
+
+        public function Buscar(){
+            $search = '';
+            $unidad = new UnidadProductiva();
+            if (isset($_POST["search"])) { $search  = $_POST["search"]; } else { $search=''; };  
+            $totalRecords = $this->model->getTotalRecordsBusqueda($search);
+            $totalPages = ceil($totalRecords/resultsPerPage);
+            if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };  
+            $startFrom = ($page-1) * resultsPerPage;
+            require_once 'Views/UnidadesProductivas/fetch.php';
+        }
         
+
         public function Verificar(){
             require_once 'Views/UnidadesProductivas/check_availability.php';
         }

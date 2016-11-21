@@ -120,19 +120,6 @@ $('#search').bind('input',function(){
 });  
 
 $(document).ready(function(){
-    /*
-    $('.pagination').pagination({
-        items: <?php echo $totalRecords;?>,
-        itemsOnPage: <?php echo resultsPerPage;?>,
-        cssStyle: 'light-theme',
-        currentPage : 1,
-        onPageClick : function(pageNumber) {
-            $("#target-content").html('Cargando...');
-            var base = "<?php echo BASE_URL;?>";
-            $("#target-content").load(base + "Personas/Pagination/Page/" + pageNumber);
-        }
-    });
-    */
 
     $('.pagination').pagination({
         items: <?php echo $totalRecords;?>,

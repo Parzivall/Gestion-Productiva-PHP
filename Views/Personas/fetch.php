@@ -45,7 +45,8 @@ $output.=         '</tbody>
                   endif;
                 endfor;endif;
             $output.= '</ul></nav>';
-            $output.= '<input type="text" id="totalRecords" value="'.$totalRecords.'">';
+            $output.= '<input hidden type="text" id="totalRecords" value="'.$totalRecords.'">';
+            $output.= '<p class="text-success"> Total: '.$totalRecords.'</p>';
 
 if (!$found)
 {
