@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 28-10-2016 a las 15:20:07
+-- Tiempo de generación: 21-11-2016 a las 09:49:47
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.21
 
@@ -305,6 +305,14 @@ CREATE TABLE `DetallesOperacion` (
   `Operacion_Id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `DetallesOperacion`
+--
+
+INSERT INTO `DetallesOperacion` (`Id`, `Descripcion`, `Monto`, `Operacion_Id`) VALUES
+(1, '1 kg', 100, 1),
+(2, 'arroz', 4500, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -438,6 +446,13 @@ CREATE TABLE `Operaciones` (
   `Fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `Operaciones`
+--
+
+INSERT INTO `Operaciones` (`Id`, `Tipo`, `Unidad_Id`, `Fecha`) VALUES
+(1, 1, 52, '2016-11-17');
+
 -- --------------------------------------------------------
 
 --
@@ -464,15 +479,36 @@ CREATE TABLE `Personas` (
   `Condicion_Laboral` smallint(6) DEFAULT NULL,
   `Especialidad` varchar(100) DEFAULT NULL,
   `Cargo_Id` int(11) DEFAULT NULL,
-  `Unidad_Id` int(11) DEFAULT NULL
+  `Unidad_Id` int(11) DEFAULT NULL,
+  `Token` text,
+  `TokenTimestamp` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `Personas`
 --
 
-INSERT INTO `Personas` (`Dni`, `Username`, `Password`, `Nombres`, `Apellidos`, `Direccion`, `Telefono`, `Email`, `Web`, `Nacimiento`, `Genero`, `UltimaConexion`, `Foto`, `Informacion`, `TipoUsuario`, `Fecha_Ingreso`, `Condicion_Laboral`, `Especialidad`, `Cargo_Id`, `Unidad_Id`) VALUES
-('1', 'admin', '$2y$10$5Hh9VUKl5hrdRT1/oNwix.XJ8pAzoW8f0HGu3dcnh4FOLt1oDxFfy', 'Administrador', 'General', '', 959003224, '', '', '1995-07-11', 1, NULL, 'imagenes/personas/1.jpg', '', 1, '0000-00-00', 1, '', 15, 65);
+INSERT INTO `Personas` (`Dni`, `Username`, `Password`, `Nombres`, `Apellidos`, `Direccion`, `Telefono`, `Email`, `Web`, `Nacimiento`, `Genero`, `UltimaConexion`, `Foto`, `Informacion`, `TipoUsuario`, `Fecha_Ingreso`, `Condicion_Laboral`, `Especialidad`, `Cargo_Id`, `Unidad_Id`, `Token`, `TokenTimestamp`) VALUES
+('''345435', 'ssad', '$2y$10$l3/IHxPZCJnq3E1SjAuQgua/U8jFIlNjCWvPOkbO4oocpWl8NZIoS', 'adksadj', 'sdfdsf', '', 0, '', '', '2016-11-16', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
+('0', '', '$2y$10$D7tvOX4FYwEy5eDwO/UT7u/nn.hsc7scjrGJukHbRCTDiZrQTX7XW', 'testing', 'etes', '', 0, '', '', '2016-11-10', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
+('02', '', '$2y$10$m7FvN8sF2L63I5d9.P/BD.6kv/RBPKZLB0er.8mP/MOLxu8PD6nQy', 'sdflk', 'sdfsdf', '', 0, '', '', '2016-11-02', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
+('1', 'admin', '$2y$10$5Hh9VUKl5hrdRT1/oNwix.XJ8pAzoW8f0HGu3dcnh4FOLt1oDxFfy', 'Administrador', 'General', '', 959003224, '', '', '1995-07-11', 1, NULL, 'imagenes/personas/1.jpg', '', 1, '0000-00-00', 1, '', 15, 65, '', NULL),
+('23423432', 'sdfsdf', '$2y$10$CBWJURwmAIqHxL0yUA3CbuNCX4qV/8BvLfjqm3ScVUuEv7ZcWTqli', 'sdasd', 'sdfdsf', '', 0, '', '', '2016-11-20', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
+('23432', '', '$2y$10$EERaa4c2Bap0LENcPKa8L.NUGKQxEYdyo9C6Bg2TjtApZKHsOJVJS', 'jair', 'jasd', '', 0, '', '', '2016-11-03', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
+('239', '', '$2y$10$bZ9rwb2o14gv1rYfjJ2nsu5djii97kT3Pa/QTArJFl01qOLO3aFkq', 'lui', 'asd', '', 0, '', '', '2016-11-11', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
+('2394', '', '$2y$10$kkVyALx..vI5HR1E4pb4m.5VTeJRvWbctMynzZjLb.WvrZyNEUuuS', 'sdfdsf', 'sdfsdf', '', 0, '', '', '2016-11-15', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
+('2394839', 'asdad', '$2y$10$V/dxTlnH4pGj/MOA9tSjtOjKBMpl8pp5vP9sPFP7DXXSJVtZtSz.2', 'jair asfas', 'jair asdasd', '', 0, 'hasudq@mail.com', '', '2016-11-17', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
+('24234', '', '$2y$10$VNv3Bbj4oWfZMA9txkReneREf2gDj5HS.JoC59Kx.OG5BGDfywQba', 'usuario21', 'asdasd', '', 0, '', '', '2016-11-10', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
+('324325', 'usuario', '$2y$10$8SaJ45mLZDQVMqjbtfpGO.q9g71Nk23DzM9g/aLH6e2iRYUFLaFBC', 'jair', 'jair', '', 0, 'jairfrancesco@outlook.com', '', '2016-11-17', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, 0),
+('345435', 'jairs', '$2y$10$o4vwTBk8BFznuHnHUqm.S.z7TEc9aOO8NgJx6f1arVnQ4RHnMrR7a', 'jair', 'asdasd', '', 0, '', '', '2016-11-17', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
+('34543534', 'asdsadasd', '$2y$10$wBR2i8c.S.wD7.8UVi.f3.GbcjiSrZW5d5ngfrArazcU24.rCj3J2', 'jair', ' jair', '', 0, '', '', '2016-11-10', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
+('345435345', '', '$2y$10$QdVfsGYgyRR/mzpkCC1uPudQniXGniX50jBOSJK5MDC34ncuFH3YG', 'jair', 'huaman', '', 0, '', '', '2016-11-10', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
+('42374832979', '', '$2y$10$dwGQ0d5uaQD22AnDs6grZetUmJlr.zIJHeCcvyhIxTki0FbyjSNr.', 'jairdoc', 'domingo', '', 0, '', '', '2016-11-22', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
+('71498374', 'jair', '$2y$10$SeeFd4bjgEEYECvjHHugcevw7W.VIsazzJCR/5n9YyRPYERC4xDKm', 'jair francesco', 'huaman canqui', '', 0, 'jairfrancesco@gmail.com', '', '1995-07-11', 1, '2016-11-18', NULL, '', 0, '0000-00-00', 1, '', 2, 65, '894dcdf5c0e3e7677f29ffc4dc7cd1609e1f8a32', 1479555829),
+('890', 'nuevo', '$2y$10$NxZ/HtJccC3QD6tgkjN.XOwUuBjSSf9sJMBZpaOWw03aMIcJi9pjW', 'nuevo jair', 'jair viejo', '', 0, '', '', '2016-11-21', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 2, '', 2, 65, NULL, NULL),
+('989', '', '$2y$10$U2kO/EszyBZ3kIPE1ZYCSeDOdd/6KFxZ8hoHHtGhB9onNMoa6XwhC', 'franceso jair ', 'perez', '', 0, '', '', '2016-11-20', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
+('sdfdsf', '', '$2y$10$Lph23oftCRxcvzgWgia6PuU6tkmGgcjL5XB.0fSGqXMjQnxwhumoi', 'jair', 'jair', '', 0, '', '', '2016-11-10', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
+('sfdsf', 'sddsf', '$2y$10$/h.DJevSD9ooAYNIK39c/u3imYhxtcXubIaUPfegGQiqirHwLWG7G', 'sdfdsf', 'sfdsf', '', 0, '', '', '2016-11-17', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -673,6 +709,65 @@ CREATE TABLE `Tipo_Comprobante_Documento` (
   `Descripcion` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `Tipo_Comprobante_Documento`
+--
+
+INSERT INTO `Tipo_Comprobante_Documento` (`Id`, `Descripcion`) VALUES
+(1, 'Factura'),
+(2, 'Recibo por Honorarios'),
+(3, 'Boleta de Venta'),
+(4, 'Liquidación de compra'),
+(5, 'Boleto de compañía de aviación comercial por el servicio de transporte aéreo de pasajeros'),
+(6, 'Carta de porte aéreo por el servicio de transporte de carga aérea'),
+(7, 'Nota de crédito'),
+(8, 'Nota de débito'),
+(9, 'Guía de remisión - Remitente'),
+(10, 'Recibo por Arrendamiento'),
+(11, 'Póliza emitida por las Bolsas de Valores, Bolsas de Productos o Agentes de Intermediación por operac'),
+(12, 'Ticket o cinta emitido por máquina registradora'),
+(13, 'Documento emitido por bancos, instituciones financieras, crediticias y de seguros que se encuentren '),
+(14, 'Recibo por servicios públicos de suministro de energía eléctrica, agua, teléfono, telex y telegráfic'),
+(15, 'Boleto emitido por las empresas de transporte público urbano de pasajeros'),
+(16, 'Boleto de viaje emitido por las empresas de transporte público interprovincial de pasajeros dentro d'),
+(17, 'Documento emitido por la Iglesia Católica por el arrendamiento de bienes inmuebles'),
+(18, 'Documento emitido por las Administradoras Privadas de Fondo de Pensiones que se encuentran bajo la s'),
+(19, 'Boleto o entrada por atracciones y espectáculos públicos'),
+(20, 'Comprobante de Retención'),
+(21, 'Conocimiento de embarque por el servicio de transporte de carga marítima'),
+(22, 'Comprobante por Operaciones No Habituales'),
+(23, 'Pólizas de Adjudicación emitidas con ocasión del remate o adjudicación de bienes por venta forzada, '),
+(24, 'Certificado de pago de regalías emitidas por PERUPETRO S.A'),
+(25, 'Documento de Atribución (Ley del Impuesto General a las Ventas e Impuesto Selectivo al Consumo, Art.'),
+(26, 'Recibo por el Pago de la Tarifa por Uso de Agua Superficial con fines agrarios y por el pago de la C'),
+(27, 'Seguro Complementario de Trabajo de Riesgo'),
+(28, 'Tarifa Unificada de Uso de Aeropuerto'),
+(29, 'Documentos emitidos por la COFOPRI en calidad de oferta de venta de terrenos, los correspondientes a'),
+(30, 'Documentos emitidos por las empresas que desempeñan el rol adquirente en los sistemas de pago median'),
+(31, 'Guía de Remisión - Transportista'),
+(32, 'Documentos emitidos por las empresas recaudadoras de la denominada Garantía de Red Principal a la qu'),
+(34, 'Documento del Operador'),
+(35, 'Documento del Partícipe'),
+(36, 'Recibo de Distribución de Gas Natural'),
+(37, 'Documentos que emitan los concesionarios del servicio de revisiones técnicas vehiculares, por la pre'),
+(40, 'Constancia de Depósito - IVAP (Ley 28211)'),
+(50, 'Declaración Única de Aduanas - Importación definitiva'),
+(52, 'Despacho Simplificado - Importación Simplificada'),
+(53, 'Declaración de Mensajería o Courier'),
+(54, 'Liquidación de Cobranza'),
+(55, 'BVME para transporte ferroviaro de pasajeros'),
+(56, 'Comprobante de pago SEAE'),
+(87, 'Nota de Crédito Especial'),
+(88, 'Nota de Débito Especial'),
+(91, 'Comprobante de No Domiciliado'),
+(96, 'Exceso de crédito fiscal por retiro de bienes'),
+(97, 'Nota de Crédito - No Domiciliado'),
+(98, 'Nota de Débito - No Domiciliado'),
+(99, 'Otros -Consolidado de Boletas de Venta'),
+(102, 'Otros (especificar)'),
+(153, 'pRYEVA'),
+(154, 'Prueba 2');
+
 -- --------------------------------------------------------
 
 --
@@ -750,7 +845,7 @@ INSERT INTO `UnidadesProductivas` (`Id`, `Nombre`, `Rubro_Id`, `Web`, `Telefono`
 (62, 'CONSULTORIO NUTRICIONAL ', 113, '', 0, 0, '', 0, 'Av. Alcides Carrion Nº 101', 35, 'imagenes/unidadesproductivas/organigrama.jpg', NULL, NULL),
 (63, 'INSTITUTO DEL ADOLESCENTE ', 113, '', 219266, 0, '', 0, 'Av. Alcides Carrion Nº 101', 35, 'imagenes/unidadesproductivas/organigrama.jpg', NULL, NULL),
 (64, 'LABORATORIO BROMATOLOGICO Y CONTROL DE CALIDAD DE LOS ALIMENTOS ', 113, 'daccsnut@unsa.edu.pe', 417098, 0, '', 0, 'Av. Alcides Carrion Nº 101', 35, 'imagenes/unidadesproductivas/organigrama.jpg', NULL, NULL),
-(65, 'AULA MAGNA ', 21, '', 0, 0, '', 968012305, 'Av. Alcides Carrion Nº 101', 35, 'imagenes/unidadesproductivas/organigrama.jpg', NULL, NULL),
+(65, 'AULA MAGNA ', 21, '', 0, 0, '', 968012305, 'Av. Alcides Carrion Nº 101', 35, 'imagenes/unidadesproductivas/organigrama.jpg', NULL, '71498374'),
 (66, 'LABORATORIO DE FISIOLOGIA Y BIOTECNOLOGIA VEGETAL ', 113, 'hlazon@hotmail.com', 0, 0, '', 942723607, 'Av. Alcides Carrion Nº 101', 35, 'imagenes/unidadesproductivas/organigrama.jpg', NULL, NULL),
 (67, 'INPEGAS UNSA ', 24, '', 0, 0, '', 0, 'Av. Independencia s/n - Area Ingenierias', 35, 'imagenes/unidadesproductivas/organigrama.jpg', NULL, NULL);
 
@@ -973,7 +1068,7 @@ ALTER TABLE `Cronogramas`
 -- AUTO_INCREMENT de la tabla `DetallesOperacion`
 --
 ALTER TABLE `DetallesOperacion`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `DocumentoExistente`
 --
@@ -1003,7 +1098,7 @@ ALTER TABLE `InventarioFisico_Detalle`
 -- AUTO_INCREMENT de la tabla `Operaciones`
 --
 ALTER TABLE `Operaciones`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `Personas_Roles`
 --
@@ -1025,6 +1120,11 @@ ALTER TABLE `Roles`
 ALTER TABLE `Rubros`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 --
+-- AUTO_INCREMENT de la tabla `Tipo_Comprobante_Documento`
+--
+ALTER TABLE `Tipo_Comprobante_Documento`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
+--
 -- AUTO_INCREMENT de la tabla `Titulos`
 --
 ALTER TABLE `Titulos`
@@ -1033,7 +1133,7 @@ ALTER TABLE `Titulos`
 -- AUTO_INCREMENT de la tabla `UnidadesProductivas`
 --
 ALTER TABLE `UnidadesProductivas`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 --
 -- Restricciones para tablas volcadas
 --
