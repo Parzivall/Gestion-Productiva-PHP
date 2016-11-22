@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 21-11-2016 a las 10:44:38
+-- Tiempo de generación: 22-11-2016 a las 13:34:59
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.21
 
@@ -341,6 +341,14 @@ CREATE TABLE `DocumentoExistente` (
   `Unidad_Id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `DocumentoExistente`
+--
+
+INSERT INTO `DocumentoExistente` (`Id`, `Descripcion`, `Tipo_Documento_Id`, `Numero`, `Fecha_Legalizacion`, `Numero_Folios`, `EstadoOperativo`, `Observaciones`, `Unidad_Id`) VALUES
+(2, 'Procesamiento de Datos de Gestion Productiva', 1, '190', '2016-05-11', '2457', 'Funcionando', 'OBSERVACIONES A MAS NO PODER°!!\r\nOBSERVACIONES A MAS NO PODER°!!OBSERVACIONES A MAS NO PODER°!!\r\nOBSERVACIONES A MAS NO PODER°!!OBSERVACIONES A MAS NO PODER°!!OBSERVACIONES A MAS NO PODER°!!OBSERVACIO', 38),
+(3, 'Documento de Prueba', 3, 'sfsdfds', '2016-11-06', '123', '123', '', 65);
+
 -- --------------------------------------------------------
 
 --
@@ -505,6 +513,7 @@ INSERT INTO `Personas` (`Dni`, `Username`, `Password`, `Nombres`, `Apellidos`, `
 ('0', '', '$2y$10$D7tvOX4FYwEy5eDwO/UT7u/nn.hsc7scjrGJukHbRCTDiZrQTX7XW', 'testing', 'etes', '', 0, '', '', '2016-11-10', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
 ('02', '', '$2y$10$m7FvN8sF2L63I5d9.P/BD.6kv/RBPKZLB0er.8mP/MOLxu8PD6nQy', 'sdflk', 'sdfsdf', '', 0, '', '', '2016-11-02', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
 ('1', 'admin', '$2y$10$5Hh9VUKl5hrdRT1/oNwix.XJ8pAzoW8f0HGu3dcnh4FOLt1oDxFfy', 'Administrador', 'General', '', 959003224, '', '', '1995-07-11', 1, NULL, 'imagenes/personas/1.jpg', '', 1, '0000-00-00', 1, '', 15, 65, '', NULL),
+('18213', '', '$2y$10$UcbJxqVOsk7imP79N/XrQ.BceXXo4BdVBTVxuRxy7Ck5FrG406eLW', 'Nueva persona', 'de prueba', '', 0, '', '', '2016-11-14', 1, '2016-11-22', NULL, '', 0, '0000-00-00', 1, '', 2, 45, NULL, NULL),
 ('23423432', 'sdfsdf', '$2y$10$CBWJURwmAIqHxL0yUA3CbuNCX4qV/8BvLfjqm3ScVUuEv7ZcWTqli', 'sdasd', 'sdfdsf', '', 0, '', '', '2016-11-20', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
 ('23432', '', '$2y$10$EERaa4c2Bap0LENcPKa8L.NUGKQxEYdyo9C6Bg2TjtApZKHsOJVJS', 'jair', 'jasd', '', 0, '', '', '2016-11-03', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
 ('239', '', '$2y$10$bZ9rwb2o14gv1rYfjJ2nsu5djii97kT3Pa/QTArJFl01qOLO3aFkq', 'lui', 'asd', '', 0, '', '', '2016-11-11', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
@@ -517,7 +526,6 @@ INSERT INTO `Personas` (`Dni`, `Username`, `Password`, `Nombres`, `Apellidos`, `
 ('345435345', '', '$2y$10$QdVfsGYgyRR/mzpkCC1uPudQniXGniX50jBOSJK5MDC34ncuFH3YG', 'jair', 'huaman', '', 0, '', '', '2016-11-10', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
 ('42374832979', '', '$2y$10$dwGQ0d5uaQD22AnDs6grZetUmJlr.zIJHeCcvyhIxTki0FbyjSNr.', 'jairdoc', 'domingo', '', 0, '', '', '2016-11-22', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
 ('71498374', 'jair', '$2y$10$SeeFd4bjgEEYECvjHHugcevw7W.VIsazzJCR/5n9YyRPYERC4xDKm', 'jair francesco', 'huaman canqui', '', 0, 'jairfrancesco@gmail.com', '', '1995-07-11', 1, '2016-11-18', NULL, '', 0, '0000-00-00', 1, '', 2, 65, '894dcdf5c0e3e7677f29ffc4dc7cd1609e1f8a32', 1479555829),
-('890', 'nuevo', '$2y$10$NxZ/HtJccC3QD6tgkjN.XOwUuBjSSf9sJMBZpaOWw03aMIcJi9pjW', 'nuevo jair', 'jair viejo', '', 0, '', '', '2016-11-21', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 2, '', 2, 65, NULL, NULL),
 ('989', '', '$2y$10$U2kO/EszyBZ3kIPE1ZYCSeDOdd/6KFxZ8hoHHtGhB9onNMoa6XwhC', 'franceso jair ', 'perez', '', 0, '', '', '2016-11-20', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
 ('sdfdsf', '', '$2y$10$Lph23oftCRxcvzgWgia6PuU6tkmGgcjL5XB.0fSGqXMjQnxwhumoi', 'jair', 'jair', '', 0, '', '', '2016-11-10', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL),
 ('sfdsf', 'sddsf', '$2y$10$/h.DJevSD9ooAYNIK39c/u3imYhxtcXubIaUPfegGQiqirHwLWG7G', 'sdfdsf', 'sfdsf', '', 0, '', '', '2016-11-17', 1, '2016-11-20', NULL, '', 0, '0000-00-00', 1, '', 2, 65, NULL, NULL);
@@ -1084,7 +1092,7 @@ ALTER TABLE `DetallesOperacion`
 -- AUTO_INCREMENT de la tabla `DocumentoExistente`
 --
 ALTER TABLE `DocumentoExistente`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `Facultad`
 --
@@ -1134,7 +1142,7 @@ ALTER TABLE `Rubros`
 -- AUTO_INCREMENT de la tabla `Tipo_Comprobante_Documento`
 --
 ALTER TABLE `Tipo_Comprobante_Documento`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 --
 -- AUTO_INCREMENT de la tabla `Titulos`
 --

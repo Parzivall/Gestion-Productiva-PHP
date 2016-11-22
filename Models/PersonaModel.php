@@ -57,25 +57,6 @@ class Persona
 		}
 	}	
 
-	public function Buscar($startFrom, $busqueda)
-	{
-		try
-		{
-			$limit = resultsPerPage;
-			$start = $startFrom;
-			$busqueda = '%'.$busqueda.'%';
-			$stmt = $this->pdo->prepare("SELECT * FROM Personas where Nombres LIKE :busqueda or Apellidos LIKE :busqueda ORDER BY Apellidos ASC LIMIT :startFrom,:resultsPerPage");
-			$stmt->bindparam(":busqueda", $busqueda);
-			$stmt->bindValue(":startFrom", (int)$start, PDO::PARAM_INT);
-			$stmt->bindValue(":resultsPerPage", (int)$limit, PDO::PARAM_INT);
-			$stmt->execute();
-			return $stmt->fetchAll(PDO::FETCH_OBJ);
-		}
-		catch(Exception $e)
-		{
-			die($e->getMessage());
-		}
-	}
 
 	public function Listar($startFrom)
 	{
@@ -102,6 +83,56 @@ class Persona
 			}
 		}
 	}
+
+	public function BuscarByUnidadId($startFrom, $busqueda, $Id)
+	{
+		try
+		{
+			$limit = resultsPerPage;
+			$start = $startFrom;
+			$busqueda = '%'.$busqueda.'%';
+			$stmt = $this->pdo->prepare("SELECT * FROM Personas where Unidad_Id=:unidad_Id and (Nombres LIKE :busqueda or Apellidos LIKE :busqueda) ORDER BY Apellidos ASC LIMIT :startFrom,:resultsPerPage");
+			$stmt->bindValue(":unidad_Id", $Id, PDO::PARAM_INT);
+			$stmt->bindparam(":busqueda", $busqueda);
+			$stmt->bindValue(":startFrom", (int)$start, PDO::PARAM_INT);
+			$stmt->bindValue(":resultsPerPage", (int)$limit, PDO::PARAM_INT);
+			$stmt->execute();
+			return $stmt->fetchAll(PDO::FETCH_OBJ);
+		}
+		catch(Exception $e)
+		{
+			die($e->getMessage());
+		}
+	}
+
+
+	public function Buscar($startFrom, $busqueda)
+	{
+		if (isset($_SESSION['Unidad_Id']))
+		{
+			$unidadID = intval($_SESSION['Unidad_Id']);
+			return $this->BuscarByUnidadId($startFrom, $busqueda, $unidadID);
+		}
+		else
+		{
+			try
+			{
+				$limit = resultsPerPage;
+				$start = $startFrom;
+				$busqueda = '%'.$busqueda.'%';
+				$stmt = $this->pdo->prepare("SELECT * FROM Personas where Nombres LIKE :busqueda or Apellidos LIKE :busqueda ORDER BY Apellidos ASC LIMIT :startFrom,:resultsPerPage");
+				$stmt->bindparam(":busqueda", $busqueda);
+				$stmt->bindValue(":startFrom", (int)$start, PDO::PARAM_INT);
+				$stmt->bindValue(":resultsPerPage", (int)$limit, PDO::PARAM_INT);
+				$stmt->execute();
+				return $stmt->fetchAll(PDO::FETCH_OBJ);
+			}
+			catch(Exception $e)
+			{
+				die($e->getMessage());
+			}
+		}
+	}	
 
 	public function Obtener($dni)
 	{

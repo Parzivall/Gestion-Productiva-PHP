@@ -26,18 +26,19 @@
 			}
 		}
 
-		public function Listar($startFrom)
+
+		public function ListarByUnidad($startFrom,$Id)
 		{
 			try
 			{
 				$limit = resultsPerPage;
 				$start = $startFrom;
-				$stmt = $this->pdo->prepare("SELECT * FROM DocumentoExistente ORDER BY Fecha_Legalizacion ASC LIMIT :startFrom,:resultsPerPage");
+				$stmt = $this->pdo->prepare("SELECT * FROM DocumentoExistente where Unidad_Id=:unidad_Id ORDER BY Fecha_Legalizacion ASC LIMIT :startFrom,:resultsPerPage");
+				$stmt->bindValue(":unidad_Id", $Id, PDO::PARAM_INT);
 				$stmt->bindValue(":startFrom", (int)$start, PDO::PARAM_INT);
 				$stmt->bindValue(":resultsPerPage", (int)$limit, PDO::PARAM_INT);
 				$stmt->execute();
 				return $stmt->fetchAll(PDO::FETCH_OBJ);
-
 			}
 			catch(Exception $e)
 			{
@@ -45,14 +46,42 @@
 			}
 		}
 
-		public function Buscar($startFrom, $busqueda)
+		public function Listar($startFrom)
+		{
+			if (isset($_SESSION['Unidad_Id']))
+			{
+				$unidadID = intval($_SESSION['Unidad_Id']);
+				return $this->ListarByUnidad($startFrom,$unidadID);
+			}
+			else
+			{
+				try
+				{
+					$limit = resultsPerPage;
+					$start = $startFrom;
+					$stmt = $this->pdo->prepare("SELECT * FROM DocumentoExistente ORDER BY Fecha_Legalizacion ASC LIMIT :startFrom,:resultsPerPage");
+					$stmt->bindValue(":startFrom", (int)$start, PDO::PARAM_INT);
+					$stmt->bindValue(":resultsPerPage", (int)$limit, PDO::PARAM_INT);
+					$stmt->execute();
+					return $stmt->fetchAll(PDO::FETCH_OBJ);
+
+				}
+				catch(Exception $e)
+				{
+					die($e->getMessage());
+				}
+			}
+		}
+
+		public function BuscarByUnidadId($startFrom, $busqueda, $Id)
 		{
 			try
 			{
 				$limit = resultsPerPage;
 				$start = $startFrom;
 				$busqueda = '%'.$busqueda.'%';
-				$stmt = $this->pdo->prepare("SELECT * FROM DocumentoExistente where Descripcion LIKE :busqueda ORDER BY Descripcion ASC LIMIT :startFrom,:resultsPerPage");
+				$stmt = $this->pdo->prepare("SELECT * FROM DocumentoExistente where Unidad_Id=:unidad_Id and Descripcion LIKE :busqueda ORDER BY Descripcion ASC LIMIT :startFrom,:resultsPerPage");
+				$stmt->bindValue(":unidad_Id", $Id, PDO::PARAM_INT);
 				$stmt->bindparam(":busqueda", $busqueda);
 				$stmt->bindValue(":startFrom", (int)$start, PDO::PARAM_INT);
 				$stmt->bindValue(":resultsPerPage", (int)$limit, PDO::PARAM_INT);
@@ -62,6 +91,34 @@
 			catch(Exception $e)
 			{
 				die($e->getMessage());
+			}
+		}
+
+		public function Buscar($startFrom, $busqueda)
+		{
+			if (isset($_SESSION['Unidad_Id']))
+			{
+				$unidadID = intval($_SESSION['Unidad_Id']);
+				return $this->BuscarByUnidadId($startFrom,$busqueda,$unidadID);
+			}
+			else
+			{
+				try
+				{
+					$limit = resultsPerPage;
+					$start = $startFrom;
+					$busqueda = '%'.$busqueda.'%';
+					$stmt = $this->pdo->prepare("SELECT * FROM DocumentoExistente where Descripcion LIKE :busqueda ORDER BY Descripcion ASC LIMIT :startFrom,:resultsPerPage");
+					$stmt->bindparam(":busqueda", $busqueda);
+					$stmt->bindValue(":startFrom", (int)$start, PDO::PARAM_INT);
+					$stmt->bindValue(":resultsPerPage", (int)$limit, PDO::PARAM_INT);
+					$stmt->execute();
+					return $stmt->fetchAll(PDO::FETCH_OBJ);
+				}
+				catch(Exception $e)
+				{
+					die($e->getMessage());
+				}
 			}
 		}
 
