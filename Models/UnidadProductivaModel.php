@@ -48,6 +48,19 @@
 			}
 		}
 
+		public function getAll(){
+			try
+			{
+				$stmt = $this->pdo->prepare("SELECT * FROM UnidadesProductivas ORDER BY Nombre ASC");
+				$stmt->execute();
+				return $stmt->fetchAll(PDO::FETCH_OBJ);
+			}
+			catch(Exception $e)
+			{
+				die($e->getMessage());
+			}
+		}
+
 
 		public function Buscar($startFrom, $busqueda)
 		{

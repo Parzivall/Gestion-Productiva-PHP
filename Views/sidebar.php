@@ -48,6 +48,12 @@
                         <p>Operaciones</p>
                     </a>
                 </li>
+                <li class="<?php echo isset($documento) ? 'active' : ''?>">
+                    <a href="<?php echo BASE_URL;?>Documentos">
+                        <i class="pe-7s-news-paper"></i>
+                        <p>Documentos</p>
+                    </a>
+                </li>
                 <li class="<?php echo isset($cronograma) ? 'active' : ''?>">
                     <a href="<?php echo BASE_URL;?>Cronogramas">
                         <i class="pe-7s-clock"></i>
