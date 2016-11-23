@@ -46,12 +46,51 @@
 			}
 		}
 
+		public function Buscar($startFrom, $busqueda)
+		{
+			try
+			{
+				$limit = resultsPerPage;
+				$start = $startFrom;
+				$busqueda = '%'.$busqueda.'%';
+				$stmt = $this->pdo->prepare("SELECT * FROM UnidadesProductivas where Nombre LIKE :busqueda ORDER BY Nombre ASC LIMIT :startFrom,:resultsPerPage");
+				$stmt->bindparam(":busqueda", $busqueda);
+				$stmt->bindValue(":startFrom", (int)$start, PDO::PARAM_INT);
+				$stmt->bindValue(":resultsPerPage", (int)$limit, PDO::PARAM_INT);
+				$stmt->execute();
+				return $stmt->fetchAll(PDO::FETCH_OBJ);
+			}
+			catch(Exception $e)
+			{
+				die($e->getMessage());
+			}
+		}
+
 		public function getTotalRecords(){
 			try {
 				$stm = $this->pdo->prepare("SELECT up.Id, up.Nombre, up.Rubro_Id, up.Web, up.Telefono, up.Telefono_Anexo, up.Celular, up.Ubicacion, up.Ciudad_Id, up.Persona_Dni FROM UnidadesProductivas up");
 				$stm->execute();
 				return $stm->rowCount();
 				
+			} catch (Exception $e) {
+				die($e->getMessage());
+			}
+		}
+
+		public function getTotalRecordsBusqueda($busqueda){
+			try {
+				if ($busqueda!='')
+				{
+					$busqueda = '%'.$busqueda.'%';
+					$stmt = $this->pdo->prepare("SELECT * FROM UnidadesProductivas where Nombre LIKE :busqueda");
+					$stmt->bindparam(":busqueda", $busqueda);
+					$stmt->execute();
+					return $stmt->rowCount();
+				} else {
+					$stmt = $this->pdo->prepare("SELECT * FROM UnidadesProductivas");
+					$stmt->execute();
+					return $stmt->rowCount();
+				}	
 			} catch (Exception $e) {
 				die($e->getMessage());
 			}

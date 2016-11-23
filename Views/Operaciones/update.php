@@ -273,7 +273,7 @@
                                         <div class="form-group">
                                             <label>Tipo de Comprobante/Documento</label>
                                             <select name="TipoComprobateDocumento" class="form-control">
-                                                <?php foreach($this->modelTipoComprobante->getAll() as $r): ?>
+                                                <?php foreach($this->modelTipoComprobante->getComprobantesSeleccionados() as $r): ?>
                                                     <option <?php echo ($operacion->Tipo_Comprobante_Documento_Id==$r->Id) ? 'selected' : '' ?> value="<?php echo $r->Id?>" ><?php echo $r->Descripcion;?></option>
                                                 <?php endforeach; ?>
                                             </select>
