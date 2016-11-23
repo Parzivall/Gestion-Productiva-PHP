@@ -206,7 +206,7 @@
                     
                     <ol class="breadcrumb">
                         <li><a href="<?php echo BASE_URL;?>Operaciones/">Operaciones</a></li>
-                        <li class="active"><?php echo $operacion->Id != null ? $operacion->Tipo.'('.$operacion->Fecha.')' : 'Registro de Operación'; ?></li>
+                        <li class="active"><?php echo $operacion->Id != null ? ($operacion->Tipo==1 ? "Ingreso" : "Egreso").'('.$operacion->Fecha.')' : 'Registro de Operación'; ?></li>
                     </ol>
                     <form method="post" action="<?php echo BASE_URL;?>Operaciones/Guardar/" enctype="multipart/form-data">
                         <div class="content">

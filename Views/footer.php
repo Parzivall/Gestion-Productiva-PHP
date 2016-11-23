@@ -44,6 +44,8 @@
 	<!--  Charts Plugin -->
 	<script src="<?php echo BASE_URL;?>Assets/js/chartist.min.js"></script>
 
+    <script src="<?php echo BASE_URL;?>Assets/js/Chart.min.js"></script>
+
     <!--  Notifications Plugin    -->
     <script src="<?php echo BASE_URL;?>Assets/js/bootstrap-notify.js"></script>
 

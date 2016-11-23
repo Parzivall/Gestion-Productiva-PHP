@@ -224,5 +224,34 @@
 				die($e->getMessage());
 			}
 		}
+
+		
+		public function getIngresosAgrupadosByUnidadId($Id)
+		{
+			try 
+			{
+				$stm = $this->pdo
+				          ->prepare("SELECT tcd.Descripcion,sum(Monto) as 'Total' FROM Operaciones op, DetallesOperacion do, Tipo_Comprobante_Documento tcd where op.Id = do.Operacion_Id and op.Tipo_Comprobante_Documento_Id = tcd.Id and Tipo=1 and op.Unidad_Id = ? GROUP by Unidad_Id,Tipo_Comprobante_Documento_Id");
+				$stm->execute(array($Id));
+				return $stm->fetchAll(PDO::FETCH_ASSOC);
+			} catch (Exception $e) 
+			{
+				die($e->getMessage());
+			}
+		}
+
+		public function getEgresosAgrupadosByUnidadId($Id)
+		{
+			try 
+			{
+				$stm = $this->pdo
+				          ->prepare("SELECT tcd.Descripcion,sum(Monto) as 'Total' FROM Operaciones op, DetallesOperacion do, Tipo_Comprobante_Documento tcd where op.Id = do.Operacion_Id and op.Tipo_Comprobante_Documento_Id = tcd.Id and Tipo=2 and op.Unidad_Id = ? GROUP by Unidad_Id,Tipo_Comprobante_Documento_Id");
+				$stm->execute(array($Id));
+				return $stm->fetchAll(PDO::FETCH_ASSOC);
+			} catch (Exception $e) 
+			{
+				die($e->getMessage());
+			}
+		}
 	}
 ?>
