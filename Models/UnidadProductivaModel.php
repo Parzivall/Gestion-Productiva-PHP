@@ -146,6 +146,22 @@
 			}
 		}
 
+		public function getResponsableByDni($Dni){
+			try 
+			{
+				$stm = $this->pdo
+				            ->prepare("SELECT * FROM Personas WHERE Dni = ?");			          
+
+				$stm->execute(array($Dni));
+				$row = $stm->fetch(PDO::FETCH_ASSOC);
+				return $row['Nombres'].' '.$row['Apellidos'];
+			}
+			catch (Exception $e) 
+			{
+				die($e->getMessage());
+			}
+		}
+
 		public function getRubroById($Id){
 			try 
 			{

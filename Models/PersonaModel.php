@@ -57,6 +57,21 @@ class Persona
 		}
 	}	
 
+	public function getAllByUnidadId($Id)
+	{
+		try
+		{
+			$stmt = $this->pdo->prepare("SELECT * FROM Personas where Unidad_Id=:unidad_Id ORDER BY Apellidos ASC");
+			$stmt->bindValue(":unidad_Id", $Id, PDO::PARAM_INT);
+			$stmt->execute();
+			return $stmt->fetchAll(PDO::FETCH_OBJ);
+		}
+		catch(Exception $e)
+		{
+			die($e->getMessage());
+		}	
+	}
+
 
 	public function Listar($startFrom)
 	{

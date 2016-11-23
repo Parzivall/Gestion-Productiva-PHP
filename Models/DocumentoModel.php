@@ -73,6 +73,35 @@
 			}
 		}
 
+		public function getAll()
+		{
+			try
+				{
+					$stmt = $this->pdo->prepare("SELECT * FROM DocumentoExistente ORDER BY Fecha_Legalizacion ASC");
+					$stmt->execute();
+					return $stmt->fetchAll(PDO::FETCH_OBJ);
+				}
+				catch(Exception $e)
+				{
+					die($e->getMessage());
+				}
+		}
+
+		public function getAllByUnidadId($Id)
+		{
+			try
+			{
+				$stmt = $this->pdo->prepare("SELECT * FROM DocumentoExistente WHERE Unidad_Id=:unidad_Id ORDER BY Fecha_Legalizacion ASC");
+				$stmt->bindValue(":unidad_Id", $Id, PDO::PARAM_INT);
+				$stmt->execute();
+				return $stmt->fetchAll(PDO::FETCH_OBJ);
+			}
+			catch(Exception $e)
+			{
+				die($e->getMessage());
+			}
+		}
+
 		public function BuscarByUnidadId($startFrom, $busqueda, $Id)
 		{
 			try

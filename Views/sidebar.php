@@ -16,6 +16,12 @@
             </div>
 
             <ul class="nav">
+                <li class="<?php echo isset($dashboard) ? 'active' : ''?>">
+                    <a href="<?php echo BASE_URL;?>Dashboard">
+                        <i class="pe-7s-display2"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
                 <li class="<?php echo $_SESSION['TipoUsuario']==0 ? 'hide' : ''; ?> <?php echo isset($unidad) ? 'active' : ''?>" >
                     <a href="<?php echo BASE_URL;?>UnidadesProductivas">
                         <i class="pe-7s-graph"></i>

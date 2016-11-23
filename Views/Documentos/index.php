@@ -43,6 +43,7 @@
                                         <th>N° de Folios</th>
                                         <th>Estado Operativo</th>
                                         <th>Observaciones</th>
+                                        <th>Unidad</th>
                                         <th></th>
                                     </thead>
                                     <tbody id="target-content">
