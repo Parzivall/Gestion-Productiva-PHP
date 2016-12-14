@@ -37,6 +37,7 @@
             $totalPages = ceil($totalRecords/resultsPerPage);
             if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };  
             $startFrom = ($page-1) * resultsPerPage;
+            
             if(isset($_REQUEST['Id'])){
                 $operacion = $this->model->Obtener($_REQUEST['Id']);
                 $detallesTemporales = $this->modelDetalleOperacion->getDetallesByOperacionId($_REQUEST['Id']);
@@ -138,7 +139,7 @@
                 }
             }else {
                 $lastIdOperacion = $this->model->Registrar($operacion); //Registrar cabecera y obtener id generado
-                $detalle = new DetalleOperacion();
+                //$detalle = new DetalleOperacion();
 
                 //Para insertar los detalles
                 for ($i=0; $i < $contador; $i++) { 
@@ -156,7 +157,7 @@
 
                 //Para enlazar los detalles insertados con La operacion Insertada
             }
-            header('Location:'.BASE_URL.'Operaciones');
+          //  header('Location:'.BASE_URL.'Operaciones');
         }
         
         public function Eliminar(){

@@ -20,6 +20,7 @@
         public function Index(){
 
             $rubro = new Rubro();
+           
             $totalRecords = $this->model->getTotalRecords();
             $totalPages = ceil($totalRecords/resultsPerPage);
             if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };  

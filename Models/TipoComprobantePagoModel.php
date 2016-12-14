@@ -51,21 +51,6 @@
 			}
 		}
 
-		public function getComprobantesSeleccionados(){
-			try
-			{
-				$stmt = $this->pdo->prepare("SELECT * FROM Tipo_Comprobante_Documento WHERE Id<5 or Id=103 ORDER BY Descripcion ASC");
-				$stmt->execute();
-				return $stmt->fetchAll(PDO::FETCH_OBJ);
-			}
-			catch(Exception $e)
-			{
-				die($e->getMessage());
-			}
-		}
-
-		
-
 		public function getTotalRecords(){
 			try {
 				$stm = $this->pdo->prepare("SELECT * FROM Tipo_Comprobante_Documento");

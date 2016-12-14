@@ -34,4 +34,5 @@
 
     <!--CSS OWN -->
     <link rel="stylesheet" type="text/css" href="<?php echo BASE_URL;?>Assets/css/styles.css">
+
 </head>

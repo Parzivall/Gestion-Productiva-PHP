@@ -24,7 +24,7 @@ else
 {
 
     // Obtenemos el controlador que queremos cargar
-    $controller = strtolower($_REQUEST['c']);
+    $controller = strtolower($_REQUEST['c']);//todo lo convierte a miniscula
     
     $accion = isset($_REQUEST['a']) ? $_REQUEST['a'] : 'Index';
     // Instanciamos el controlador

@@ -16,12 +16,6 @@
             </div>
 
             <ul class="nav">
-                <li class="<?php echo isset($dashboard) ? 'active' : ''?>">
-                    <a href="<?php echo BASE_URL;?>Dashboard">
-                        <i class="pe-7s-display2"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
                 <li class="<?php echo $_SESSION['TipoUsuario']==0 ? 'hide' : ''; ?> <?php echo isset($unidad) ? 'active' : ''?>" >
                     <a href="<?php echo BASE_URL;?>UnidadesProductivas">
                         <i class="pe-7s-graph"></i>
@@ -54,12 +48,6 @@
                         <p>Operaciones</p>
                     </a>
                 </li>
-                <li class="<?php echo isset($documento) ? 'active' : ''?>">
-                    <a href="<?php echo BASE_URL;?>Documentos">
-                        <i class="pe-7s-news-paper"></i>
-                        <p>Documentos</p>
-                    </a>
-                </li>
                 <li class="<?php echo isset($cronograma) ? 'active' : ''?>">
                     <a href="<?php echo BASE_URL;?>Cronogramas">
                         <i class="pe-7s-clock"></i>
@@ -72,6 +60,20 @@
                         <p>Tablas Auxiliares</p>
                     </a>
                 </li>
+
+                <li class = "<?php echo (isset($Inventariofisico)) ? 'active' : ''?>">
+                    <a href="<?php echo BASE_URL;?>InventarioFisico">
+                        <i class="pe-7s-note"></i>
+                        <p>Inventarios</p>
+                    </a>
+                </li>
+
+               <li class="<?php echo (isset($Unidadmedida)) ? 'active' : ''?>">
+                    <a href="<?php echo BASE_URL;?>UnidadMedida">
+                        <i class="pe-7s-config"></i>
+                        <p>Piezas de Inventarios</p>
+                    </a>
+                </li> 
 
                 
                 <!--

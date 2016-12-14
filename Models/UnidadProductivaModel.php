@@ -48,19 +48,6 @@
 			}
 		}
 
-		public function getAll(){
-			try
-			{
-				$stmt = $this->pdo->prepare("SELECT * FROM UnidadesProductivas ORDER BY Nombre ASC");
-				$stmt->execute();
-				return $stmt->fetchAll(PDO::FETCH_OBJ);
-			}
-			catch(Exception $e)
-			{
-				die($e->getMessage());
-			}
-		}
-
 
 		public function Buscar($startFrom, $busqueda)
 		{
@@ -92,7 +79,7 @@
 				          
 
 				$stm->execute(array($Id));
-				return $stm->fetch(PDO::FETCH_OBJ);
+				return $stm->fetch(PDO::FETCH_OBJ);//devuelve una fila del llamado
 			} catch (Exception $e) 
 			{
 				die($e->getMessage());
@@ -141,22 +128,6 @@
 
 			}
 			catch(Exception $e)
-			{
-				die($e->getMessage());
-			}
-		}
-
-		public function getResponsableByDni($Dni){
-			try 
-			{
-				$stm = $this->pdo
-				            ->prepare("SELECT * FROM Personas WHERE Dni = ?");			          
-
-				$stm->execute(array($Dni));
-				$row = $stm->fetch(PDO::FETCH_ASSOC);
-				return $row['Nombres'].' '.$row['Apellidos'];
-			}
-			catch (Exception $e) 
 			{
 				die($e->getMessage());
 			}

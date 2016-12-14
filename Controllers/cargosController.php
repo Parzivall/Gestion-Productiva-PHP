@@ -21,9 +21,10 @@
 
             $cargo = new Cargo();
             $totalRecords = $this->model->getTotalRecords();
-            $totalPages = ceil($totalRecords/resultsPerPage);
+            $totalPages = ceil($totalRecords/resultsPerPage);// de donde resultados por pagina
             if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };  
             $startFrom = ($page-1) * resultsPerPage;
+
             require_once 'Views/header.php';
             require_once 'Views/sidebar.php';
             require_once 'Views/panel.php';
@@ -31,12 +32,13 @@
             require_once 'Views/footer.php';
         }
         
+        
         public function Crud(){
             $cargo = new Cargo();
             $totalRecords = $this->model->getTotalRecords();
-            $totalPages = ceil($totalRecords/resultsPerPage);
+            $totalPages = ceil($totalRecords/resultsPerPage);//Redondear fracciones hacia arriba
             if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };  
-            $startFrom = ($page-1) * resultsPerPage;
+                $startFrom = ($page-1) * resultsPerPage;
             if(isset($_REQUEST['Id'])){
                 $cargo = $this->model->Obtener($_REQUEST['Id']);
             }

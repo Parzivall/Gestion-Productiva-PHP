@@ -12,5 +12,4 @@
    define('MAIL_SMTPSECURE', 'tls');
    define('MAIL_SMTPAUTH', true);
    define('resultsPerPage', 10);   
-   define('UNIVERSIDAD', 'UNIVERSIDAD NACIONAL DE SAN AGUSTIN');
 ?>

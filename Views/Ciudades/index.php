@@ -15,6 +15,7 @@
                                     <option value="<?php echo BASE_URL;?>Ciudades" <?php if (isset($this->auxTable) && $this->auxTable=="Ciudades") echo 'selected'; ?>>Ciudades</option>
                                     <option value="<?php echo BASE_URL;?>Rubros" <?php if (isset($this->auxTable) && $this->auxTable=="Rubros") echo 'selected'; ?>>Rubros</option>
                                     <option value="<?php echo BASE_URL;?>Cargos" <?php if (isset($this->auxTable) && $this->auxTable=="Cargos") echo 'selected'; ?>>Cargos</option>
+                                    <!--<option value="<?php echo BASE_URL;?>UnidadMedida" <?php if (isset($this->auxTable) && $this->auxTable=="UnidadMedida") echo 'selected'; ?>>UnidadMedida</option>-->
                                 </select>             
                             </div>
                         </div>

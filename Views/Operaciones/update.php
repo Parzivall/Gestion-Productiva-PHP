@@ -1,65 +1,19 @@
 <script type="text/javascript" src="<?php echo BASE_URL;?>Assets/js/jspdf.min.js"></script>
+
 <script type="text/javascript">
-    //var montoAcumulado = 0;
-    var montoAcumulado = parseFloat("<?php echo $operacion->Id != null ? ($this->model->getMontoTotal($operacion->Id) =='' ? "0" : $this->model->getMontoTotal($operacion->Id)) : "0"; ?>");
-    var editandoDetalle = false;
-    var rowEdit = null;
-
-    var genPDF = function(){
-        /*
-        var doc = new jsPDF();
-        doc.text(20,20, "Universidad Nacional de San Agustin");
-        doc.text(20,40, "Reporte de Ingreso/Egreso");
-
-        doc.fromHTML($('#tableDetalles').get(0), 20,60,{'width':500});
-        doc.save('reporte.pdf');
-        */
-        var pdf = new jsPDF('p', 'pt', 'ledger');
-        pdf.text(240,60, "Universidad Nacional de San Agustin");
-        pdf.text(260,80, "Reporte de Ingreso/Egreso");
-        pdf.text(40,100, "Tipo(Unidad Productiva):");
-        pdf.text(100,100, $('#Titulo').val());
-        pdf.text(40, 120, "Monto Total:")
-        pdf.text(160, 120, $('[name=Monto]').val());
-
-        source = $('#tableToGenerate')[0];
-
-        specialElementHandlers = {
-            '#bypassme' : function(element, renderer) {
-                return true
-            }
-        };
-        margins = {
-            top : 160,
-            bottom : 60,
-            left : 60,
-            width : 300
-        };
-        
-        pdf.fromHTML(source, // HTML string or DOM elem ref.
-        margins.left, // x coord
-        margins.top, { // y coord
-            'width' : margins.width, // max width of content on PDF
-            'elementHandlers' : specialElementHandlers
-        },
-
-        function(dispose) {
-            // dispose: object with X, Y of the last line add to the PDF 
-            //          this allow the insertion of new lines after html
-            pdf.save('fileNameOfGeneretedPdf.pdf');
-        }, margins);
-
-    }
-
+   // var montoAcumulado = 0;
+   // var editandoDetalle =false;
+    
     var saveEditDetalle = function(parent){
-        var descripcion = $('#DescripcionDetalle').val();
+        var descripcion = $('#DescripcionDetalle').val()
         var monto = $('#MontoDetalle').val();
         var montoAnterior = parent.children("td:nth-child(2)").html();
         parent.children("td:nth-child(1)").html(descripcion);
         parent.children("td:nth-child(2)").html(monto);
-        parent.children("input:nth-child(5)").val(descripcion);
-        parent.children("input:nth-child(6)").val(monto);
-        montoAcumulado -= parseFloat(montoAnterior);
+
+        parent.children("input:nth-child(4)").val(descripcion);//aca deberia ser 1
+        parent.children("input:nth-child(5)").val(monto);//y aqui 2 lo pne como defaul valor monto
+        montoAcumulado -= parseFloat(montoAnterior);//lee todo y solo regresa el primer numero
         montoAcumulado += parseFloat(monto);
         actualizarMontoTotal();
         cleanDetalle();
@@ -68,14 +22,15 @@
 
     var editDetalle =  function(){
         editandoDetalle = true;
-        var parent = $(this).closest("tr");
+        var parent = $(this).closest("tr");//me devuelve el ultimo <tr>
         rowEdit = parent;
         var tdDescripcion = parent.children("td:nth-child(1)").html();
         var tdMonto = parent.children("td:nth-child(2)").html();
         $('#DescripcionDetalle').val(tdDescripcion);
         $('#MontoDetalle').val(tdMonto);
-
     }
+    
+
     var deleteDetalle = function(){
         var parent = $(this).closest("tr");
         var tdMonto = parent.children("td:nth-child(2)").html();
@@ -84,9 +39,9 @@
         actualizarMontoTotal();
         $(this).closest("tr").remove();
     }
+
     var cleanDetalle = function(){
         $('#DescripcionDetalle').val('');
-        $('#MontoDetalle').val('');
     }
 
     var actualizarMontoTotal = function()
@@ -117,8 +72,6 @@
         return true;   
     }
     */
-
-
     var verificarRequeridos = function(){
         if ($('#DescripcionDetalle').val()=='' || $('#MontoDetalle').val()==''){
             return false;
@@ -134,10 +87,12 @@
         //Set initial variables
         //montoAcumulado = parseInt($('[name=Monto]').val());        
         $('#btnGuardarDetalle').click(function(){
+
             if(!verificarRequeridos()){
                 alert('Ingrese el detalle a guardar');
                 return;
             }     
+
 
             if (editandoDetalle){
                 //Verificar que el monto a ingresar no sea mayor al total
@@ -147,9 +102,11 @@
                     return;
                 }
                 */
+                alert('Ingrese el detalle a guardar' + rowEdit);
                 saveEditDetalle(rowEdit);
             }
             else{
+
                 //Verificar que el monto a ingresar no sea mayor al total
                 /*
                 if (verificarMonto()==false){
@@ -190,11 +147,12 @@
                 $('.btnEditDetalle').bind("click", editDetalle);
                 $('.btnDeleteDetalle').off().on("click", deleteDetalle);    
             }
+
         });
 
         $('#btnGenerarReporte').click(genPDF);
 
-    })
+    });
 
 </script>
 
@@ -206,7 +164,7 @@
                     
                     <ol class="breadcrumb">
                         <li><a href="<?php echo BASE_URL;?>Operaciones/">Operaciones</a></li>
-                        <li class="active"><?php echo $operacion->Id != null ? ($operacion->Tipo==1 ? "Ingreso" : "Egreso").'('.$operacion->Fecha.')' : 'Registro de Operación'; ?></li>
+                        <li class="active"><?php echo $operacion->Id != null ? $operacion->Tipo.'('.$operacion->Fecha.')' : 'Registro de Operación'; ?></li>
                     </ol>
                     <form method="post" action="<?php echo BASE_URL;?>Operaciones/Guardar/" enctype="multipart/form-data">
                         <div class="content">
@@ -226,7 +184,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="hidden" name="Id" value="<?php echo $operacion->Id; ?>" />
+                                            <input type="hidden" name="Id" value="<?php echo $operacion->Id; ?>" >
                                             <label>Tipo</label>
                                             <select name="Tipo" class="form-control">
                                                 <option <?php echo $operacion->Tipo==1 ? 'selected':''; ?> value="1">Ingreso</option>
@@ -273,7 +231,7 @@
                                         <div class="form-group">
                                             <label>Tipo de Comprobante/Documento</label>
                                             <select name="TipoComprobateDocumento" class="form-control">
-                                                <?php foreach($this->modelTipoComprobante->getComprobantesSeleccionados() as $r): ?>
+                                                <?php foreach($this->modelTipoComprobante->getAll() as $r): ?>
                                                     <option <?php echo ($operacion->Tipo_Comprobante_Documento_Id==$r->Id) ? 'selected' : '' ?> value="<?php echo $r->Id?>" ><?php echo $r->Descripcion;?></option>
                                                 <?php endforeach; ?>
                                             </select>
@@ -315,7 +273,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Descripcion</label>
-                                                            <input type="text" class="form-control" name="DescripcionDetalle" placeholder="Descripcion" id="DescripcionDetalle" value="<?php echo "";?>">
+                                                            <input type="text" class="form-control" name="DescripcionDetalle" placeholder="Descripcion" id="DescripcionDetalle" value="<?php echo " ";?>">
                                                         </div>        
                                                     </div>
                                                 </div>
@@ -368,6 +326,7 @@
                                                                 </tr>
                                                             <?php endforeach; ?>
                                                         </tbody>
+                                                        
                                                     </table>
                                                 </div>        
                                             </div>
@@ -376,7 +335,9 @@
                                 </div>
                             </div>  
                         </div>
+
                     </form>
+
                 </div>
             </div>
         </div>
